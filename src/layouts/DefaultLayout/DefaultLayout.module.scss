@@ -1,0 +1,21 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    width: var(--default-layout-header-width);
+    min-height: 1000px;
+    background-color: aqua;
+    display: flex;
+    margin-top: var(--default-layout-header-height, 70px);
+}
+
+.LeftSidebar {
+}
+
+.content {
+    flex: 1;
+    background-color: #fff;
+    min-height: 1000px;
+}
