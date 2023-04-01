@@ -54,7 +54,7 @@ function Search() {
             });
     }, [debouncedValue]);
     return (
-        <div>
+        <div className={cx('wrapper')}>
             <Tippy
                 interactive
                 visible={showResults && searchResults.length > 0}

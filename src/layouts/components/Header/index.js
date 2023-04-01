@@ -54,7 +54,7 @@ function Header() {
                         </button>
                     </NewTippy>
                     <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
-                        <img className={cx('user_avatar')} src={user_avatar} />
+                        <img className={cx('user_avatar')} src={user_avatar} alt="user" />
                     </Menu>
                     {/* <Button
                         text

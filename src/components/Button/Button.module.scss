@@ -57,6 +57,16 @@
 
 // Button sizes
 
+.smallest {
+    background-color: transparent;
+    color: var(--primary);
+    min-width: 40px;
+    padding: 10px 4px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
 .small {
     min-width: 88px;
     padding: 14px 43px;

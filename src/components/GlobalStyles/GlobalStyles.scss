@@ -6,8 +6,9 @@
     --white: #fff;
     --black: #000;
     --primary-darker: #224ed3;
+    --background-color: #eff4fb;
 
-    --text-color: #333;
+    --text-color: #515365;
 
     // default layout
     --default-layout-header-height: 70px;
@@ -46,6 +47,10 @@ html *::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0);
 }
 
+button {
+    background-color: var(--white);
+}
+
 button,
 input,
 [tabindex] {
@@ -53,7 +58,83 @@ input,
     border: none;
 }
 
+ul {
+    list-style-type: none;
+}
+
 a {
     color: var(--text-color);
     text-decoration: none;
+}
+
+hr {
+    height: 2px;
+    background-color: #ccc;
+    border: none;
+}
+
+.message {
+    max-width: 225px;
+    margin: 8px;
+    background-color: #ccc;
+    border-radius: 8px;
+}
+
+.sender {
+    background-color: var(--primary);
+    color: var(--white);
+    float: right;
+}
+
+.reciever {
+    background-color: #d9d9d9;
+    color: var(--black);
+    float: left;
+}
+
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    padding: 0;
+    margin: 0;
+    border: none;
+    resize: none;
+    outline: none;
+}
+
+#preview {
+    width: 150px;
+    height: 150px;
+    margin: 4px;
+    border-radius: 5px;
+}
+
+.image-container {
+    display: flex;
+    max-width: 815px;
+    overflow: auto;
+}
+
+.post-image {
+    position: relative;
+}
+
+.delete-image-button {
+    font-size: 26px;
+    background-color: transparent;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.image-container:nth-child(4) {
+    width: 93px;
+    height: 93px;
+}
+
+.label-checkbox {
+    display: flex;
+    font-size: 24px;
+    text-align: center;
 }

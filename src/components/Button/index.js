@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import styles from './Button.module.scss';
 
 const cx = classNames.bind(styles);
@@ -11,6 +11,7 @@ function Button({
     outline = false,
     text = false,
     small = false,
+    smallest = false,
     large = false,
     disabled = false,
     children,
@@ -26,6 +27,7 @@ function Button({
         primary,
         outline,
         small,
+        smallest,
         large,
         disabled,
         text,

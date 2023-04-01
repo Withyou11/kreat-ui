@@ -1,19 +1,11 @@
+.wrapper {
+    margin-left: 60px;
+}
 .search,
 .search-result {
     width: 500px;
     max-height: 230px;
     overflow: auto;
-    // &::-webkit-scrollbar {
-    //     width: 10px;
-    // }
-
-    // &::-webkit-scrollbar-track {
-    //     background-color: #f1f1f1;
-    // }
-
-    // &::-webkit-scrollbar-thumb {
-    //     background-color: #000;
-    // }
 }
 
 .search-title {
@@ -27,14 +19,16 @@
     position: relative;
     background-color: var(--primary-darker);
     padding-left: 16px;
-    height: var(--search-height);
+    height: 45px;
     border-radius: var(--search-border-radius);
     border: 2px solid transparent;
+    overflow: hidden;
     display: flex;
     input {
         flex: 1;
         height: 100%;
         padding-right: 40px;
+        margin-top: 4px;
         background-color: transparent;
         font-size: 1.8rem;
         color: var(--white);

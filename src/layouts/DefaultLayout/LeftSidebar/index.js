@@ -1,12 +1,14 @@
 import classNames from 'classnames/bind';
 import styles from './LeftSidebar.module.scss';
-
+import CustomCalendar from '~/components/CustomCalendar';
+import FriendSuggest from '~/components/FriendSuggest';
 const cx = classNames.bind(styles);
 
 function LeftSidebar() {
     return (
         <aside className={cx('wrapper')}>
-            <h2>Left Sidebar</h2>
+            <CustomCalendar />
+            <FriendSuggest />
         </aside>
     );
 }

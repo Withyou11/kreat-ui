@@ -1,8 +1,10 @@
 .wrapper {
     display: flex;
+    width: 100%;
     align-items: center;
     padding: 9px 16px;
     cursor: pointer;
+    color: var(--text-color);
     &:hover {
         background-color: rgba(22, 24, 35, 0.03);
     }
@@ -21,7 +23,8 @@
 }
 
 .name {
-    font-size: 1.6rem;
+    text-align: left;
+    font-size: 1.4rem;
     font-weight: 600;
 }
 

@@ -1,5 +1,11 @@
+import PostForm from '~/components/PostForm';
+
 function Newsfeed() {
-    return <h2>Newsfeed Page</h2>;
+    return (
+        <div>
+            <PostForm />
+        </div>
+    );
 }
 
 export default Newsfeed;

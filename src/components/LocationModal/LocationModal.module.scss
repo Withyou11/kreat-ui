@@ -1,0 +1,36 @@
+.wrapper {
+    width: 500px;
+    height: 320px;
+    position: absolute;
+    top: 0;
+    left: 150px;
+    border-radius: 5px;
+}
+
+.search {
+    width: 100%;
+    margin: 0 20px;
+}
+
+.search-title {
+    padding: 5px 12px;
+    color: var(--text-color);
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.buttonDone {
+    position: absolute;
+    bottom: 0;
+    font-size: 2rem;
+    color: var(--white);
+    border-radius: 5px;
+    width: 100%;
+    height: 30px;
+    background-color: var(--primary);
+}
+
+.buttonDone:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}

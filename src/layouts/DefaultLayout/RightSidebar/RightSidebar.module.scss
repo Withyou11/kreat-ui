@@ -1,5 +1,7 @@
 .wrapper {
-    width: 350px;
+    width: 330px;
     min-height: 1000px;
-    background-color: #e3bbbb;
+    background-color: var(--background-color);
+    position: fixed;
+    right: 0;
 }

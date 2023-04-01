@@ -1,0 +1,113 @@
+.wrapper {
+    width: 100%;
+    height: 300px;
+}
+
+.post-form {
+    position: relative;
+}
+
+.avatar {
+    position: absolute;
+    margin-right: 16px;
+    margin-left: 8px;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+form {
+}
+
+.main-input {
+    margin-top: 12px;
+    width: 90%;
+    font-size: 2rem;
+    margin-left: 70px;
+    min-height: 140px;
+    &::placeholder {
+        font-size: 2rem;
+    }
+}
+
+.post-actions {
+    display: flex;
+    flex-direction: row;
+    height: 100px;
+}
+
+.add-image-button {
+    cursor: pointer;
+    margin: 30px 20px;
+    width: 30px;
+    height: 30px;
+}
+
+.add-image-icon {
+    width: 100%;
+    height: 100%;
+    color: green;
+}
+
+.add-user-icon {
+    width: 100%;
+    height: 100%;
+    color: var(--primary-darker);
+}
+
+.add-location-icon {
+    width: 100%;
+    height: 100%;
+    color: red;
+}
+
+.post-info {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.friends-info {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    max-height: 58px;
+    overflow: hidden;
+}
+
+.location-info {
+    font-size: 1.8rem;
+    margin-top: 8px;
+}
+
+.radio-container {
+    margin-left: 10px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-item {
+    display: flex;
+    height: 30px;
+}
+
+.radio-label {
+    color: var(--black);
+    margin: auto 8px;
+}
+
+input[type='radio'] {
+    height: 20px;
+    width: 20px;
+    margin: 4px;
+}
+
+.submit-button {
+    font-size: 2rem;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    height: 40px;
+}
