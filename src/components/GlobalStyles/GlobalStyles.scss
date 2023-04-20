@@ -1,6 +1,6 @@
 @import 'normalize.css';
 @import url('https://fonts.googleapis.com/css2?family=Aguafina+Script&family=Alike&family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
-
+@import 'bootstrap/dist/css/bootstrap.min.css';
 :root {
     --primary: #0093ff;
     --white: #fff;
@@ -11,7 +11,7 @@
     --text-color: #515365;
 
     // default layout
-    --default-layout-header-height: 70px;
+    --default-layout-header-height: 60px;
     --default-layout-header-width: 1535px;
 }
 
@@ -137,4 +137,21 @@ textarea {
     display: flex;
     font-size: 24px;
     text-align: center;
+}
+.carousel-indicators {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 15;
+    width: 60%;
+    margin-left: -30%;
+    padding-left: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.modal-content {
+    margin-top: 100px;
+    height: 500px;
+    overflow-y: auto;
 }

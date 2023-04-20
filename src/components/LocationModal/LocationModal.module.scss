@@ -1,12 +1,3 @@
-.wrapper {
-    width: 500px;
-    height: 320px;
-    position: absolute;
-    top: 0;
-    left: 150px;
-    border-radius: 5px;
-}
-
 .search {
     width: 100%;
     margin: 0 20px;
@@ -21,11 +12,11 @@
 
 .buttonDone {
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     font-size: 2rem;
     color: var(--white);
     border-radius: 5px;
-    width: 100%;
+    width: 95%;
     height: 30px;
     background-color: var(--primary);
 }

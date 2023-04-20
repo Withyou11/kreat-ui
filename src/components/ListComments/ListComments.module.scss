@@ -1,0 +1,29 @@
+.wrapper {
+    max-height: 600px;
+    width: 100%;
+    margin: -1px auto 30px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 12px;
+    background-color: #fff;
+}
+
+.list-comment {
+    border-radius: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.comment-input-bar {
+    background-color: var(--white);
+    margin-top: auto;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.input {
+    width: 85%;
+}
+
+.submit {
+    padding: 12px;
+}

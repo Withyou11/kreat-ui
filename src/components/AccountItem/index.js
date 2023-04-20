@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 import Button from '../Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import reactIcons from '../General/reactIcons';
 
 const cx = classNames.bind(styles);
 
-function AccountItem({ data, button, active, inactive, user, onUserSelect }) {
+function AccountItem({ data, button, active, inactive, user, onUserSelect, react }) {
     function handleAddFriend(e) {
         e.preventDefault();
         console.log('addFriend');
@@ -19,7 +20,7 @@ function AccountItem({ data, button, active, inactive, user, onUserSelect }) {
 
     if (!active && !inactive) {
         return (
-            <Link to={`/@${data.nickname}`} className={cx('wrapper')}>
+            <Link style={{ textDecoration: 'none' }} to={`/@${data.nickname}`} className={cx('wrapper')}>
                 <img className={cx('avatar')} src={data.avatar} alt="Avatar" />
                 <div className={cx('info')}>
                     <h4 className={cx('name')}>{data.full_name}</h4>
@@ -34,6 +35,7 @@ function AccountItem({ data, button, active, inactive, user, onUserSelect }) {
                         onClick={handleAddFriend}
                     ></Button>
                 )}
+                {react && <div style={{ margin: '10px 30px' }}>{reactIcons.get(react)}</div>}
             </Link>
         );
     } else {

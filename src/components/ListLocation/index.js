@@ -13,10 +13,7 @@ function ListLocation({ data, select }) {
             {data &&
                 data.map((location) => (
                     <div key={location.geonameId}>
-                        <button
-                            className={cx('wrapper')}
-                            onClick={(event) => handleLocationSelection(event, location.name)}
-                        >
+                        <button onClick={(event) => handleLocationSelection(event, location.name)}>
                             <h4 className={cx('name')}>{location.name}</h4>
                         </button>
                     </div>

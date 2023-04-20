@@ -47,7 +47,7 @@
 }
 
 .outline {
-    border-color: var(--primary);
+    border-color: #d8d8d8;
     color: currentColor;
     &:hover {
         background-color: #d9d9d9;
@@ -73,6 +73,14 @@
 }
 
 .large {
-    min-width: 250px;
-    padding: 14px 43px;
+    font-size: 1.8rem;
+    font-weight: 400;
+    min-width: 231px;
+    padding: 14px 20px;
+}
+
+.Img {
+    width: 2.3rem;
+    padding: 0px;
+    margin-right: 8px;
 }

@@ -1,7 +1,10 @@
 import classNames from 'classnames/bind';
 // import { Link } from 'react-router-dom';
 import styles from './Button.module.scss';
-
+import hahaImg from '~/assets/images/haha.png';
+import wowImg from '~/assets/images/wow.png';
+import sadImg from '~/assets/images/sad.png';
+import angryImg from '~/assets/images/angry.png';
 const cx = classNames.bind(styles);
 
 function Button({
@@ -15,6 +18,10 @@ function Button({
     large = false,
     disabled = false,
     children,
+    haha = false,
+    wow = false,
+    sad = false,
+    angry = false,
     leftIcon,
     rightIcon,
     className,
@@ -52,6 +59,10 @@ function Button({
     return (
         <Comp className={classes} {...props}>
             {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
+            {haha && <img className={cx('Img')} alt="reaction" src={hahaImg}></img>}
+            {wow && <img className={cx('Img')} alt="reaction" src={wowImg}></img>}
+            {sad && <img className={cx('Img')} alt="reaction" src={sadImg}></img>}
+            {angry && <img className={cx('Img')} alt="reaction" src={angryImg}></img>}
             <span className={cx('title')}>{children}</span>
             {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
         </Comp>

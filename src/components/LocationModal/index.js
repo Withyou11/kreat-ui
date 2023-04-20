@@ -8,8 +8,9 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import ListLocation from '../ListLocation';
+import Modal from 'react-bootstrap/Modal';
 
-function LocationModal({ onClose, handleAtLocationChange }) {
+function LocationModal({ onClose, visible, handleAtLocationChange }) {
     const APIKey = 'kreat';
     const cx = classNames.bind(styles);
     const inputRef = useRef();
@@ -42,41 +43,45 @@ function LocationModal({ onClose, handleAtLocationChange }) {
             })
             .catch(() => {});
     }, [debouncedValue]);
-
+    function handleClose() {
+        onClose();
+    }
     useEffect(() => {
         handleAtLocationChange(selectedLocation);
     }, [selectedLocation]);
     return (
-        <PopperWrapper className={cx('wrapper')}>
-            <h3 className={cx('search-title')}>Location: {selectedLocation || ''}</h3>
-            <button className={cx('delete-image-button')} onClick={onClose}>
-                <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
-            </button>
-            <Tippy
-                placement="bottom"
-                interactive
-                visible={true}
-                render={(attr) => (
-                    <div className={cx('search-result')} tabIndex="-1" {...attr}>
-                        <ListLocation data={searchResults} select={setSelectedLocation} />
+        <Modal show={visible} onHide={handleClose} animation={false}>
+            <Modal.Body>
+                <h3 className={cx('search-title')}>Location: {selectedLocation || ''}</h3>
+                <button className={cx('delete-image-button')} onClick={handleClose}>
+                    <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
+                </button>
+                <Tippy
+                    placement="bottom"
+                    interactive
+                    visible={true}
+                    render={(attr) => (
+                        <div className={cx('search-result')} tabIndex="-1" {...attr}>
+                            <ListLocation data={searchResults} select={setSelectedLocation} />
+                        </div>
+                    )}
+                    onClickOutside={onClose}
+                >
+                    <div className={cx('search')}>
+                        <input
+                            ref={inputRef}
+                            value={searchText}
+                            placeholder="Enter location..."
+                            spellCheck="false"
+                            onChange={(e) => handleChange(e)}
+                        />
                     </div>
-                )}
-                onClickOutside={onClose}
-            >
-                <div className={cx('search')}>
-                    <input
-                        ref={inputRef}
-                        value={searchText}
-                        placeholder="Enter location..."
-                        spellCheck="false"
-                        onChange={(e) => handleChange(e)}
-                    />
-                </div>
-            </Tippy>
-            <button className={cx('buttonDone')} onClick={(event) => handleCompleteLocation(event)}>
-                Done
-            </button>
-        </PopperWrapper>
+                </Tippy>
+                <button className={cx('buttonDone')} onClick={(event) => handleCompleteLocation(event)}>
+                    Done
+                </button>
+            </Modal.Body>
+        </Modal>
     );
 }
 

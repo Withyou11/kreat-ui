@@ -145,6 +145,7 @@ function PostForm() {
                             {isTagModalOpen && (
                                 <div>
                                     <TagFriendModal
+                                        visible={isTagModalOpen}
                                         onClose={() => setIsTagModalOpen(false)}
                                         withfriend={withfriend}
                                         handleWithFriendChange={handleWithFriendChange}
@@ -163,6 +164,7 @@ function PostForm() {
                             {isLocationModalOpen && (
                                 <div>
                                     <LocationModal
+                                        visible={isLocationModalOpen}
                                         onClose={() => setIsLocationModalOpen(false)}
                                         handleAtLocationChange={handleAtLocationChange}
                                     />

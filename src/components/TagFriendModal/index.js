@@ -3,10 +3,11 @@ import classNames from 'classnames/bind';
 import { useEffect, useState, useMemo } from 'react';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Modal from 'react-bootstrap/Modal';
 
 import ListTagFriend from '../ListTagFriend';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-function TagFriendModal({ onClose, withfriend, handleWithFriendChange }) {
+function TagFriendModal({ onClose, visible, withfriend, handleWithFriendChange }) {
     // const [friends, setFriends] = useState([]);
     const cx = classNames.bind(styles);
 
@@ -47,6 +48,21 @@ function TagFriendModal({ onClose, withfriend, handleWithFriendChange }) {
                 fullName: 'Mike Brown',
                 avatar: 'https://randomuser.me/api/portraits/men/5.jpg',
             },
+            {
+                id: 6,
+                fullName: 'Bob Johnson',
+                avatar: 'https://randomuser.me/api/portraits/men/3.jpg',
+            },
+            {
+                id: 7,
+                fullName: 'Alice Williams',
+                avatar: 'https://randomuser.me/api/portraits/women/4.jpg',
+            },
+            {
+                id: 8,
+                fullName: 'Mike Brown',
+                avatar: 'https://randomuser.me/api/portraits/men/5.jpg',
+            },
         ],
         [],
     );
@@ -67,11 +83,16 @@ function TagFriendModal({ onClose, withfriend, handleWithFriendChange }) {
         setSearchResults(filteredData);
     }, [searchText, data]);
 
+    function handleClose() {
+        onClose();
+    }
     return (
-        <div className={cx('wrapper')}>
-            <PopperWrapper>
+        // <div className={cx('wrapper')}>
+        //     <PopperWrapper>
+        <Modal show={visible} onHide={handleClose} animation={false}>
+            <Modal.Body>
                 <h3 style={{ margin: '0 12px' }}>Select friends to tag:</h3>
-                <button className={cx('delete-image-button')} onClick={onClose}>
+                <button className={cx('delete-image-button')} onClick={handleClose}>
                     <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                 </button>
                 <hr style={{ margin: '8px' }} />
@@ -90,8 +111,10 @@ function TagFriendModal({ onClose, withfriend, handleWithFriendChange }) {
                 <button className={cx('buttonDone')} onClick={(event) => handleCompleteTag(event)}>
                     Done
                 </button>
-            </PopperWrapper>
-        </div>
+            </Modal.Body>
+        </Modal>
+        //     </PopperWrapper>
+        // </div>
     );
 }
 
