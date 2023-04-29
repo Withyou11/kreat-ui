@@ -1,0 +1,97 @@
+.about-container {
+    display: flex;
+    flex-direction: column;
+    width: 91.5%;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.about-above {
+    display: flex;
+}
+
+.personal-info {
+    margin-right: 30px;
+    flex: 1;
+    height: 700px;
+    background-color: var(--white);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.hobbies {
+    flex: 2;
+    height: 700px;
+    background-color: var(--white);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.education {
+    margin: 20px 0;
+    height: 300px;
+    background-color: var(--white);
+    border-radius: 8px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    margin-bottom: 0;
+}
+
+.header-text {
+    font-size: 2rem;
+}
+
+.personal-info-detail {
+    display: flex;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+.personal-info-detail .title {
+    flex: 1;
+    margin-left: 24px;
+    color: #515365;
+    font-size: 1.8rem;
+}
+
+.personal-info-detail .content {
+    flex: 2;
+    color: #888da8;
+    font-size: 1.8rem;
+    margin-right: 8px;
+}
+
+table {
+    width: 100%; /* Chiếm hết chiều rộng của thẻ div */
+    border-collapse: collapse; /* Hợp nhất các đường viền của ô */
+}
+
+.hobby td {
+    width: 50%;
+    padding: 16px;
+    text-align: left;
+    vertical-align: top;
+}
+
+td .title {
+    color: #515365;
+    font-size: 1.8rem;
+}
+
+td .content {
+    color: #888da8;
+    font-size: 1.8rem;
+}
+
+.education td {
+    width: 33%;
+    padding: 16px;
+    text-align: left;
+    vertical-align: top;
+}

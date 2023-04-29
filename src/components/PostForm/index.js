@@ -10,6 +10,7 @@ import TagFriendModal from '../TagFriendModal';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { faLocationDot, faTimes, faUserTag } from '@fortawesome/free-solid-svg-icons';
 import LocationModal from '../LocationModal';
+import { Link } from 'react-router-dom';
 
 function PostForm() {
     const [inputValue, setInputValue] = useState('');
@@ -83,9 +84,9 @@ function PostForm() {
         <div className={cx('wrapper')}>
             <PopperWrapper>
                 <div className={cx('post-form')}>
-                    <div className={cx('avatar')}>
+                    <Link to="/timelines" className={cx('avatar')}>
                         <img src={avatar} alt="avatar" />
-                    </div>
+                    </Link>
                     <form onSubmit={handleSubmit}>
                         <textarea
                             className={cx('main-input')}

@@ -1,13 +1,17 @@
+import classNames from 'classnames/bind';
+import styles from './HeaderOnly.module.scss';
 import Header from '~/layouts/components/Header';
 
 function HeaderOnly({ children }) {
+    const cx = classNames.bind(styles);
+
     return (
-        <div>
+        <>
             <Header></Header>
-            <div className="container">
-                <div className="content">{children}</div>
+            <div className={cx('container_header_only')}>
+                <div className={cx('content')}>{children}</div>
             </div>
-        </div>
+        </>
     );
 }
 

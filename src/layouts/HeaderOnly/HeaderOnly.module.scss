@@ -1,0 +1,10 @@
+.container_header_only {
+    width: 100%;
+    min-height: 1000px;
+    background-color: var(--background-color);
+    margin-top: var(--default-layout-header-height, 70px);
+}
+
+.content {
+    width: 100%;
+}
