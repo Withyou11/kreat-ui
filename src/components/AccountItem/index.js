@@ -11,7 +11,6 @@ const cx = classNames.bind(styles);
 function AccountItem({ data, button, active, inactive, user, onUserSelect, react }) {
     function handleAddFriend(e) {
         e.preventDefault();
-        console.log('addFriend');
     }
 
     function handleOpenChatBox(e) {
@@ -23,7 +22,7 @@ function AccountItem({ data, button, active, inactive, user, onUserSelect, react
             <Link style={{ textDecoration: 'none' }} to={`/@${data.nickname}`} className={cx('wrapper')}>
                 <img className={cx('avatar')} src={data.avatar} alt="Avatar" />
                 <div className={cx('info')}>
-                    <h4 className={cx('name')}>{data.full_name}</h4>
+                    <h4 className={cx('name')}>{data.fullName}</h4>
                     <p className={cx('amount-common-friend')}>
                         6<span> Friends in Common</span>
                     </p>

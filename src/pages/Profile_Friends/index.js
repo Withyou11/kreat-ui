@@ -7,17 +7,26 @@ import ProfileHeader from '~/components/ProfileHeader';
 import FriendItem from '~/layouts/components/FriendItem';
 import { useDebounce } from '~/hooks';
 import axios from 'axios';
-import listUsers from '~/StaticData/ListUser';
+// import listUsers from '~/StaticData/ListUser';
+import FriendRequestItem from '~/layouts/components/FriendRequestItem';
 
 function Profile_Friends(props) {
     const cx = classNames.bind(styles);
     const [searchText, setSearchText] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const [listUsers, setListUsers] = useState([]);
     const debouncedValue = useDebounce(searchText, 600);
 
     const inputRef = useRef();
+    useEffect(() => {
+        axios
+            .get(`http://localhost:3000/accounts/64748bc1f6501b98ef1c9155/friends`)
+            .then((res) => {
+                setListUsers(res.data.listFriend[0]);
+            })
+            .catch(() => {});
+    }, []);
 
     const handleChange = (e) => {
         const searchValue = e.target.value;
@@ -32,27 +41,22 @@ function Profile_Friends(props) {
             return;
         }
         // setLoading(true);
-        console.log(debouncedValue);
         var resultFind = listUsers.filter((user) => user.fullname.toLowerCase().includes(debouncedValue));
-        console.log(listUsers);
-
-        console.log(resultFind);
         setSearchResults(resultFind);
 
-        // axios
-        //     .get(`https://tiktok.fullstack.edu.vn/api/users/search`, {
-        //         params: {
-        //             q: debouncedValue,
-        //             type: 'more',
-        //         },
-        //     })
-        //     .then((res) => {
-        //         setSearchResults(res.data.data);
-        //         setLoading(false);
-        //     })
-        //     .catch(() => {
-        //         setLoading(false);
-        //     });
+        axios
+            .get(`http://localhost:3000/accounts/search`, {
+                params: {
+                    q: debouncedValue,
+                },
+            })
+            .then((res) => {
+                setSearchResults(res.data.accounts);
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false);
+            });
     }, [debouncedValue]);
     return (
         <>
@@ -88,18 +92,28 @@ function Profile_Friends(props) {
                         {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
                     </div>
                 </div>
+
+                <h2 style={{ textAlign: 'center', marginTop: '30px' }}>YOUR FRIENDS</h2>
                 <div className={cx('list-friend-container')}>
                     {searchResults.length > 0
                         ? searchResults.map((user) => (
-                              <div key={user.id}>
+                              <div key={user._id}>
                                   <FriendItem data={user} />
                               </div>
                           ))
                         : listUsers.map((user) => (
-                              <div key={user.id}>
+                              <div key={user._id}>
                                   <FriendItem data={user} />
                               </div>
                           ))}
+                </div>
+                <h2 style={{ textAlign: 'center', marginTop: '30px' }}>FRIEND REQUESTS</h2>
+                <div className={cx('list-friend-container')}>
+                    {listUsers.map((user) => (
+                        <div key={user._id}>
+                            <FriendRequestItem data={user} />
+                        </div>
+                    ))}
                 </div>
             </div>
         </>

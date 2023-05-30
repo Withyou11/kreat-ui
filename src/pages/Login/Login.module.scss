@@ -1,0 +1,48 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+}
+.aside {
+    background-color: #5cbaff;
+    width: 36%;
+    height: 745px;
+}
+.image {
+    margin: 200px 100px;
+}
+.main {
+    flex: 1;
+    margin: 50px 150px;
+}
+.title1 {
+    color: var(--white);
+    font-weight: bold;
+    font-size: 32px;
+}
+.title2 {
+    color: var(--white);
+    font-size: 20px;
+    margin-right: 240px;
+}
+.input {
+    margin: 20px;
+    margin-left: -1px;
+    ::placeholder {
+        color: #515365 !important;
+    }
+}
+.submit {
+    margin-top: 20px;
+    margin-left: -1px;
+    background-color: #5cbaff;
+    color: #fff;
+    width: 40%;
+    font-size: 20px;
+}
+.forget {
+    margin-top: 20px;
+    background-color: transparent;
+    color: #fff;
+    width: 30%;
+    font-size: 20px;
+}

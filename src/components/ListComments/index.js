@@ -15,7 +15,6 @@ function ListComments({ data }) {
     };
 
     useEffect(() => {}, [data]);
-
     return (
         <div className={cx('wrapper')}>
             <div className={cx('list-comment')}>

@@ -74,8 +74,8 @@ function ProfileHeader() {
                     </Link>
                 </div>
                 <div className={cx('info')}>
-                    <img className={cx('avatar')} src={avatar1} alt="avatar"></img>
-                    <p className={cx('fullname')}>James Spiegel</p>
+                    <img className={cx('avatar')} src={localStorage.getItem('avatar')} alt="avatar"></img>
+                    <p className={cx('fullname')}>{localStorage.getItem('fullname')}</p>
                 </div>
             </div>
         </div>

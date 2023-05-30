@@ -29,10 +29,11 @@ const MENU_ITEMS = [
         // to: '/login',
     },
 ];
-
 function Header() {
     // Handle logic
-    const handleMenuChange = (menuItem) => {};
+    const handleMenuChange = () => {
+        console.log('a');
+    };
 
     return (
         <header className={cx('wrapper')}>
@@ -54,26 +55,8 @@ function Header() {
                         </button>
                     </NewTippy>
                     <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
-                        <img className={cx('user_avatar')} src={user_avatar} alt="user" />
+                        <img className={cx('user_avatar')} src={localStorage.getItem('avatar')} alt="user" />
                     </Menu>
-                    {/* <Button
-                        text
-                        onClick={() => {
-                            alert('clicked');
-                        }}
-                    >
-                        Sign up
-                    </Button>
-                    <Button
-                        leftIcon={<FontAwesomeIcon icon={faMagnifyingGlass} />}
-                        outline
-                        small
-                        onClick={() => {
-                            alert('clicked');
-                        }}
-                    >
-                        Log in
-                    </Button> */}
                 </div>
             </div>
         </header>

@@ -39,14 +39,13 @@ function Search() {
         setLoading(true);
 
         axios
-            .get(`https://tiktok.fullstack.edu.vn/api/users/search`, {
+            .get(`http://localhost:3000/accounts/search`, {
                 params: {
                     q: debouncedValue,
-                    type: 'more',
                 },
             })
             .then((res) => {
-                setSearchResults(res.data.data);
+                setSearchResults(res.data.accounts);
                 setLoading(false);
             })
             .catch(() => {
@@ -63,7 +62,7 @@ function Search() {
                         <PopperWrapper>
                             <h3 className={cx('search-title')}>Account</h3>
                             {searchResults.map((result) => (
-                                <AccountItem key={result.id} data={result} />
+                                <AccountItem key={result._id} data={result} />
                             ))}
                         </PopperWrapper>
                     </div>

@@ -1,9 +1,10 @@
-import { HeaderOnly } from '~/layouts';
+import { HeaderOnly, NoLayout } from '~/layouts';
 import Newsfeed from '~/pages/Newsfeed';
 import Profile_TimeLines from '~/pages/Profile_TimeLines';
 import Profile_AboutMe from '~/pages/Profile_AboutMe';
 import Profile_Friends from '~/pages/Profile_Friends';
 import Profile_Medias from '~/pages/Profile_Medias';
+import Login from '~/pages/Login';
 // public routes
 const publicRoutes = [
     { path: '/', component: Newsfeed },
@@ -12,6 +13,7 @@ const publicRoutes = [
     { path: '/about', component: Profile_AboutMe, layout: HeaderOnly },
     { path: '/friends', component: Profile_Friends, layout: HeaderOnly },
     { path: '/medias', component: Profile_Medias, layout: HeaderOnly },
+    { path: '/login', component: Login, layout: NoLayout },
 ];
 
 const privateRoutes = [];

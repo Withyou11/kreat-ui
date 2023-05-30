@@ -42,7 +42,7 @@ function FriendItem({ data }) {
         <Link style={{ textDecoration: 'none' }} to={`/@${data.email}`} className={cx('wrapper')}>
             <div className={cx('info')}>
                 <img className={cx('avatar')} src={data.avatar} alt="avatar"></img>
-                <p className={cx('name')}>{data.fullname}</p>
+                <p className={cx('name')}>{data.fullName}</p>
                 <Button
                     className={cx('action')}
                     leftIcon={<FontAwesomeIcon icon={faEllipsis} style={{ fontSize: '2.4rem' }} />}

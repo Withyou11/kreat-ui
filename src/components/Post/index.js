@@ -9,20 +9,29 @@ import reactIcons from '../General/reactIcons';
 import generateReactionList from '../General/generateReactionList';
 import { Carousel } from 'react-bootstrap';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
-
+import axios from 'axios';
 import { faHeart, faThumbsUp, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { faComment, faShareFromSquare, faThumbsUp as faThumbsUp1 } from '@fortawesome/free-regular-svg-icons';
 import ShowListReact from '../ShowListReact';
 
 function Post({ data }) {
     const cx = classNames.bind(styles);
-    const reactionList = data.listIdAccountReact;
+    const reactionList = data.listReaction;
     const currentUser = 'Dan Cortese';
     const [isTagModalOpen, setIsTagModalOpen] = useState(false);
     const [isReactModalOpen, setIsReactModalOpen] = useState(false);
     const [showComment, setShowComment] = useState(false);
+    const [comments, setComments] = useState([]);
 
-    const handleCommentClick = () => {
+    const handleCommentClick = (id) => {
+        axios
+            .get(`http://localhost:3000/posts/${id}/get_all_comment`)
+            .then((res) => {
+                setComments(res.data.listComment);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
         setShowComment(true);
     };
     function handleCloseReactList() {
@@ -30,12 +39,12 @@ function Post({ data }) {
     }
     const [currentUserReact, setCurrentUserReact] = useState('');
     function checkCurrentUserReact(currentUser) {
-        data.listIdAccountReact.forEach((userReact) => {
-            if (userReact.nameAccount === currentUser) {
-                setCurrentUserReact(userReact.reactType);
-                return;
-            }
-        });
+        // data.listReaction.forEach((userReact) => {
+        //     if (userReact.fullName === currentUser) {
+        //         setCurrentUserReact(userReact.reactType);
+        //         return;
+        //     }
+        // });
     }
 
     const handleTagButtonClick = (event) => {
@@ -48,7 +57,6 @@ function Post({ data }) {
         setIsReactModalOpen(true);
     };
     let reactionAmount = [];
-
     generateReactionList(reactionAmount, reactionList);
 
     var totalReactions = reactionAmount.reduce((total, reaction) => total + reaction.count, 0);
@@ -79,37 +87,39 @@ function Post({ data }) {
         <div className={cx('wrapper')}>
             <PopperWrapper>
                 <div className={cx('post-info')}>
-                    <img className={cx('avatar')} src={data.avatar} alt="avatar" />
+                    <img className={cx('avatar')} src={data.post.avatar} alt="avatar" />
                     <div className={cx('post-info-main')}>
-                        <h4 className={cx('name')}>{data.nameAccount}</h4>
+                        <h4 className={cx('name')}>{data.post.fullName}</h4>
                         <div className={cx('time-location')}>
-                            <p className={cx('time')}>{data.dateTime.slice(0, 10)}</p>
+                            <p className={cx('time')}>{data.createdAt}</p>
                             <FontAwesomeIcon className={cx('privacy')} icon={faUserGroup}></FontAwesomeIcon>
-                            <p className={cx('location')}>{data.location}</p>
+                            <p className={cx('location')}>{data.post.location}</p>
                         </div>
                     </div>
-                    {data.nameFriendTag.length > 0 && (
+                    {data.post.id_friendTag.length > 0 && (
                         <div className={cx('friend')} onClick={(e) => handleTagButtonClick(e)}>
-                            <p className={cx('friend-number')}>{data.nameFriendTag.length} people</p>
+                            <p className={cx('friend-number')}>{data.post.id_friendTag.length} people</p>
                         </div>
                     )}
                 </div>
 
                 <div className={cx('post-content')}>
                     <div className={cx('post-content-text')}>
-                        <p className={cx('post-text')}>{data.postText}</p>
+                        <p className={cx('post-text')}>{data.post.postContent}</p>
                     </div>
                     <div className={cx('post-content-image')}>
-                        {data.image.length > 1 && (
+                        {data.post.id_visualMedia.length > 1 && (
                             <Carousel>
-                                {data.image.map((image) => (
+                                {data.post.id_visualMedia.map((image) => (
                                     <Carousel.Item key={image}>
                                         <img className={cx('image')} src={image} alt={`Post`} />
                                     </Carousel.Item>
                                 ))}
                             </Carousel>
                         )}
-                        {data.image.length === 1 && <img className={cx('image')} src={data.image} alt={`Post`} />}
+                        {data.post.id_visualMedia.length === 1 && (
+                            <img className={cx('image')} src={data.image} alt={`Post`} />
+                        )}
                     </div>
                 </div>
                 {data.shareId && (
@@ -173,7 +183,7 @@ function Post({ data }) {
                         </p>
                     </div>
                     <div className={cx('comment-number')}>
-                        <p>{data.listComment.length} comments</p>
+                        <p>{data.amountComment} comments</p>
                     </div>
                 </div>
                 <div className={cx('action-buttons')}>
@@ -295,7 +305,7 @@ function Post({ data }) {
                             leftIcon={<FontAwesomeIcon icon={faComment} />}
                             outline
                             large
-                            onClick={handleCommentClick}
+                            onClick={() => handleCommentClick(data.post._id)}
                         >
                             Comment
                         </Button>
@@ -314,10 +324,10 @@ function Post({ data }) {
                     </div>
                 </div>
             </PopperWrapper>
-            {showComment && <ListComments data={data.listComment}></ListComments>}
+            {showComment && <ListComments data={comments}></ListComments>}
             {isTagModalOpen && (
                 <ShowListTagFriend
-                    data={data.nameFriendTag}
+                    data={data.post.id_friendTag}
                     visible={isTagModalOpen}
                     onClose={setIsTagModalOpen}
                 ></ShowListTagFriend>

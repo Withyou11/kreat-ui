@@ -20,8 +20,7 @@ function Comment({ data }) {
         setIsReactModalOpen(false);
     }
 
-    console.log(isReactModalOpen);
-    const reactionList = data.listReact;
+    const reactionList = data.listReaction;
     let reactionAmount = [];
     generateReactionList(reactionAmount, reactionList);
 
@@ -58,13 +57,13 @@ function Comment({ data }) {
 
     return (
         <div className={cx('comment-container')}>
-            <img className={cx('avatar')} src={data.avatar} alt="avatar" />
+            <img className={cx('avatar')} src={data.comment.avatar} alt="avatar" />
             <div className={cx('comment-main')}>
                 <div className={cx('comment-info-main')}>
-                    <h4 className={cx('name')}>{data.nameAccount}</h4>
+                    <h4 className={cx('name')}>{data.comment.fullName}</h4>
                     <p className={cx('time')}>{data.datetime}</p>
                 </div>
-                <div className={cx('comment-content')}>{data.contentComment}</div>
+                <div className={cx('comment-content')}>{data.comment.commentContent}</div>
                 <div className={cx('react-button')}>
                     <div className={cx('hover-reaction')}>
                         <Button

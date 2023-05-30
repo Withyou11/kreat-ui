@@ -9,10 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../Button';
 function ChatBox({ updateState, userId, userName, userAvatar }) {
     const cx = classNames.bind(styles);
-    console.log(userId);
     function handleClose(e) {
         updateState(null);
-        console.log(userId);
     }
     useEffect(() => {}, [userId]);
 

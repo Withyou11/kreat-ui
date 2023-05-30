@@ -1,9 +1,8 @@
 import styles from './PostForm.module.scss';
 import classNames from 'classnames/bind';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
-import avatar from '~/assets/images/useravatar.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
 import Button from '../Button';
 import TagFriendModal from '../TagFriendModal';
@@ -35,8 +34,22 @@ function PostForm() {
     const cx = classNames.bind(styles);
 
     // Hàm hoàn tất đăng bài
-    const handleSubmit = () => {
-        console.log('post successfully submitted');
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axios
+            .post(`http://localhost:3000/posts/64748bc1f6501b98ef1c9155/create_post/`, {
+                id_visualMedia: selectedImages,
+                postContent: inputValue,
+                postPrivacy: privacy,
+                id_friendTag: withfriend,
+                location: atLocation,
+            })
+            .then((res) => {
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
         // Biến tag bạn bè: withfriend, biến location: atLocation, biến nội dung: inputValue, biến ảnh: selectedImages, biến quyền riêng tư: privacy
     };
 
@@ -64,7 +77,7 @@ function PostForm() {
         event.preventDefault();
         setIsLocationModalOpen(true);
     };
-
+    const placeholder = `What are you thinking, ${localStorage.getItem('fullname')}?`;
     useEffect(() => {
         document.getElementById('public').click();
     }, []);
@@ -85,14 +98,14 @@ function PostForm() {
             <PopperWrapper>
                 <div className={cx('post-form')}>
                     <Link to="/timelines" className={cx('avatar')}>
-                        <img src={avatar} alt="avatar" />
+                        <img className={cx('avatarImg')} src={localStorage.getItem('avatar')} alt="avatar" />
                     </Link>
                     <form onSubmit={handleSubmit}>
                         <textarea
                             className={cx('main-input')}
                             type="text"
                             spellCheck={false}
-                            placeholder="What are you thinking?"
+                            placeholder={placeholder}
                             value={inputValue}
                             onChange={(event) => setInputValue(event.target.value)}
                         />
