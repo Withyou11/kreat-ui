@@ -68,3 +68,72 @@
 .active {
     color: #0093ff;
 }
+
+.buttonContainer {
+    position: absolute;
+    bottom: 14px;
+    right: -466px;
+    display: flex;
+    flex-direction: row;
+}
+
+.addButton {
+    font-size: 13px;
+    margin-right: 24px;
+    padding: 12px 30px;
+    border: 0;
+    border-radius: 12px;
+    background-color: var(--primary);
+    color: #ffffff;
+    font-weight: Bold;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+}
+
+.addButton:hover {
+    background-color: #6fc5ff;
+    box-shadow: 0 0 20px #6fc5ff50;
+    transform: scale(1.1);
+}
+
+.addButton:active {
+    background-color: #3d94cf;
+    transition: all 0.25s;
+    -webkit-transition: all 0.25s;
+    box-shadow: none;
+    transform: scale(0.98);
+}
+
+.addButton1 {
+    font-size: 13px;
+    margin-right: 24px;
+    padding: 12px 30px;
+    border: 0;
+    border-radius: 12px;
+    background-color: #999696;
+    color: #ffffff;
+    font-weight: Bold;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+}
+
+.addButton1:hover {
+    background-color: #a1a3a4;
+    box-shadow: 0 0 20px #d7edfc50;
+    transform: scale(1.1);
+}
+
+.addButton1:active {
+    background-color: #92a0aa;
+    transition: all 0.25s;
+    -webkit-transition: all 0.25s;
+    box-shadow: none;
+    transform: scale(0.98);
+}
+
+.friend {
+    text-align: center;
+    margin: 10px;
+    margin-right: 40px;
+    font-size: 20px;
+}

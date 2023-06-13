@@ -1,4 +1,4 @@
-function generateReactionList(reactionAmount, list) {
+function generateReactionList(setReactionAmount, list) {
     var like = 0;
     var love = 0;
     var haha = 0;
@@ -8,33 +8,41 @@ function generateReactionList(reactionAmount, list) {
     if (list) {
         for (let i = 0; i < list.length; i++) {
             switch (list[i].reactType) {
-                case 'Like':
+                case 'like':
                     like++;
                     break;
-                case 'Love':
+                case 'love':
                     love++;
                     break;
-                case 'Haha':
+                case 'haha':
                     haha++;
                     break;
-                case 'Wow':
+                case 'wow':
                     wow++;
                     break;
-                case 'Sad':
+                case 'sad':
                     sad++;
                     break;
-                case 'Angry':
+                case 'angry':
                     angry++;
                     break;
                 default:
             }
         }
-        reactionAmount.push({ type: 'like', count: like });
-        reactionAmount.push({ type: 'love', count: love });
-        reactionAmount.push({ type: 'haha', count: haha });
-        reactionAmount.push({ type: 'wow', count: wow });
-        reactionAmount.push({ type: 'sad', count: sad });
-        reactionAmount.push({ type: 'angry', count: angry });
+        setReactionAmount([
+            { type: 'like', count: like },
+            { type: 'love', count: love },
+            { type: 'haha', count: haha },
+            { type: 'wow', count: wow },
+            { type: 'sad', count: sad },
+            { type: 'angry', count: angry },
+        ]);
+        // reactionAmount.push({ type: 'like', count: like });
+        // reactionAmount.push({ type: 'love', count: love });
+        // reactionAmount.push({ type: 'haha', count: haha });
+        // reactionAmount.push({ type: 'wow', count: wow });
+        // reactionAmount.push({ type: 'sad', count: sad });
+        // reactionAmount.push({ type: 'angry', count: angry });
     }
 }
 

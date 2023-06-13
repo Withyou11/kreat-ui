@@ -1,7 +1,6 @@
 import styles from './Login.module.scss';
 import classNames from 'classnames/bind';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import login from '~/assets/images/login.png';
 import { useState } from 'react';
 import axios from 'axios';
@@ -18,9 +17,11 @@ function Login() {
             .then((res) => {
                 if (res.status === 200) {
                     console.log('Response success !!!');
-                    localStorage.setItem('api', res.data.accessToken);
+                    localStorage.setItem('accessToken', res.data.accessToken);
+                    localStorage.setItem('accountId', res.data.id_account);
                     localStorage.setItem('fullname', res.data.fullName);
                     localStorage.setItem('avatar', res.data.avatar);
+                    localStorage.setItem('anotherAccountId', '');
                     navigate('/');
                 } else {
                     alert('Wrong email or password');

@@ -1,0 +1,82 @@
+.delete-image-button {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px;
+}
+
+.form-control1 {
+    flex: 1;
+    background-color: #f7f7f7;
+    margin: 0 26px;
+    padding: 8px;
+    border-radius: 10px;
+    min-height: 80px;
+}
+
+.form-control2 {
+    border: 0;
+    width: 68%;
+    margin: 4px 26px;
+    background-color: #f7f7f7;
+    border-radius: 6px;
+    height: 34px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.label1 {
+    margin: auto 0;
+    width: 100px;
+}
+
+.label2 {
+    margin: auto;
+    margin-left: 50px;
+    width: 100px;
+}
+
+.form-control {
+    flex: 1;
+}
+
+.form-group {
+    display: flex;
+}
+
+.delete-user-icon {
+    font-size: 24px;
+}
+
+.buttonDone {
+    position: absolute;
+    bottom: 10px;
+    font-size: 2rem;
+    color: var(--white);
+    border-radius: 5px;
+    width: 95%;
+    height: 30px;
+    background-color: var(--primary);
+}
+
+.buttonDone:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.yearContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 26px;
+}
+
+.form-control2 {
+    border: 0;
+    width: 68%;
+    margin: 0;
+    margin-left: 74px;
+    background-color: #f7f7f7;
+    border-radius: 6px;
+    height: 34px;
+    padding-left: 8px;
+    padding-right: 8px;
+}

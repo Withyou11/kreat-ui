@@ -1,6 +1,6 @@
 .wrapper {
     width: 85%;
-    height: 300px;
+    min-height: 300px;
     margin: auto;
 }
 
@@ -28,7 +28,7 @@ form {
 
 .main-input {
     margin-top: 12px;
-    width: 90%;
+    width: 89%;
     font-size: 2rem;
     margin-left: 70px;
     min-height: 140px;

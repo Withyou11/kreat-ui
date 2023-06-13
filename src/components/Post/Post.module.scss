@@ -1,8 +1,8 @@
 .wrapper {
-    // max-height: 580px;
     width: 85%;
     margin: 10px auto;
     position: relative;
+    overflow: hidden;
 }
 
 .post-info {
@@ -70,6 +70,7 @@
 .post-content {
     display: flex;
     flex-direction: column;
+    width: '640px';
 }
 
 .post-content-text {
@@ -88,8 +89,14 @@
     margin: auto;
 }
 
-.image {
+.post-content-image1 {
+    width: 90%;
     margin: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.image {
     height: 400px;
     width: 100%;
     border-radius: 6px;
@@ -147,13 +154,19 @@
 
 .action-buttons {
     display: flex;
+    flex-direction: row;
     width: 100%;
     position: relative;
 }
 
 .action-button > Button {
-    padding: 6px 14px;
+    padding: 6px 0px;
     border-radius: 0;
+    flex: 1;
+}
+
+.share-button {
+    width: 200px;
 }
 
 .hover-reaction {
@@ -166,6 +179,7 @@
     border-radius: 50px;
     top: -40px;
     left: 0;
+    z-index: 1000;
 }
 
 .react-btn:hover > .hover-reaction {
@@ -225,7 +239,7 @@
 
 // share content
 .share-content {
-    width: 90%;
+    // width: 90%;
     margin: auto;
     border: 1px solid #ccc;
     border-radius: 5px;

@@ -9,26 +9,36 @@ const cx = classNames.bind(styles);
 function MenuItem({ data }) {
     const navigate = useNavigate();
 
-    const handleClick = () => {
+    const handleClick = async () => {
         if (data.title === 'Logout') {
             localStorage.removeItem('avatar');
             localStorage.removeItem('fullname');
-            localStorage.removeItem('fake');
-            localStorage.removeItem('api');
-            axios
-                .post(`http://localhost:3000/auth/logout`, {
-                    email: 'sunghajung@gmail.com',
-                })
+            localStorage.removeItem('anotherAccountId');
+            localStorage.removeItem('accountId');
+            localStorage.removeItem('anotherAccountName');
+            localStorage.removeItem('anotherAccountAvatar');
+            await axios
+                .post(
+                    `http://localhost:3000/auth/logout`,
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                        },
+                    },
+                )
                 .then((res) => {
                     if (res.status === 200) {
                         console.log('Logout success !!!');
                         navigate('/login');
+                        localStorage.removeItem('accessToken');
                     } else {
                         alert('Can not log out');
                     }
                 })
                 .catch((error) => {
                     console.log(error);
+                    // console.log(error);
                 });
         }
     };

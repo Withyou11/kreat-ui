@@ -4,17 +4,20 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
+import { Image } from 'cloudinary-react';
 import Button from '../Button';
 import TagFriendModal from '../TagFriendModal';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { faLocationDot, faTimes, faUserTag } from '@fortawesome/free-solid-svg-icons';
 import LocationModal from '../LocationModal';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function PostForm() {
+    const navigate = useNavigate();
     const [inputValue, setInputValue] = useState('');
     const [selectedImages, setSelectedImages] = useState([]);
-    const [privacy, setPrivacy] = useState('Public');
+    const [selectedVideos, setSelectedVideos] = useState([]);
+    const [privacy, setPrivacy] = useState('public');
 
     const [withfriend, setWithFriend] = useState([]);
     const [atLocation, setAtLocation] = useState('');
@@ -36,21 +39,62 @@ function PostForm() {
     // Hàm hoàn tất đăng bài
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios
-            .post(`http://localhost:3000/posts/64748bc1f6501b98ef1c9155/create_post/`, {
-                id_visualMedia: selectedImages,
-                postContent: inputValue,
-                postPrivacy: privacy,
-                id_friendTag: withfriend,
-                location: atLocation,
-            })
-            .then((res) => {
-                window.location.reload();
+        let visualData = [];
+        const promises = [];
+
+        selectedImages.forEach((image) => {
+            const file = image;
+            const reader = new FileReader();
+            const promise = new Promise((resolve, reject) => {
+                reader.onload = function (event) {
+                    const base64Data = event.target.result;
+                    resolve(base64Data);
+                };
+                reader.onerror = function (error) {
+                    reject(error);
+                };
+            });
+            reader.readAsDataURL(file);
+            promises.push(promise);
+        });
+
+        Promise.all(promises)
+            .then((base64DataArray) => {
+                const visualList = {
+                    data: base64DataArray,
+                };
+                visualList.data.map((visual) => {
+                    visualData.push({ type: 'image', data: visual });
+                });
+                const postData = {
+                    visualData: visualData,
+                    postContent: inputValue,
+                    postPrivacy: privacy,
+                    id_friendTag: withfriend,
+                    location: atLocation,
+                };
+                axios
+                    .post('http://localhost:3000/posts/create_post', postData, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                        },
+                    })
+                    .then((res) => {
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             })
             .catch((error) => {
-                console.log(error);
+                console.error(error);
             });
-        // Biến tag bạn bè: withfriend, biến location: atLocation, biến nội dung: inputValue, biến ảnh: selectedImages, biến quyền riêng tư: privacy
+
+        // selectedVideos.forEach((video) => {
+        //     id_visualMedia.push({ key: 'video', value: video });
+        // });
+
+        // Biến tag bạn bè: withfriend, biến location: atLocation, biến nội dung: inputValue, biến ảnh: selectedImages, biến video: selectedVideos, biến quyền riêng tư: privacy
     };
 
     const handleInputButtonClick = (event) => {
@@ -58,14 +102,34 @@ function PostForm() {
         inputRef.current.click();
     };
 
-    const handleImageChange = (event) => {
+    const handleMediaChange = (event) => {
         const files = Array.from(event.target.files);
-        setSelectedImages((prevSelectedImages) => [...prevSelectedImages, ...files]);
+        files.forEach((file) => {
+            console.log(file);
+
+            if (file.type.includes('image')) {
+                handleImageChange(file);
+            } else if (file.type.includes('video')) {
+                handleVideoChange(file);
+            }
+        });
     };
 
-    const handleImageDelete = (image) => {
-        setSelectedImages((prevSelectedImages) => prevSelectedImages.filter((prevImage) => prevImage !== image));
-        URL.revokeObjectURL(image.preview);
+    const handleImageChange = (image) => {
+        setSelectedImages((prevSelectedImages) => [...prevSelectedImages, image]);
+    };
+
+    const handleVideoChange = (video) => {
+        // Xử lý video tại đây
+        setSelectedVideos((prevSelectedVideos) => [...prevSelectedVideos, video]);
+    };
+    const handleMediaDelete = (media, type) => {
+        if (type === 'image') {
+            setSelectedImages((prevSelectedImages) => prevSelectedImages.filter((prevImage) => prevImage !== media));
+            URL.revokeObjectURL(media.preview);
+        } else if (type === 'video') {
+            setSelectedVideos((prevSelectedVideos) => prevSelectedVideos.filter((prevVideo) => prevVideo !== media));
+        }
     };
 
     const handleTagButtonClick = (event) => {
@@ -78,9 +142,6 @@ function PostForm() {
         setIsLocationModalOpen(true);
     };
     const placeholder = `What are you thinking, ${localStorage.getItem('fullname')}?`;
-    useEffect(() => {
-        document.getElementById('public').click();
-    }, []);
 
     useEffect(() => {
         const urls = [];
@@ -93,13 +154,21 @@ function PostForm() {
         };
     }, [selectedImages]);
 
+    const handleGoProfile = () => {
+        navigate('/timelines');
+    };
+
     return (
         <div className={cx('wrapper')}>
             <PopperWrapper>
                 <div className={cx('post-form')}>
-                    <Link to="/timelines" className={cx('avatar')}>
-                        <img className={cx('avatarImg')} src={localStorage.getItem('avatar')} alt="avatar" />
-                    </Link>
+                    <button onClick={handleGoProfile} className={cx('avatar')}>
+                        <Image
+                            className={cx('avatarImg')}
+                            cloudName="dzuzcewvj"
+                            publicId={localStorage.getItem('avatar')}
+                        />
+                    </button>
                     <form onSubmit={handleSubmit}>
                         <textarea
                             className={cx('main-input')}
@@ -120,7 +189,27 @@ function PostForm() {
                                     />
                                     <button
                                         className={cx('delete-image-button')}
-                                        onClick={() => handleImageDelete(image)}
+                                        onClick={() => handleMediaDelete(image, 'image')}
+                                    >
+                                        <FontAwesomeIcon
+                                            className={cx('delete-user-icon')}
+                                            icon={faTimes}
+                                        ></FontAwesomeIcon>
+                                    </button>
+                                </div>
+                            ))}
+                            {selectedVideos.map((video) => (
+                                <div className={cx('post-media')} key={video.name}>
+                                    <video
+                                        id="preview"
+                                        key={video.name}
+                                        src={URL.createObjectURL(video)}
+                                        alt={video.name}
+                                        controls
+                                    />
+                                    <button
+                                        className={cx('delete-media-button')}
+                                        onClick={() => handleMediaDelete(video, 'video')}
                                     >
                                         <FontAwesomeIcon
                                             className={cx('delete-user-icon')}
@@ -149,9 +238,10 @@ function PostForm() {
                                 style={{ display: 'none' }}
                                 id="image-uploader"
                                 type="file"
+                                accept="image/*, video/*"
                                 multiple
-                                name="image"
-                                onChange={(event) => handleImageChange(event)}
+                                name="media"
+                                onChange={(event) => handleMediaChange(event)}
                             />
                             <button className={cx('add-image-button')} onClick={(event) => handleTagButtonClick(event)}>
                                 <FontAwesomeIcon className={cx('add-user-icon')} icon={faUserTag}></FontAwesomeIcon>

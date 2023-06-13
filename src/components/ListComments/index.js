@@ -8,13 +8,11 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 function ListComments({ data }) {
     const cx = classNames.bind(styles);
-
     const handleSubmit = (e) => {
         e.preventDefault();
         // call API post comment here
     };
 
-    useEffect(() => {}, [data]);
     return (
         <div className={cx('wrapper')}>
             <div className={cx('list-comment')}>

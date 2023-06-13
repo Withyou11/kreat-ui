@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import styles from './ShowListTagFriend.module.scss';
 import classNames from 'classnames/bind';
 import Button from '../Button';
@@ -7,6 +9,22 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
 function ShowListTagFriend({ data, visible, onClose }) {
     const cx = classNames.bind(styles);
+    const [listFriend, setListFriend] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:3000/posts/${data}/get_all_tagged_friend`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+            })
+            .then((res) => {
+                setListFriend(res.data.listTaggedFriend);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
     function handleClose() {
         onClose(false);
     }
@@ -22,9 +40,9 @@ function ShowListTagFriend({ data, visible, onClose }) {
                         onClick={handleClose}
                     ></Button>
                 </div>
-                {data.map((account) => (
+                {listFriend.map((account) => (
                     <div key={Math.random()}>
-                        <AccountItem data={account}></AccountItem>
+                        <AccountItem data={account.personalInfo} mutualFriends={account.mutualFriends}></AccountItem>
                     </div>
                 ))}
             </Modal.Body>

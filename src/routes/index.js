@@ -9,7 +9,7 @@ import Login from '~/pages/Login';
 const publicRoutes = [
     { path: '/', component: Newsfeed },
     { path: '/timelines', component: Profile_TimeLines, layout: HeaderOnly },
-    { path: '/:nickname', component: Profile_TimeLines, layout: HeaderOnly },
+    { path: '/timelines/:id', component: Profile_TimeLines, layout: HeaderOnly },
     { path: '/about', component: Profile_AboutMe, layout: HeaderOnly },
     { path: '/friends', component: Profile_Friends, layout: HeaderOnly },
     { path: '/medias', component: Profile_Medias, layout: HeaderOnly },

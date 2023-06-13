@@ -38,7 +38,6 @@ function LocationModal({ onClose, visible, handleAtLocationChange }) {
         axios
             .get(`http://api.geonames.org/searchJSON?q=${debouncedValue}&maxRows=10&username=${APIKey}`)
             .then((res) => {
-                console.log(res.data.geonames);
                 setSearchResults(res.data.geonames);
             })
             .catch(() => {});

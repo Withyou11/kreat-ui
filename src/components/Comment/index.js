@@ -192,7 +192,7 @@ function Comment({ data }) {
             </div>
             {isReactModalOpen && (
                 <ShowListReact
-                    data={data.listReact}
+                    data={data.comment._id}
                     visible={isReactModalOpen}
                     onClose={handleCloseReactList}
                 ></ShowListReact>

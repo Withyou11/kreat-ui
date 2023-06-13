@@ -40,6 +40,9 @@ function Search() {
 
         axios
             .get(`http://localhost:3000/accounts/search`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
                 params: {
                     q: debouncedValue,
                 },
@@ -62,7 +65,11 @@ function Search() {
                         <PopperWrapper>
                             <h3 className={cx('search-title')}>Account</h3>
                             {searchResults.map((result) => (
-                                <AccountItem key={result._id} data={result} />
+                                <AccountItem
+                                    key={result.id_account}
+                                    data={result}
+                                    mutualFriends={result.mutualFriends}
+                                />
                             ))}
                         </PopperWrapper>
                     </div>

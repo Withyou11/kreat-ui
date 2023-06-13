@@ -16,11 +16,6 @@ function TagFriendModal({ onClose, visible, withfriend, handleWithFriendChange }
         onClose();
     };
 
-    // useEffect(() => {
-    //     fetch('/api/friends')
-    //       .then(response => response.json())
-    //       .then(data => setFriends(data));
-    //   }, []);
     const data = useMemo(
         () => [
             {

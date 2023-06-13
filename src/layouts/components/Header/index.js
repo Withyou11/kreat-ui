@@ -4,11 +4,10 @@ import 'tippy.js/dist/tippy.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faGear, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faBell, faComments } from '@fortawesome/free-regular-svg-icons';
-import { Link } from 'react-router-dom';
-// import Button from '~/components/Button';
+import { useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import logo from '~/assets/images/app_logo.png';
-import user_avatar from '~/assets/images/useravatar.png';
+import { Image } from 'cloudinary-react';
 import Menu from '~/components/Popper/Menu';
 import Search from '../Search';
 const cx = classNames.bind(styles);
@@ -30,17 +29,26 @@ const MENU_ITEMS = [
     },
 ];
 function Header() {
-    // Handle logic
-    const handleMenuChange = () => {
-        console.log('a');
+    const navigation = useNavigate();
+    // const accountContext = useContext(AccountContext);
+    // const accountId = accountContext.accountId;
+    // const setAccountId = accountContext.setAccountId;
+    const handleGoNewsfeed = () => {
+        localStorage.setItem('anotherAccountId', '');
+        localStorage.setItem('anotherAccountName', '');
+        localStorage.setItem('anotherAccountAvatar', '');
+        // setAccountId('main');
+        navigation('/');
     };
+    // Handle logic
+    const handleMenuChange = () => {};
 
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <Link to="/" className={cx('logo-link')}>
+                <button onClick={handleGoNewsfeed} className={cx('logo-link')}>
                     <img className={cx('logo')} src={logo} alt="logo" />
-                </Link>
+                </button>
                 <Search />
 
                 <div className={cx('actions')}>
@@ -55,7 +63,16 @@ function Header() {
                         </button>
                     </NewTippy>
                     <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
-                        <img className={cx('user_avatar')} src={localStorage.getItem('avatar')} alt="user" />
+                        <div>
+                            <Image
+                                className={cx('user_avatar')}
+                                cloudName="dzuzcewvj"
+                                publicId={localStorage.getItem('avatar')}
+                                alt="avatar"
+                                crop="scale"
+                            />
+                        </div>
+                        {/* <img className={cx('user_avatar')} src={localStorage.getItem('avatar')} alt="user" /> */}
                     </Menu>
                 </div>
             </div>

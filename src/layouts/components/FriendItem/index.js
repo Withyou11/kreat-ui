@@ -1,29 +1,41 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '~/components/Button';
 import styles from './FriendItem.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Image } from 'cloudinary-react';
 
 function FriendItem({ data }) {
+    const navigate = useNavigate();
     const cx = classNames.bind(styles);
     const [showMenu, setShowMenu] = useState(false);
     const menuRef = useRef(null);
 
+    // const accountContext = useContext(AccountContext);
+    // const accountId = accountContext.accountId;
+    // const setAccountId = accountContext.setAccountId;
+    const handleGoTimeline = () => {
+        localStorage.setItem('anotherAccountId', data.id_account);
+        localStorage.setItem('anotherAccountName', data.fullName);
+        localStorage.setItem('anotherAccountAvatar', data.avatar);
+        // setAccountId(data.id_account);
+        navigate(`/timelines/${data.id_account}`);
+    };
     function handleShowAction(e) {
+        e.stopPropagation();
         e.preventDefault();
         setShowMenu(!showMenu);
     }
 
     function handleUnfriend(e) {
+        e.stopPropagation();
         e.preventDefault();
-        console.log('Unfriend:' + data.fullname);
     }
 
     function handleReport(e) {
         e.preventDefault();
-        console.log('Report:' + data.fullname);
     }
 
     useEffect(() => {
@@ -39,16 +51,18 @@ function FriendItem({ data }) {
     }, [menuRef]);
 
     return (
-        <Link style={{ textDecoration: 'none' }} to={`/@${data.email}`} className={cx('wrapper')}>
+        <div onClick={handleGoTimeline} style={{ textDecoration: 'none' }} className={cx('wrapper')}>
             <div className={cx('info')}>
-                <img className={cx('avatar')} src={data.avatar} alt="avatar"></img>
+                <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} />
                 <p className={cx('name')}>{data.fullName}</p>
-                <Button
-                    className={cx('action')}
-                    leftIcon={<FontAwesomeIcon icon={faEllipsis} style={{ fontSize: '2.4rem' }} />}
-                    smallest
-                    onClick={handleShowAction}
-                ></Button>
+                {!localStorage.getItem('anotherAccountId') && (
+                    <Button
+                        className={cx('action')}
+                        leftIcon={<FontAwesomeIcon icon={faEllipsis} style={{ fontSize: '2.4rem' }} />}
+                        smallest
+                        onClick={handleShowAction}
+                    ></Button>
+                )}
                 {showMenu && (
                     <div ref={menuRef} className={cx('menu')}>
                         <button className={cx('menu-item')} onClick={handleUnfriend}>
@@ -66,12 +80,12 @@ function FriendItem({ data }) {
                     <p>Friends</p>
                 </div>
                 <div className={cx('friend')}>
-                    <p className={cx('amount')}>{data.mutualFriendAmount}</p>
+                    <p className={cx('amount')}>{data.mutualFriends}</p>
                     <p>Mutual friends</p>
                 </div>
             </div>
-            <p className={cx('about')}>{data.about}</p>
-        </Link>
+            <p className={cx('about')}>{data.aboutMe}</p>
+        </div>
     );
 }
 export default FriendItem;
