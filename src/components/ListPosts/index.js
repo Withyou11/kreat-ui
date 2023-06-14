@@ -2,19 +2,21 @@ import { useNavigate } from 'react-router-dom';
 import Post from '../Post';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+
 function ListPosts() {
     const navigate = useNavigate();
     const [results, setResults] = useState([]);
+    const [page, setPage] = useState(0);
+
     useEffect(() => {
         axios
-            .get(`http://localhost:3000/posts/get_all_post`, {
+            .get(`http://localhost:3000/posts/get_all_post/${page}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
             })
             .then((res) => {
-                console.log(res.data.listPost);
-                setResults(res.data.listPost);
+                setResults((prevResults) => [...prevResults, ...res.data.listPost]);
             })
             .catch((error) => {
                 if (error.response.status === 403) {
@@ -29,13 +31,29 @@ function ListPosts() {
                     navigate('/login');
                 }
             });
+    }, [page, navigate]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.scrollY;
+            if (Math.ceil(scrolled) >= scrollable + 17) {
+                console.log('cuối trang');
+                setPage((prevPage) => prevPage + 1);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
 
     return (
         <div>
-            {results?.map((post, index) => (
+            {results.map((post, index) => (
                 <div key={index}>
-                    {console.log(post)}
                     <Post data={post} />
                 </div>
             ))}

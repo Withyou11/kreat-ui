@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import { io } from 'socket.io-client';
 import styles from './ChatBox.module.scss';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { useEffect, useRef, useState } from 'react';
@@ -9,11 +10,6 @@ import { Image } from 'cloudinary-react';
 import axios from 'axios';
 import Button from '../Button';
 function ChatBox({ updateState, conversationId, userName, userAvatar }) {
-    const socket = useRef('ws://localhost:3002');
-
-    useEffect(() => {
-        socket.current.emit('addUser', localStorage.getItem('accountId'));
-    }, [localStorage.getItem('accountId')]);
     const [messages, setMessages] = useState([]);
 
     const cx = classNames.bind(styles);

@@ -41,7 +41,7 @@ function ShowListReact({ data, visible, onClose }) {
                 </div>
                 {listReact.map((account) => (
                     <div key={Math.random()}>
-                        <AccountItem data={account.reaction} mutualFriends={account.mutualFriends}></AccountItem>
+                        <AccountItem data={account} mutualFriends={account.mutualFriends}></AccountItem>
                     </div>
                 ))}
             </Modal.Body>

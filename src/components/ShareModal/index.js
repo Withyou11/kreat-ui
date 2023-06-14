@@ -21,7 +21,7 @@ function ShareModal({ data, onClose, visible }) {
             shareId: data._id,
             postPrivacy: privacy,
             postContent: content,
-            feeling: feeling == 'No emotion' ? '' : feeling,
+            postFeeling: feeling === 'No emotion' ? '' : feeling,
         };
         axios
             .post('http://localhost:3000/posts/share_post', postData, {

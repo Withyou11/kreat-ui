@@ -111,8 +111,12 @@
     justify-content: space-between;
 }
 
-.react-number {
+.react-number-container {
     margin: 8px 0 0 0;
+}
+
+.react-number:hover {
+    text-decoration: underline;
 }
 
 .like {

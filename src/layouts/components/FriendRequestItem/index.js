@@ -25,7 +25,7 @@ function FriendRequestItem({ data }) {
         e.stopPropagation();
         e.preventDefault();
         axios
-            .delete(`http://localhost:3000/accounts/${data._id}/decline_friend_request`, {
+            .delete(`http://localhost:3000/accounts/${data.id_friendRequest}/decline_friend_request`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

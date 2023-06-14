@@ -7,7 +7,7 @@ import axios from 'axios';
 function Profile_TimeLines(props) {
     const [data, setData] = useState({});
     let id = '';
-    if (localStorage.getItem('anotherAccountId') !== '') {
+    if (localStorage.getItem('anotherAccountId')) {
         id = localStorage.getItem('anotherAccountId');
     } else {
         id = localStorage.getItem('accountId');
@@ -32,8 +32,8 @@ function Profile_TimeLines(props) {
         <>
             {data.fullName && <ProfileHeader data={data} />}
             <div className={cx('list-post')}>
-                {data.timeline?.map((post) => (
-                    <div key={post.post._id}>
+                {data.timeline?.map((post, index) => (
+                    <div key={index}>
                         <Post data={post} />
                     </div>
                 ))}

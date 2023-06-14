@@ -5,7 +5,8 @@ import ChatBox from '../ChatBox';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function ListAccountItem() {
+function ListAccountItem({}) {
+    // console.log(onlineFriends);
     const cx = classNames.bind(styles);
     const [selectedConversationId, setSelectedConversatioId] = useState(null);
     const [selectedUserName, setSelectedUserName] = useState(null);
@@ -18,7 +19,7 @@ function ListAccountItem() {
     const clearUser = () => {
         handleUserSelect(null, null, null);
     };
-    const [data, setData] = useState([]);
+    const [listContact, setListContact] = useState([]);
     useEffect(() => {
         axios
             .get(`http://localhost:3000/accounts/contact`, {
@@ -27,15 +28,16 @@ function ListAccountItem() {
                 },
             })
             .then((response) => {
-                setData(response.data.listContact);
+                setListContact(response.data.listContact);
             })
             .catch((e) => {
                 console.log(e);
             });
     }, []);
+    // const onlineAccountIds = onlineFriends.map((onlineFriend) => onlineFriend.id_account);
     return (
         <div className={cx('wrapper')}>
-            {data?.map((account) => (
+            {listContact?.map((account) => (
                 <div key={Math.random()}>
                     <AccountItem
                         key={account.id_conversation}
@@ -45,6 +47,22 @@ function ListAccountItem() {
                     ></AccountItem>
                 </div>
             ))}
+            {/* {listContact?.map((account) => {
+                const isActive = onlineAccountIds.includes(account.id_account);
+                return (
+                    <div key={Math.random()}>
+                        <AccountItem
+                            key={account.id_conversation}
+                            data={account}
+                            active={isActive}
+                            inactive={!isActive}
+                            onUserSelect={() =>
+                                handleUserSelect(account.id_conversation, account.fullName, account.avatar)
+                            }
+                        ></AccountItem>
+                    </div>
+                );
+            })} */}
             {selectedConversationId && (
                 <ChatBox
                     updateState={clearUser}

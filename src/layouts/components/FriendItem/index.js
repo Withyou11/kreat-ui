@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { Image } from 'cloudinary-react';
-
+import axios from 'axios';
 function FriendItem({ data }) {
     const navigate = useNavigate();
     const cx = classNames.bind(styles);
@@ -32,6 +32,16 @@ function FriendItem({ data }) {
     function handleUnfriend(e) {
         e.stopPropagation();
         e.preventDefault();
+        axios
+            .delete(`http://localhost:3000/accounts/${data.id_account}/unfriend`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+            })
+            .then((res) => {
+                window.location.reload();
+            })
+            .catch(() => {});
     }
 
     function handleReport(e) {

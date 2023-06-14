@@ -2,8 +2,21 @@ import classNames from 'classnames/bind';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import ListAccountItem from '../ListAccountItem';
 import styles from './Contact.module.scss';
+import { io } from 'socket.io-client';
+import { useEffect, useRef, useState } from 'react';
 
 function Contact() {
+    // const socket = useRef();
+    // const [onlineFriendList, setOnlineFiendList] = useState([]);
+    // useEffect(() => {
+    //     if (localStorage.getItem('accountId')) {
+    //         socket.current = io('ws://localhost:3002');
+    //         socket.current.on('getUser', (onlineFriends) => {
+    //             setOnlineFiendList(onlineFriends);
+    //         });
+    //     }
+    // }, [localStorage.getItem('accountId')]);
+
     const cx = classNames.bind(styles);
     return (
         <div className={cx('wrapper')}>

@@ -79,9 +79,9 @@ function Post({ data }) {
 
     const handleGoTimelines = () => {
         if (data.id_account === localStorage.getItem('accountId')) {
-            localStorage.removeItem('anotherAccountId');
-            localStorage.removeItem('anotherAccountName');
-            localStorage.removeItem('anotherAccountAvatar');
+            localStorage.setItem('anotherAccountId', '');
+            localStorage.setItem('anotherAccountName', '');
+            localStorage.setItem('anotherAccountAvatar', '');
             navigate(`/timelines`);
         } else {
             localStorage.setItem('anotherAccountId', data.id_account);
@@ -384,11 +384,12 @@ function Post({ data }) {
 
                 <div className={cx('interaction-number')}>
                     {totalReactions > 0 ? (
-                        <div className={cx('react-number')} onClick={(e) => handleReactButtonClick(e)}>
+                        <div className={cx('react-number-container')} onClick={(e) => handleReactButtonClick(e)}>
                             {topReactions.map((reaction) => {
                                 return renderIcon(reaction);
                             })}
                             <p
+                                className={cx('react-number')}
                                 style={{
                                     display: 'inline-block',
                                     fontSize: '2rem',
@@ -396,6 +397,7 @@ function Post({ data }) {
                                     paddingBottom: '4px',
                                     lineHeight: '3rem',
                                     opacity: '0.7',
+                                    cursor: 'pointer',
                                 }}
                             >
                                 {totalReactions}

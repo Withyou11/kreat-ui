@@ -14,7 +14,6 @@ function ProfileHeader(data) {
     const [activeTab, setActiveTab] = useState('timeline');
     const location = useLocation();
     const [friendStatus, setFriendStatus] = useState(data.data.friendStatus);
-    console.log(data.data.friendStatus);
     function handleTabClick(tab) {
         setActiveTab(tab);
     }
@@ -54,11 +53,14 @@ function ProfileHeader(data) {
 
     function handleCancelRequest(e) {
         axios
-            .delete(`http://localhost:3000/accounts/${data.data.id_friendRequest}/decline_friend_request`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            .delete(
+                `http://localhost:3000/accounts/${localStorage.getItem('anotherAccountId')}/cancel_friend_request`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    },
                 },
-            })
+            )
             .then((res) => {
                 setFriendStatus('not friend');
             })
@@ -94,16 +96,22 @@ function ProfileHeader(data) {
     function handleUnfriend(e) {
         e.stopPropagation();
         e.preventDefault();
-        axios
-            .delete(`http://localhost:3000/accounts/ ${localStorage.getItem('anotherAccountId')}/unfriend`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-            })
-            .then((res) => {
-                window.location.reload();
-            })
-            .catch(() => {});
+        if (
+            window.location.confirm(`Are you sure you want to unfriend ${localStorage.getItem('anotherAccountName')}?`)
+        ) {
+            axios
+                .delete(`http://localhost:3000/accounts/${localStorage.getItem('anotherAccountId')}/unfriend`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    },
+                })
+                .then((res) => {
+                    window.location.reload();
+                })
+                .catch(() => {});
+        } else {
+            // user clicked Cancel
+        }
     }
 
     return (

@@ -2,13 +2,15 @@ import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import styles from './Menu.module.scss';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+// import { io } from 'socket.io-client';
+import { useRef } from 'react';
 
 const cx = classNames.bind(styles);
 
 function MenuItem({ data }) {
     const navigate = useNavigate();
-
+    // const socket = useRef();
     const handleClick = async () => {
         if (data.title === 'Logout') {
             localStorage.removeItem('avatar');
@@ -29,6 +31,8 @@ function MenuItem({ data }) {
                 )
                 .then((res) => {
                     if (res.status === 200) {
+                        // socket.current = io('ws://localhost:3002');
+                        // socket.current.emit('disconnect');
                         console.log('Logout success !!!');
                         navigate('/login');
                         localStorage.removeItem('accessToken');
