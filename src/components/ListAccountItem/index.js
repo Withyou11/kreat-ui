@@ -5,16 +5,17 @@ import ChatBox from '../ChatBox';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function ListAccountItem({}) {
-    // console.log(onlineFriends);
+function ListAccountItem({ onlineFriendList }) {
     const cx = classNames.bind(styles);
     const [selectedConversationId, setSelectedConversatioId] = useState(null);
     const [selectedUserName, setSelectedUserName] = useState(null);
     const [selectedUserAvatar, setSelectedUserAvatar] = useState(null);
-    const handleUserSelect = (conversationId, userName, userAvatar) => {
+    const [selectedUserId, setSelectedUserId] = useState(null);
+    const handleUserSelect = (conversationId, userName, userAvatar, userId) => {
         setSelectedConversatioId(conversationId);
         setSelectedUserName(userName);
         setSelectedUserAvatar(userAvatar);
+        setSelectedUserId(userId);
     };
     const clearUser = () => {
         handleUserSelect(null, null, null);
@@ -34,10 +35,10 @@ function ListAccountItem({}) {
                 console.log(e);
             });
     }, []);
-    // const onlineAccountIds = onlineFriends.map((onlineFriend) => onlineFriend.id_account);
+    const onlineAccountIds = onlineFriendList.map((onlineFriend) => onlineFriend.id_account);
     return (
         <div className={cx('wrapper')}>
-            {listContact?.map((account) => (
+            {/* {listContact?.map((account) => (
                 <div key={Math.random()}>
                     <AccountItem
                         key={account.id_conversation}
@@ -46,8 +47,8 @@ function ListAccountItem({}) {
                         onUserSelect={() => handleUserSelect(account.id_conversation, account.fullName, account.avatar)}
                     ></AccountItem>
                 </div>
-            ))}
-            {/* {listContact?.map((account) => {
+            ))} */}
+            {listContact?.map((account) => {
                 const isActive = onlineAccountIds.includes(account.id_account);
                 return (
                     <div key={Math.random()}>
@@ -57,18 +58,24 @@ function ListAccountItem({}) {
                             active={isActive}
                             inactive={!isActive}
                             onUserSelect={() =>
-                                handleUserSelect(account.id_conversation, account.fullName, account.avatar)
+                                handleUserSelect(
+                                    account.id_conversation,
+                                    account.fullName,
+                                    account.avatar,
+                                    account.id_account,
+                                )
                             }
                         ></AccountItem>
                     </div>
                 );
-            })} */}
+            })}
             {selectedConversationId && (
                 <ChatBox
                     updateState={clearUser}
                     conversationId={selectedConversationId}
                     userName={selectedUserName}
                     userAvatar={selectedUserAvatar}
+                    userId={selectedUserId}
                 />
             )}
         </div>

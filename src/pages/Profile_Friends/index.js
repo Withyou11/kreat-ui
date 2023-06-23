@@ -1,13 +1,12 @@
 import styles from './Profile_Friends.module.scss';
 import classNames from 'classnames/bind';
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProfileHeader from '~/components/ProfileHeader';
 import FriendItem from '~/layouts/components/FriendItem';
 import { useDebounce } from '~/hooks';
 import axios from 'axios';
-import { AccountContext } from '~/Context/AccountContext/AccountContext';
 import FriendRequestItem from '~/layouts/components/FriendRequestItem';
 
 function Profile_Friends(props) {
@@ -18,9 +17,6 @@ function Profile_Friends(props) {
     const [listUsers, setListUsers] = useState([]);
     const [listFriendsRequest, setListFriendsRequest] = useState([]);
     const debouncedValue = useDebounce(searchText, 600);
-    const accountContext = useContext(AccountContext);
-    // const accountId = accountContext.accountId;
-    // const setAccountId = accountContext.setAccountId;
     const [data, setData] = useState({});
     let id = '';
     if (localStorage.getItem('anotherAccountId') !== '') {

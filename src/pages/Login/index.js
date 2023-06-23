@@ -2,11 +2,17 @@ import styles from './Login.module.scss';
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
 import login from '~/assets/images/login.png';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 function Login() {
+    const emailInputRef = useRef(null);
     const navigate = useNavigate();
+    useEffect(() => {
+        if (emailInputRef.current) {
+            emailInputRef.current.focus();
+        }
+    }, []);
     const onLogin = (e) => {
         e.preventDefault();
         axios
@@ -53,6 +59,7 @@ function Login() {
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        ref={emailInputRef}
                     />
                     <input
                         className={cx('input')}

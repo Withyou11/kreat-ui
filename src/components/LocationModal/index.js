@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useDebounce } from '~/hooks';
 import Tippy from '@tippyjs/react/headless';
-import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import ListLocation from '../ListLocation';
@@ -68,6 +67,7 @@ function LocationModal({ onClose, visible, handleAtLocationChange }) {
                 >
                     <div className={cx('search')}>
                         <input
+                            className={cx('input')}
                             ref={inputRef}
                             value={searchText}
                             placeholder="Enter location..."

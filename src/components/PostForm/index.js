@@ -8,9 +8,10 @@ import { Image } from 'cloudinary-react';
 import Button from '../Button';
 import TagFriendModal from '../TagFriendModal';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
-import { faLocationDot, faTimes, faUserTag } from '@fortawesome/free-solid-svg-icons';
+import { faFaceSmile, faLocationDot, faTimes, faUserTag } from '@fortawesome/free-solid-svg-icons';
 import LocationModal from '../LocationModal';
 import { useNavigate } from 'react-router-dom';
+import FeelingModal from '../FeelingModal';
 
 function PostForm() {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ function PostForm() {
 
     const [withfriend, setWithFriend] = useState([]);
     const [atLocation, setAtLocation] = useState('');
+    const [feeling, setFeeling] = useState('');
 
     const handleWithFriendChange = (newListFriend) => {
         setWithFriend(newListFriend);
@@ -30,8 +32,13 @@ function PostForm() {
         setAtLocation(newLocation);
     };
 
+    const handleFeelingChange = (newFeeling) => {
+        setFeeling(newFeeling);
+    };
+
     const [isTagModalOpen, setIsTagModalOpen] = useState(false);
     const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+    const [isFeelingModalOpen, setIsFeelingModalOpen] = useState(false);
 
     const inputRef = useRef(null);
     const cx = classNames.bind(styles);
@@ -72,6 +79,7 @@ function PostForm() {
                     postPrivacy: privacy,
                     id_friendTag: withfriend,
                     location: atLocation,
+                    postFeeling: feeling,
                 };
                 axios
                     .post('http://localhost:3000/posts/create_post', postData, {
@@ -141,6 +149,12 @@ function PostForm() {
         event.preventDefault();
         setIsLocationModalOpen(true);
     };
+
+    const handleFeelingButtonClick = (event) => {
+        event.preventDefault();
+        setIsFeelingModalOpen(true);
+    };
+
     const placeholder = `What are you thinking, ${localStorage.getItem('fullname')}?`;
 
     useEffect(() => {
@@ -221,71 +235,103 @@ function PostForm() {
                         </div>
                         <hr />
                         <div className={cx('post-actions')}>
-                            <label htmlFor="image-uploader">
-                                <button
-                                    className={cx('add-image-button')}
-                                    onClick={(event) => handleInputButtonClick(event)}
-                                >
-                                    <FontAwesomeIcon
-                                        className={cx('add-user-icon')}
-                                        style={{ color: 'green' }}
-                                        icon={faImage}
-                                    ></FontAwesomeIcon>
-                                </button>
-                            </label>
-                            <input
-                                ref={inputRef}
-                                style={{ display: 'none' }}
-                                id="image-uploader"
-                                type="file"
-                                accept="image/*, video/*"
-                                multiple
-                                name="media"
-                                onChange={(event) => handleMediaChange(event)}
-                            />
-                            <button className={cx('add-image-button')} onClick={(event) => handleTagButtonClick(event)}>
-                                <FontAwesomeIcon className={cx('add-user-icon')} icon={faUserTag}></FontAwesomeIcon>
-                            </button>
-                            {isTagModalOpen && (
-                                <div>
-                                    <TagFriendModal
-                                        visible={isTagModalOpen}
-                                        onClose={() => setIsTagModalOpen(false)}
-                                        withfriend={withfriend}
-                                        handleWithFriendChange={handleWithFriendChange}
+                            <div className={cx('add-image-button-container')}>
+                                <div className={cx('add-image-button-2')}>
+                                    <button
+                                        className={cx('add-image-button')}
+                                        onClick={(event) => handleInputButtonClick(event)}
+                                    >
+                                        <FontAwesomeIcon
+                                            className={cx('add-user-icon')}
+                                            style={{ color: 'green' }}
+                                            icon={faImage}
+                                        ></FontAwesomeIcon>
+                                    </button>
+                                    <input
+                                        ref={inputRef}
+                                        style={{ display: 'none' }}
+                                        id="image-uploader"
+                                        type="file"
+                                        accept="image/*, video/*"
+                                        multiple
+                                        name="media"
+                                        onChange={(event) => handleMediaChange(event)}
                                     />
+                                    <button
+                                        className={cx('add-image-button')}
+                                        onClick={(event) => handleTagButtonClick(event)}
+                                    >
+                                        <FontAwesomeIcon
+                                            className={cx('add-user-icon')}
+                                            icon={faUserTag}
+                                        ></FontAwesomeIcon>
+                                    </button>
+                                    {isTagModalOpen && (
+                                        <div>
+                                            <TagFriendModal
+                                                visible={isTagModalOpen}
+                                                onClose={() => setIsTagModalOpen(false)}
+                                                withfriend={withfriend}
+                                                handleWithFriendChange={handleWithFriendChange}
+                                            />
+                                        </div>
+                                    )}
                                 </div>
-                            )}
-                            <button
-                                className={cx('add-image-button')}
-                                onClick={(event) => handleLocationButtonClick(event)}
-                            >
-                                <FontAwesomeIcon
-                                    className={cx('add-location-icon')}
-                                    icon={faLocationDot}
-                                ></FontAwesomeIcon>
-                            </button>
-                            {isLocationModalOpen && (
-                                <div>
-                                    <LocationModal
-                                        visible={isLocationModalOpen}
-                                        onClose={() => setIsLocationModalOpen(false)}
-                                        handleAtLocationChange={handleAtLocationChange}
-                                    />
+                                <div className={cx('add-image-button-2')}>
+                                    <button
+                                        className={cx('add-image-button')}
+                                        onClick={(event) => handleLocationButtonClick(event)}
+                                    >
+                                        <FontAwesomeIcon
+                                            className={cx('add-location-icon')}
+                                            icon={faLocationDot}
+                                        ></FontAwesomeIcon>
+                                    </button>
+                                    {isLocationModalOpen && (
+                                        <div>
+                                            <LocationModal
+                                                visible={isLocationModalOpen}
+                                                onClose={() => setIsLocationModalOpen(false)}
+                                                handleAtLocationChange={handleAtLocationChange}
+                                            />
+                                        </div>
+                                    )}
+                                    <button
+                                        className={cx('add-image-button')}
+                                        onClick={(event) => handleFeelingButtonClick(event)}
+                                    >
+                                        <FontAwesomeIcon
+                                            className={cx('add-emotion-icon')}
+                                            icon={faFaceSmile}
+                                        ></FontAwesomeIcon>
+                                    </button>
+                                    {isFeelingModalOpen && (
+                                        <div>
+                                            <FeelingModal
+                                                visible={isFeelingModalOpen}
+                                                onClose={() => setIsFeelingModalOpen(false)}
+                                                handleFeelingChange={handleFeelingChange}
+                                            />
+                                        </div>
+                                    )}
                                 </div>
-                            )}
+                            </div>
                             <div className={cx('post-info')}>
                                 <span className={cx('location-info')}>
                                     <h4 style={{ display: 'inline-block', marginLeft: '4px' }}>At:</h4>
                                     <p style={{ display: 'inline-block', marginLeft: '4px' }}>{atLocation}</p>
                                 </span>
-                                <span style={{ display: 'inline-block' }} className={cx('friends-info')}>
+                                <span style={{ display: 'inline-block' }} className={cx('location-info')}>
                                     <h4 style={{ display: 'inline-block', marginLeft: '4px' }}>With:</h4>
                                     {withfriend.map((item, index) => (
                                         <p style={{ display: 'inline-block', marginLeft: '4px' }} key={index}>
                                             {item},
                                         </p>
                                     ))}
+                                </span>
+                                <span className={cx('location-info')}>
+                                    <h4 style={{ display: 'inline-block', marginLeft: '4px' }}>Feeling:</h4>
+                                    <p style={{ display: 'inline-block', marginLeft: '4px' }}>{feeling}</p>
                                 </span>
                             </div>
 

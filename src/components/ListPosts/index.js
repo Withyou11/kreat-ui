@@ -7,39 +7,48 @@ function ListPosts() {
     const navigate = useNavigate();
     const [results, setResults] = useState([]);
     const [page, setPage] = useState(0);
+    const [stop, setStop] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:3000/posts/get_all_post/${page}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-            })
-            .then((res) => {
-                setResults((prevResults) => [...prevResults, ...res.data.listPost]);
-            })
-            .catch((error) => {
-                if (error.response.status === 403) {
-                    // alert('Login session expired, please login again');
-                    localStorage.removeItem('avatar');
-                    localStorage.removeItem('fullname');
-                    localStorage.removeItem('anotherAccountId');
-                    localStorage.removeItem('accountId');
-                    localStorage.removeItem('anotherAccountName');
-                    localStorage.removeItem('anotherAccountAvatar');
-                    localStorage.removeItem('accessToken');
-                    navigate('/login');
-                }
-            });
+        if (!stop) {
+            axios
+                .get(`http://localhost:3000/posts/get_all_post/${page}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    },
+                })
+                .then((res) => {
+                    if (res.data.listPost.length === 0) {
+                        setStop(true);
+                    }
+
+                    setResults((prevResults) => [...prevResults, ...res.data.listPost]);
+                })
+                .catch((error) => {
+                    if (error.response.status === 403) {
+                        // alert('Login session expired, please login again');
+                        localStorage.removeItem('avatar');
+                        localStorage.removeItem('fullname');
+                        localStorage.removeItem('anotherAccountId');
+                        localStorage.removeItem('accountId');
+                        localStorage.removeItem('anotherAccountName');
+                        localStorage.removeItem('anotherAccountAvatar');
+                        localStorage.removeItem('accessToken');
+                        navigate('/login');
+                    }
+                });
+        }
     }, [page, navigate]);
 
     useEffect(() => {
         const handleScroll = () => {
-            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-            const scrolled = window.scrollY;
-            if (Math.ceil(scrolled) >= scrollable + 17) {
-                console.log('cuối trang');
-                setPage((prevPage) => prevPage + 1);
+            if (!stop) {
+                const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                const scrolled = window.scrollY;
+                if (Math.ceil(scrolled) >= scrollable + (18 - page)) {
+                    console.log('cuối trang:' + page);
+                    setPage((prevPage) => prevPage + 1);
+                }
             }
         };
 
@@ -48,7 +57,7 @@ function ListPosts() {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [page, stop]);
 
     return (
         <div>

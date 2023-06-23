@@ -5,13 +5,14 @@ import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
 function FriendRequestItem({ data }) {
+    console.log(data);
     const navigate = useNavigate();
     const cx = classNames.bind(styles);
     const onConfirm = (e) => {
         e.stopPropagation();
         e.preventDefault();
         axios
-            .delete(`http://localhost:3000/accounts/${data._id}/accept_friend_request`, {
+            .delete(`http://localhost:3000/accounts/${data.id_friendRequest}/accept_friend_request`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

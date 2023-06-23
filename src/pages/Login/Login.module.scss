@@ -5,14 +5,15 @@
 .aside {
     background-color: #5cbaff;
     width: 36%;
-    height: 745px;
+    height: 100vh;
 }
 .image {
     margin: 200px 100px;
 }
 .main {
     flex: 1;
-    margin: 50px 150px;
+    padding: 50px 150px;
+    height: 100vh;
 }
 .title1 {
     color: var(--white);

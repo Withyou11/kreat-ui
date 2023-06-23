@@ -1,17 +1,20 @@
 import classNames from 'classnames/bind';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import styles from './ChatBox.module.scss';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
+import { OnlineFriendContext } from '~/Context/OnlineFriendContext/OnlineFriendContext';
 import ChatContent from '../ChatContent';
 import { faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Image } from 'cloudinary-react';
+import { io } from 'socket.io-client';
 import axios from 'axios';
 import Button from '../Button';
-function ChatBox({ updateState, conversationId, userName, userAvatar }) {
+function ChatBox({ updateState, conversationId, userName, userAvatar, userId }) {
+    const onlineFriend = useContext(OnlineFriendContext);
+    const onlineFriendList = onlineFriend.onlineFriendList;
     const [messages, setMessages] = useState([]);
-
     const cx = classNames.bind(styles);
     function handleClose(e) {
         updateState(null);
@@ -48,6 +51,18 @@ function ChatBox({ updateState, conversationId, userName, userAvatar }) {
                     },
                 })
                 .then((response) => {
+                    const onlineAccountIds = onlineFriendList.map((onlineFriend) => onlineFriend.id_account);
+                    const isSocket = onlineAccountIds.includes(userId);
+                    if (isSocket) {
+                        const data = {
+                            id_conversation: conversationId,
+                            id_sender: localStorage.getItem('accountId'),
+                            id_receiver: userId,
+                            messageContent: inputValue,
+                        };
+                        io('ws://localhost:3002').emit('sendMessage', data);
+                    }
+
                     setMessages([...messages, response.data.newMessage]);
                     setInputValue('');
                 })
