@@ -10,6 +10,7 @@ function Newsfeed() {
     const [selectedUserAvatar, setSelectedUserAvatar] = useState(null);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [newMessage, setNewMessage] = useState(null);
+    const [flag, setFlag] = useState(0);
     const handleUserSelect = (conversationId, userName, userAvatar, userId) => {
         setSelectedConversatioId(conversationId);
         setSelectedUserName(userName);
@@ -34,11 +35,19 @@ function Newsfeed() {
                 setOnlineFriendList(onlineFriends);
             });
             socket.current.on('getMessage', (newMessage) => {
+                setFlag((prevCount) => prevCount + 1);
+                console.log(newMessage.messageContent);
                 setNewMessage(newMessage);
                 setSelectedUserId(newMessage.id_sender);
             });
         }
     }, []);
+
+    useEffect(() => {
+        if (newMessage) {
+            setSelectedUserId(newMessage.id_sender);
+        }
+    }, [newMessage]);
 
     // useEffect(() => {
     //     socket.current.on('getMessage', (newMessage) => {
@@ -58,6 +67,7 @@ function Newsfeed() {
                     userName={newMessage.fullName}
                     userAvatar={newMessage.avatar}
                     userId={newMessage.id_sender}
+                    flag={flag}
                 />
             )}
         </div>

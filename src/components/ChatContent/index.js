@@ -5,6 +5,7 @@ import 'tippy.js/dist/tippy.css';
 import { useRef, useEffect } from 'react';
 
 function ChatContent({ messages }) {
+    console.log('Chat content:' + messages.length);
     const cx = classNames.bind(styles);
     const scrollRef = useRef();
     useEffect(() => {
