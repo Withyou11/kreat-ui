@@ -10,6 +10,7 @@ import EditEducationInfoModal from './EditEducationInfoModal/EditEducationInfoMo
 import axios from 'axios';
 function Profile_AboutMe(props) {
     const [data, setData] = useState({});
+    const [loading, setLoading] = useState(true);
     let id = '';
     if (localStorage.getItem('anotherAccountId') !== '') {
         id = localStorage.getItem('anotherAccountId');
@@ -26,6 +27,7 @@ function Profile_AboutMe(props) {
             })
             .then((res) => {
                 setData(res.data.about);
+                setLoading(false);
             })
             .catch(() => {});
     }, []);
@@ -151,182 +153,193 @@ function Profile_AboutMe(props) {
     return (
         <>
             <ProfileHeader data={data} />
-            <div className={cx('about-container')}>
-                <div className={cx('about-above')}>
-                    <div className={cx('personal-info')}>
-                        <div className={cx('header')}>
-                            <h3 className={cx('header-text')}>Personal Info</h3>
-                            {!localStorage.getItem('anotherAccountId') && (
-                                <FontAwesomeIcon
-                                    onClick={handleOpenEditPersonalInfoModal}
-                                    icon={faPen}
-                                    style={{ cursor: 'pointer', color: 'var(--primary)', fontSize: '2rem' }}
-                                ></FontAwesomeIcon>
-                            )}
+            {!loading ? (
+                <div className={cx('about-container')}>
+                    <div className={cx('about-above')}>
+                        <div className={cx('personal-info')}>
+                            <div className={cx('header')}>
+                                <h3 className={cx('header-text')}>Personal Info</h3>
+                                {!localStorage.getItem('anotherAccountId') && (
+                                    <FontAwesomeIcon
+                                        onClick={handleOpenEditPersonalInfoModal}
+                                        icon={faPen}
+                                        style={{ cursor: 'pointer', color: 'var(--primary)', fontSize: '2rem' }}
+                                    ></FontAwesomeIcon>
+                                )}
+                            </div>
+                            <hr />
+                            <div className={cx('personal-info-detail')}>
+                                <p className={cx('title')}>About me:</p>
+                                <p className={cx('content')}>{data.personalInfo?.aboutMe}</p>
+                            </div>
+                            <div className={cx('personal-info-detail')}>
+                                <p className={cx('title')}>Birthday:</p>
+                                <p className={cx('content')}> {data.personalInfo?.birthday}</p>
+                            </div>
+                            <div className={cx('personal-info-detail')}>
+                                <p className={cx('title')}>Lives in:</p>
+                                <p className={cx('content')}> {data.personalInfo?.liveIn}</p>
+                            </div>
+                            <div className={cx('personal-info-detail')}>
+                                <p className={cx('title')}>Occupation:</p>
+                                <p className={cx('content')}> {data.personalInfo?.occupation}</p>
+                            </div>
+                            <div className={cx('personal-info-detail')}>
+                                <p className={cx('title')}>Joined:</p>
+                                <p className={cx('content')}>{data.peronalInfo?.joined}</p>
+                            </div>
+                            <div className={cx('personal-info-detail')}>
+                                <p className={cx('title')}>Gender:</p>
+                                <p className={cx('content')}>{data.personalInfo?.gender}</p>
+                            </div>
+                            <div className={cx('personal-info-detail')}>
+                                <p className={cx('title')}>Status:</p>
+                                <p className={cx('content')}>{data.personalInfo?.maritalStatus}</p>
+                            </div>
+                            <div className={cx('personal-info-detail')}>
+                                <p className={cx('title')}>Religion:</p>
+                                <p className={cx('content')}>{data.personalInfo?.religion}</p>
+                            </div>
                         </div>
-                        <hr />
-                        <div className={cx('personal-info-detail')}>
-                            <p className={cx('title')}>About me:</p>
-                            <p className={cx('content')}>{data.personalInfo?.aboutMe}</p>
-                        </div>
-                        <div className={cx('personal-info-detail')}>
-                            <p className={cx('title')}>Birthday:</p>
-                            <p className={cx('content')}> {data.personalInfo?.birthday}</p>
-                        </div>
-                        <div className={cx('personal-info-detail')}>
-                            <p className={cx('title')}>Lives in:</p>
-                            <p className={cx('content')}> {data.personalInfo?.liveIn}</p>
-                        </div>
-                        <div className={cx('personal-info-detail')}>
-                            <p className={cx('title')}>Occupation:</p>
-                            <p className={cx('content')}> {data.personalInfo?.occupation}</p>
-                        </div>
-                        <div className={cx('personal-info-detail')}>
-                            <p className={cx('title')}>Joined:</p>
-                            <p className={cx('content')}>{data.peronalInfo?.joined}</p>
-                        </div>
-                        <div className={cx('personal-info-detail')}>
-                            <p className={cx('title')}>Gender:</p>
-                            <p className={cx('content')}>{data.personalInfo?.gender}</p>
-                        </div>
-                        <div className={cx('personal-info-detail')}>
-                            <p className={cx('title')}>Status:</p>
-                            <p className={cx('content')}>{data.personalInfo?.maritalStatus}</p>
-                        </div>
-                        <div className={cx('personal-info-detail')}>
-                            <p className={cx('title')}>Religion:</p>
-                            <p className={cx('content')}>{data.personalInfo?.religion}</p>
+                        <div className={cx('hobbies')}>
+                            <div className={cx('header')}>
+                                <h3 className={cx('header-text')}>Hobbies and Interests</h3>
+                                {!localStorage.getItem('anotherAccountId') && (
+                                    <FontAwesomeIcon
+                                        onClick={handleOpenEditFavoriteInfoModal}
+                                        icon={faPen}
+                                        style={{ cursor: 'pointer', color: 'var(--primary)', fontSize: '2.2rem' }}
+                                    ></FontAwesomeIcon>
+                                )}
+                            </div>
+                            <hr />
+                            <div className={cx('hobby')}>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p className={cx('title')}>Hobbies:</p>
+                                                <p className={cx('content')}>{data.favoriteInfo?.hobbies}</p>
+                                            </td>
+                                            <td>
+                                                <p className={cx('title')}>Favourite Music Bands / Artists:</p>
+                                                <p className={cx('content')}>{data.favoriteInfo?.favoriteMusicBands}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p className={cx('title')}>Favourite TV Shows:</p>
+                                                <p className={cx('content')}>{data.favoriteInfo?.favoriteTVShows}</p>
+                                            </td>
+                                            <td>
+                                                <p className={cx('title')}>Favourite Books:</p>
+                                                <p className={cx('content')}>{data.favoriteInfo?.favoriteBooks}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p className={cx('title')}>Favourite Movies:</p>
+                                                <p className={cx('content')}>{data.favoriteInfo?.favoriteMovies}</p>
+                                            </td>
+                                            <td>
+                                                <p className={cx('title')}>Favourite Sports:</p>
+                                                <p className={cx('content')}>{data.favoriteInfo?.favoriteSports}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p className={cx('title')}>Favourite Games:</p>
+                                                <p className={cx('content')}>{data.favoriteInfo?.favoriteGames}</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                    <div className={cx('hobbies')}>
+                    <div className={cx('education')}>
                         <div className={cx('header')}>
-                            <h3 className={cx('header-text')}>Hobbies and Interests</h3>
+                            <h3 className={cx('header-text')}>Education and Employement</h3>
                             {!localStorage.getItem('anotherAccountId') && (
                                 <FontAwesomeIcon
-                                    onClick={handleOpenEditFavoriteInfoModal}
+                                    onClick={handleOpenEditEducationInfoModal}
                                     icon={faPen}
                                     style={{ cursor: 'pointer', color: 'var(--primary)', fontSize: '2.2rem' }}
                                 ></FontAwesomeIcon>
                             )}
                         </div>
                         <hr />
-                        <div className={cx('hobby')}>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <p className={cx('title')}>Hobbies:</p>
-                                            <p className={cx('content')}>{data.favoriteInfo?.hobbies}</p>
-                                        </td>
-                                        <td>
-                                            <p className={cx('title')}>Favourite Music Bands / Artists:</p>
-                                            <p className={cx('content')}>{data.favoriteInfo?.favoriteMusicBands}</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p className={cx('title')}>Favourite TV Shows:</p>
-                                            <p className={cx('content')}>{data.favoriteInfo?.favoriteTVShows}</p>
-                                        </td>
-                                        <td>
-                                            <p className={cx('title')}>Favourite Books:</p>
-                                            <p className={cx('content')}>{data.favoriteInfo?.favoriteBooks}</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p className={cx('title')}>Favourite Movies:</p>
-                                            <p className={cx('content')}>{data.favoriteInfo?.favoriteMovies}</p>
-                                        </td>
-                                        <td>
-                                            <p className={cx('title')}>Favourite Sports:</p>
-                                            <p className={cx('content')}>{data.favoriteInfo?.favoriteSports}</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p className={cx('title')}>Favourite Games:</p>
-                                            <p className={cx('content')}>{data.favoriteInfo?.favoriteGames}</p>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <p className={cx('title')}>
+                                            Primary school: {data.educationInfo?.primarySchool}
+                                        </p>
+                                        <p className={cx('content')}>
+                                            {data.educationInfo?.yearStartPrimarySchool} -{' '}
+                                            {data.educationInfo?.yearEndPrimarySchool}{' '}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p className={cx('title')}>
+                                            Secondary school: {data.educationInfo?.secondarySchool}{' '}
+                                        </p>
+                                        <p className={cx('content')}>
+                                            {data.educationInfo?.yearStartSecondarySchool} -{' '}
+                                            {data.educationInfo?.yearEndSecondarySchool}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p className={cx('title')}>High school: {data.educationInfo?.highSchool}</p>
+                                        <p className={cx('content')}>
+                                            {data.educationInfo?.yearStartHighSchool} -{' '}
+                                            {data.educationInfo?.yearEndHighSchool}
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p className={cx('title')}>University: {data.educationInfo?.university}</p>
+                                        <p className={cx('content')}>
+                                            {data.educationInfo?.yearStartUniversity} -{' '}
+                                            {data.educationInfo?.yearEndUniversity}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+                    {isEditPersonalInfoModalOpen && (
+                        <EditPersonalInfoModal
+                            onClose={handleCloseEditPersonalInfoModal}
+                            personalInfo={data.personalInfo}
+                            onSave={handleSavePersonalInfo}
+                        />
+                    )}
+                    {isEditFavoriteInfoModalOpen && (
+                        <EditFavoriteInfoModal
+                            onClose={handleCloseEditFavoriteInfoModal}
+                            favoriteInfo={data.favoriteInfo}
+                            onSave={handleSaveFavoriteInfo}
+                        />
+                    )}
+                    {isEditEducationInfoModalOpen && (
+                        <EditEducationInfoModal
+                            onClose={handleCloseEditEducationInfoModal}
+                            educationInfo={data.educationInfo}
+                            onSave={handleSaveEducationInfo}
+                        />
+                    )}
                 </div>
-                <div className={cx('education')}>
-                    <div className={cx('header')}>
-                        <h3 className={cx('header-text')}>Education and Employement</h3>
-                        {!localStorage.getItem('anotherAccountId') && (
-                            <FontAwesomeIcon
-                                onClick={handleOpenEditEducationInfoModal}
-                                icon={faPen}
-                                style={{ cursor: 'pointer', color: 'var(--primary)', fontSize: '2.2rem' }}
-                            ></FontAwesomeIcon>
-                        )}
-                    </div>
-                    <hr />
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <p className={cx('title')}>Primary school: {data.educationInfo?.primarySchool}</p>
-                                    <p className={cx('content')}>
-                                        {data.educationInfo?.yearStartPrimarySchool} -{' '}
-                                        {data.educationInfo?.yearEndPrimarySchool}{' '}
-                                    </p>
-                                </td>
-                                <td>
-                                    <p className={cx('title')}>
-                                        Secondary school: {data.educationInfo?.secondarySchool}{' '}
-                                    </p>
-                                    <p className={cx('content')}>
-                                        {data.educationInfo?.yearStartSecondarySchool} -{' '}
-                                        {data.educationInfo?.yearEndSecondarySchool}
-                                    </p>
-                                </td>
-                                <td>
-                                    <p className={cx('title')}>High school: {data.educationInfo?.highSchool}</p>
-                                    <p className={cx('content')}>
-                                        {data.educationInfo?.yearStartHighSchool} -{' '}
-                                        {data.educationInfo?.yearEndHighSchool}
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p className={cx('title')}>University: {data.educationInfo?.university}</p>
-                                    <p className={cx('content')}>
-                                        {data.educationInfo?.yearStartUniversity} -{' '}
-                                        {data.educationInfo?.yearEndUniversity}
-                                    </p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            ) : (
+                <div className={cx('loading-wave')}>
+                    <div className={cx('loading-bar')}></div>
+                    <div className={cx('loading-bar')}></div>
+                    <div className={cx('loading-bar')}></div>
+                    <div className={cx('loading-bar')}></div>
                 </div>
-                {isEditPersonalInfoModalOpen && (
-                    <EditPersonalInfoModal
-                        onClose={handleCloseEditPersonalInfoModal}
-                        personalInfo={data.personalInfo}
-                        onSave={handleSavePersonalInfo}
-                    />
-                )}
-                {isEditFavoriteInfoModalOpen && (
-                    <EditFavoriteInfoModal
-                        onClose={handleCloseEditFavoriteInfoModal}
-                        favoriteInfo={data.favoriteInfo}
-                        onSave={handleSaveFavoriteInfo}
-                    />
-                )}
-                {isEditEducationInfoModalOpen && (
-                    <EditEducationInfoModal
-                        onClose={handleCloseEditEducationInfoModal}
-                        educationInfo={data.educationInfo}
-                        onSave={handleSaveEducationInfo}
-                    />
-                )}
-            </div>
+            )}
         </>
     );
 }

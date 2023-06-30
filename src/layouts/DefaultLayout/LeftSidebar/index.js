@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 function LeftSidebar() {
     return (
         <aside className={cx('wrapper')}>
-            <CustomCalendar />
+            {/* <CustomCalendar /> */}
             <FriendSuggest />
         </aside>
     );

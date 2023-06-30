@@ -18,7 +18,6 @@ import { useNavigate } from 'react-router-dom';
 import RenderUserReact from '../RenderUserReact/RenderUserReact';
 import ShareModal from '../ShareModal';
 function Post({ data }) {
-    console.log(data);
     const navigate = useNavigate();
     const cx = classNames.bind(styles);
     const [reactionList, setReactionList] = useState(data.listReaction);
@@ -100,18 +99,6 @@ function Post({ data }) {
     };
 
     const handleCommentClick = (id) => {
-        axios
-            .get(`http://localhost:3000/posts/${id}/get_all_comment`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-            })
-            .then((res) => {
-                setComments(res.data.listComment);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
         setShowComment(true);
     };
     function handleCloseReactList() {
@@ -488,7 +475,7 @@ function Post({ data }) {
                     </div>
                 </div>
             </PopperWrapper>
-            {showComment && <ListComments data={comments}></ListComments>}
+            {showComment && <ListComments id_post={data._id}></ListComments>}
             {isTagModalOpen && (
                 <ShowListTagFriend
                     data={data?._id}

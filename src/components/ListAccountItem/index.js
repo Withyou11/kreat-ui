@@ -5,7 +5,7 @@ import ChatBox from '../ChatBox';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function ListAccountItem({ onlineFriendList }) {
+function ListAccountItem({ listContact, onlineFriendList }) {
     const cx = classNames.bind(styles);
     const [selectedConversationId, setSelectedConversationId] = useState(null);
     const [selectedUserName, setSelectedUserName] = useState(null);
@@ -20,21 +20,6 @@ function ListAccountItem({ onlineFriendList }) {
     const clearUser = () => {
         handleUserSelect(null, null, null);
     };
-    const [listContact, setListContact] = useState([]);
-    useEffect(() => {
-        axios
-            .get(`http://localhost:3000/accounts/contact`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-            })
-            .then((response) => {
-                setListContact(response.data.listContact);
-            })
-            .catch((e) => {
-                console.log(e);
-            });
-    }, []);
 
     const onlineAccountIds = onlineFriendList.map((onlineFriend) => onlineFriend.id_account);
 

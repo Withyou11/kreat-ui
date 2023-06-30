@@ -51,7 +51,7 @@ function Newsfeed() {
     return (
         <div>
             <PostForm />
-            <ListPosts></ListPosts>
+            <ListPosts />
             {selectedUserId && (
                 <ChatBox
                     updateState={clearUser}

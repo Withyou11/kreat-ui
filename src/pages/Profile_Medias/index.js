@@ -8,6 +8,7 @@ function Profile_Medias() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [data, setData] = useState({});
     const [listImage, setListImage] = useState([]);
+    const [loading, setLoading] = useState(true);
     const cx = classNames.bind(styles);
     const handleClick = (image) => {
         setSelectedImage(image);
@@ -30,6 +31,7 @@ function Profile_Medias() {
                 console.log(res.data.listURL);
                 setData(res.data);
                 setListImage(res.data.listURL);
+                setLoading(false);
             })
             .catch(() => {});
     }, []);
@@ -40,19 +42,28 @@ function Profile_Medias() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <ProfileHeader data={data} />
-            <div className={cx('wrapper')}>
-                {listImage.map((image, index) => (
-                    <div key={index} className={cx('image-item')}>
-                        <Image
-                            className={cx('image')}
-                            cloudName="dzuzcewvj"
-                            publicId={image.url.visualUrl}
-                            crop="scale"
-                            onClick={() => handleClick(image.url.visualUrl)}
-                        />
-                    </div>
-                ))}
-            </div>
+            {!loading ? (
+                <div className={cx('wrapper')}>
+                    {listImage.map((image, index) => (
+                        <div key={index} className={cx('image-item')}>
+                            <Image
+                                className={cx('image')}
+                                cloudName="dzuzcewvj"
+                                publicId={image.url.visualUrl}
+                                crop="scale"
+                                onClick={() => handleClick(image.url.visualUrl)}
+                            />
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <div className={cx('loading-wave')}>
+                    <div className={cx('loading-bar')}></div>
+                    <div className={cx('loading-bar')}></div>
+                    <div className={cx('loading-bar')}></div>
+                    <div className={cx('loading-bar')}></div>
+                </div>
+            )}
             {selectedImage && (
                 <div className={cx('overlay')} onClick={handleClose}>
                     <Image
