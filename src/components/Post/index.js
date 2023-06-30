@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import RenderUserReact from '../RenderUserReact/RenderUserReact';
 import ShareModal from '../ShareModal';
 function Post({ data }) {
+    console.log(data);
     const navigate = useNavigate();
     const cx = classNames.bind(styles);
     const [reactionList, setReactionList] = useState(data.listReaction);
@@ -77,17 +78,24 @@ function Post({ data }) {
         return number.toString().padStart(2, '0');
     }
 
-    const handleGoTimelines = () => {
-        if (data.id_account === localStorage.getItem('accountId')) {
-            localStorage.setItem('anotherAccountId', '');
-            localStorage.setItem('anotherAccountName', '');
-            localStorage.setItem('anotherAccountAvatar', '');
-            navigate(`/timelines`);
+    const handleGoTimelines = (id, isShared) => {
+        if (!isShared) {
+            if (id === localStorage.getItem('accountId')) {
+                localStorage.setItem('anotherAccountId', '');
+                localStorage.setItem('anotherAccountName', '');
+                localStorage.setItem('anotherAccountAvatar', '');
+                navigate(`/timelines`);
+            } else {
+                localStorage.setItem('anotherAccountId', data.id_account);
+                localStorage.setItem('anotherAccountName', data.fullName);
+                localStorage.setItem('anotherAccountAvatar', data.avatar);
+                navigate(`/timelines/${id}`);
+            }
         } else {
-            localStorage.setItem('anotherAccountId', data.id_account);
-            localStorage.setItem('anotherAccountName', data.fullName);
-            localStorage.setItem('anotherAccountAvatar', data.avatar);
-            navigate(`/timelines/${data.id_account}`);
+            localStorage.setItem('anotherAccountId', id);
+            localStorage.setItem('anotherAccountName', data.shareContent.shared_fullName);
+            localStorage.setItem('anotherAccountAvatar', data.shareContent.shared_avatar);
+            navigate(`/timelines/${id}`);
         }
     };
 
@@ -251,7 +259,7 @@ function Post({ data }) {
             <PopperWrapper>
                 <div className={cx('post-info')}>
                     <Image
-                        onClick={handleGoTimelines}
+                        onClick={() => handleGoTimelines(data.id_account, false)}
                         className={cx('avatar')}
                         cloudName="dzuzcewvj"
                         publicId={data?.avatar}
@@ -352,6 +360,7 @@ function Post({ data }) {
                             </div>
                             <div className={cx('post-info')}>
                                 <Image
+                                    onClick={() => handleGoTimelines(data.shareContent.shared_id_account, true)}
                                     className={cx('avatar')}
                                     cloudName="dzuzcewvj"
                                     publicId={data?.shareContent.shared_avatar}

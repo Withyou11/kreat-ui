@@ -13,7 +13,7 @@ const publicRoutes = [
     { path: '/about', component: Profile_AboutMe, layout: HeaderOnly },
     { path: '/friends', component: Profile_Friends, layout: HeaderOnly },
     { path: '/medias', component: Profile_Medias, layout: HeaderOnly },
-    { path: '/login', component: Login, layout: NoLayout },
+    { path: '/authentication', component: Login, layout: NoLayout },
 ];
 
 const privateRoutes = [];

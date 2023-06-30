@@ -37,40 +37,128 @@ function Login() {
                 console.log(error);
             });
     };
+
+    const onRegister = (e) => {
+        e.preventDefault();
+        if (fullname === '' || resEmail === '' || resPassword === '' || confirmPassword === '') {
+            window.alert('Please enter all required fields');
+        } else if (confirmPassword !== resPassword) {
+            window.alert('Confirm password is incorrect');
+        } else {
+            // Call API Login
+        }
+    };
+
     const cx = classNames.bind(styles);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [activeTab, setActiveTab] = useState('login');
+    const toggleTab = (tab) => {
+        setActiveTab(tab);
+    };
+    const [fullname, setFullname] = useState('');
+    const [resEmail, setResEmail] = useState('');
+    const [resPassword, setResPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     return (
         <div className={cx('wrapper')}>
             <div className={cx('aside')}>
                 <img className={cx('image')} src={login} alt="Login"></img>
             </div>
             <div className={cx('main')}>
-                <p className={cx('title1')}>
-                    Share your world, connect with others, and create something amazing - with KreaT
-                </p>
-                <p className={cx('title2')}>
-                    Good to have you here! Let's catch up with friends and discover new things together
-                </p>
-                <form>
-                    <input
-                        className={cx('input')}
-                        placeholder="Email Address"
-                        type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        ref={emailInputRef}
-                    />
-                    <input
-                        className={cx('input')}
-                        placeholder="Password"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <input value="Login" className={cx('submit')} type="submit" onClick={onLogin} />
-                    <input value="Forget your password?" className={cx('forget')} type="submit" onClick={alert} />
-                </form>
+                <div className={cx('tabs')}>
+                    <div className={cx('tab', { active: activeTab === 'login' })} onClick={() => toggleTab('login')}>
+                        Login
+                    </div>
+                    <div
+                        className={cx('tab', { active: activeTab === 'register' })}
+                        onClick={() => toggleTab('register')}
+                    >
+                        Register
+                    </div>
+                </div>
+                {activeTab === 'login' && (
+                    <div>
+                        <p className={cx('title1')}>
+                            Share your world, connect with others, and create something amazing - with KreaT
+                        </p>
+                        <p className={cx('title2')}>
+                            Good to have you here! Let's catch up with friends and discover new things together
+                        </p>
+                        <form>
+                            <input
+                                className={cx('input')}
+                                placeholder="Email Address"
+                                type="text"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                ref={emailInputRef}
+                            />
+                            <input
+                                className={cx('input')}
+                                placeholder="Password"
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <input value="Login" className={cx('submit')} type="submit" onClick={onLogin} />
+                            <input
+                                value="Forget your password?"
+                                className={cx('forget')}
+                                type="submit"
+                                onClick={alert}
+                            />
+                        </form>
+                    </div>
+                )}
+                {activeTab === 'register' && (
+                    <div>
+                        <p className={cx('title1')}>
+                            Share your world, connect with others, and create something amazing - with KreaT
+                        </p>
+                        <p className={cx('title2')}>
+                            Create your own online community, share your passions, and connect with others
+                        </p>
+                        <form>
+                            <input
+                                className={cx('input')}
+                                placeholder="Full Name"
+                                type="text"
+                                value={fullname}
+                                onChange={(e) => setFullname(e.target.value)}
+                                ref={emailInputRef}
+                            />
+                            <input
+                                className={cx('input')}
+                                placeholder="Email Address"
+                                type="email"
+                                value={resEmail}
+                                onChange={(e) => setResEmail(e.target.value)}
+                                ref={emailInputRef}
+                            />
+                            <input
+                                className={cx('input')}
+                                placeholder="Password"
+                                type="password"
+                                value={resPassword}
+                                onChange={(e) => setResPassword(e.target.value)}
+                            />
+                            <input
+                                className={cx('input')}
+                                placeholder="Password"
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                            />
+                            <input
+                                value="Register"
+                                className={cx('registerButton')}
+                                type="submit"
+                                onClick={onRegister}
+                            />
+                        </form>
+                    </div>
+                )}
             </div>
         </div>
     );

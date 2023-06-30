@@ -7,12 +7,12 @@ import axios from 'axios';
 
 function ListAccountItem({ onlineFriendList }) {
     const cx = classNames.bind(styles);
-    const [selectedConversationId, setSelectedConversatioId] = useState(null);
+    const [selectedConversationId, setSelectedConversationId] = useState(null);
     const [selectedUserName, setSelectedUserName] = useState(null);
     const [selectedUserAvatar, setSelectedUserAvatar] = useState(null);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const handleUserSelect = (conversationId, userName, userAvatar, userId) => {
-        setSelectedConversatioId(conversationId);
+        setSelectedConversationId(conversationId);
         setSelectedUserName(userName);
         setSelectedUserAvatar(userAvatar);
         setSelectedUserId(userId);
@@ -35,23 +35,27 @@ function ListAccountItem({ onlineFriendList }) {
                 console.log(e);
             });
     }, []);
+
     const onlineAccountIds = onlineFriendList.map((onlineFriend) => onlineFriend.id_account);
+
+    const sortedListContact = [...listContact].sort((a, b) => {
+        const aIsActive = onlineAccountIds.includes(a.id_account);
+        const bIsActive = onlineAccountIds.includes(b.id_account);
+        if (aIsActive && !bIsActive) {
+            return -1;
+        } else if (!aIsActive && bIsActive) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+
     return (
         <div className={cx('wrapper')}>
-            {/* {listContact?.map((account) => (
-                <div key={Math.random()}>
-                    <AccountItem
-                        key={account.id_conversation}
-                        data={account}
-                        active
-                        onUserSelect={() => handleUserSelect(account.id_conversation, account.fullName, account.avatar)}
-                    ></AccountItem>
-                </div>
-            ))} */}
-            {listContact?.map((account) => {
+            {sortedListContact.map((account, index) => {
                 const isActive = onlineAccountIds.includes(account.id_account);
                 return (
-                    <div key={Math.random()}>
+                    <div key={index}>
                         <AccountItem
                             key={account.id_conversation}
                             data={account}

@@ -59,10 +59,24 @@
     margin: 0 auto;
 }
 
-.fullname {
+.fullNameContainer {
     margin: 0 auto;
     margin-top: 20px;
+    display: flex;
+}
+
+.fullname {
+    margin: auto 0;
     font-size: 2.4rem;
+}
+
+.updateNameIcon {
+    cursor: pointer;
+    margin: auto 12px;
+}
+
+.updateNameIcon:hover {
+    color: black;
 }
 
 .active {
@@ -136,4 +150,20 @@
     margin: 10px;
     margin-right: 40px;
     font-size: 20px;
+}
+
+.updateAvatar {
+    position: absolute;
+    top: 150px;
+    left: 200px;
+    background-color: transparent;
+}
+
+.updateAvatarIcon {
+    font-size: 20px;
+    padding: 4px;
+}
+
+.updateAvatarIcon:hover {
+    color: black;
 }

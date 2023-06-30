@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Profile_TimeLines.module.scss';
 import classNames from 'classnames/bind';
 import ProfileHeader from '~/components/ProfileHeader';
 import Post from '~/components/Post';
 import axios from 'axios';
 function Profile_TimeLines(props) {
+    const [loading, setLoading] = useState(true);
     const [data, setData] = useState({});
     let id = '';
     if (localStorage.getItem('anotherAccountId')) {
@@ -13,7 +14,7 @@ function Profile_TimeLines(props) {
         id = localStorage.getItem('accountId');
     }
     useEffect(() => {
-        window.scrollTo(0, 0);
+        window.scrollTo(0, 200);
         axios
             .get(`http://localhost:3000/accounts/${id}/timeline`, {
                 headers: {
@@ -22,6 +23,7 @@ function Profile_TimeLines(props) {
             })
             .then((res) => {
                 setData(res.data);
+                setLoading(false);
                 console.log(res.data);
             })
             .catch(() => {});
@@ -30,14 +32,25 @@ function Profile_TimeLines(props) {
 
     return (
         <>
-            {data.fullName && <ProfileHeader data={data} />}
-            <div className={cx('list-post')}>
-                {data.timeline?.map((post, index) => (
-                    <div key={index}>
-                        <Post data={post} />
+            {<ProfileHeader data={data} />}
+            {!loading ? (
+                <>
+                    <div className={cx('list-post')}>
+                        {data.timeline?.map((post, index) => (
+                            <div key={index}>
+                                <Post data={post} />
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
+                </>
+            ) : (
+                <div className={cx('loading-wave')}>
+                    <div className={cx('loading-bar')}></div>
+                    <div className={cx('loading-bar')}></div>
+                    <div className={cx('loading-bar')}></div>
+                    <div className={cx('loading-bar')}></div>
+                </div>
+            )}
         </>
     );
 }

@@ -84,6 +84,7 @@ function Search() {
                         spellCheck="false"
                         onChange={(e) => handleChange(e)}
                         onFocus={() => setShowResults(true)}
+                        className={cx('input-search')}
                     />
                     {/* Khi có searchText mới hiện nut x */}
                     {!!searchText && !loading && (

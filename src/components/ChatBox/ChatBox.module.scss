@@ -33,8 +33,12 @@
     // max-height: 28px;
     width: 82%;
     margin: 10px;
-    padding: 4px;
+    padding: 4px 12px;
     height: auto;
+}
+
+.input::placeholder {
+    font-style: normal;
 }
 
 .submit {

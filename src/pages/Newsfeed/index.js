@@ -18,7 +18,6 @@ function Newsfeed() {
         setSelectedUserId(userId);
     };
     const clearUser = () => {
-        console.log(1);
         handleUserSelect(null, null, null, null);
     };
     const onlineFriend = useContext(OnlineFriendContext);
@@ -26,12 +25,12 @@ function Newsfeed() {
     const setOnlineFriendList = onlineFriend.setOnlineFriendList;
     let socket = useRef();
     socket.current = io('ws://localhost:3002');
-    // localStorage.setItem('socket', jsonString);
     useEffect(() => {
         window.scrollTo(0, 0);
         if (localStorage.getItem('accountId')) {
             socket.current.emit('addUser', localStorage.getItem('accountId'));
             socket.current.on('getUser', (onlineFriends) => {
+                console.log(onlineFriends);
                 setOnlineFriendList(onlineFriends);
             });
             socket.current.on('getMessage', (newMessage) => {
@@ -48,13 +47,6 @@ function Newsfeed() {
             setSelectedUserId(newMessage.id_sender);
         }
     }, [newMessage]);
-
-    // useEffect(() => {
-    //     socket.current.on('getMessage', (newMessage) => {
-    //         setSelectedUserId(newMessage.id_sender);
-    //         setNewMessage(newMessage);
-    //     });
-    // }, [selectedUserId]);
 
     return (
         <div>

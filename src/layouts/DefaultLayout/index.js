@@ -3,19 +3,27 @@ import Header from '~/layouts/components/Header';
 import styles from './DefaultLayout.module.scss';
 import LeftSidebar from './LeftSidebar';
 import RightSidebar from './RightSidebar';
+import { useState, useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 
 function DefaultLayout({ children }) {
+    const [loading, setLoading] = useState(true);
     return (
-        <div className={cx('wrapper')}>
-            <Header />
-            <div className={cx('container')}>
-                <LeftSidebar />
-                <div className={cx('content')}>{children}</div>
-                <RightSidebar />
-            </div>
-        </div>
+        <>
+            {!loading ? (
+                <div className={cx('wrapper')}>
+                    <Header />
+                    <div className={cx('container')}>
+                        <LeftSidebar />
+                        <div className={cx('content')}>{children}</div>
+                        <RightSidebar />
+                    </div>
+                </div>
+            ) : (
+                <></>
+            )}
+        </>
     );
 }
 

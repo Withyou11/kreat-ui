@@ -12,11 +12,9 @@ import { io } from 'socket.io-client';
 import axios from 'axios';
 import Button from '../Button';
 function ChatBox({ updateState, conversationId, userName, userAvatar, userId, flag }) {
-    console.log(flag);
     const onlineFriend = useContext(OnlineFriendContext);
     const onlineFriendList = onlineFriend.onlineFriendList;
     const [messages, setMessages] = useState([]);
-    console.log('ChatBox: ' + messages.length);
     const cx = classNames.bind(styles);
     function handleClose(e) {
         updateState(null);

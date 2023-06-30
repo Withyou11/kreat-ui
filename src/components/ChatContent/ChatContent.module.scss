@@ -6,4 +6,6 @@
 .content-message {
     margin: 12px;
     font-size: Helvetica, Arial;
+    max-width: 200px; // Giới hạn chiều rộng của tin nhắn
+    word-wrap: break-word; // Cho phép xuống hàng khi tin nhắn quá dài
 }

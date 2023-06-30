@@ -34,19 +34,19 @@ function ListPosts() {
                         localStorage.removeItem('anotherAccountName');
                         localStorage.removeItem('anotherAccountAvatar');
                         localStorage.removeItem('accessToken');
-                        navigate('/login');
+                        navigate('/authentication');
+                        window.location.reload();
                     }
                 });
         }
-    }, [page, navigate]);
+    }, [page, navigate, stop]);
 
     useEffect(() => {
         const handleScroll = () => {
             if (!stop) {
                 const scrollable = document.documentElement.scrollHeight - window.innerHeight;
                 const scrolled = window.scrollY;
-                if (Math.ceil(scrolled) >= scrollable + (18 - page)) {
-                    console.log('cuối trang:' + page);
+                if (Math.ceil(scrolled) >= scrollable) {
                     setPage((prevPage) => prevPage + 1);
                 }
             }
@@ -57,7 +57,7 @@ function ListPosts() {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [page, stop]);
+    }, [stop]);
 
     return (
         <div>

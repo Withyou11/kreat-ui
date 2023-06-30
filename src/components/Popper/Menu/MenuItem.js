@@ -3,16 +3,15 @@ import Button from '~/components/Button';
 import styles from './Menu.module.scss';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-// import { io } from 'socket.io-client';
-import { useRef } from 'react';
+import { io } from 'socket.io-client';
 
 const cx = classNames.bind(styles);
 
 function MenuItem({ data }) {
     const navigate = useNavigate();
-    // const socket = useRef();
     const handleClick = async () => {
         if (data.title === 'Logout') {
+            io('ws://localhost:3002').emit('logout', localStorage.getItem('accountId'));
             localStorage.removeItem('avatar');
             localStorage.removeItem('fullname');
             localStorage.removeItem('anotherAccountId');
@@ -31,10 +30,8 @@ function MenuItem({ data }) {
                 )
                 .then((res) => {
                     if (res.status === 200) {
-                        // socket.current = io('ws://localhost:3002');
-                        // socket.current.emit('disconnect');
                         console.log('Logout success !!!');
-                        navigate('/login');
+                        navigate('/authentication');
                         localStorage.removeItem('accessToken');
                     } else {
                         alert('Can not log out');
@@ -44,6 +41,13 @@ function MenuItem({ data }) {
                     console.log(error);
                     // console.log(error);
                 });
+        } else if (data.title === 'Your Profile') {
+            localStorage.setItem('anotherAccountName', '');
+            localStorage.setItem('anotherAccountAvatar', '');
+            localStorage.setItem('anotherAccountId', '');
+            setTimeout(() => {
+                navigate(`/timelines`);
+            }, 10);
         }
     };
     return (

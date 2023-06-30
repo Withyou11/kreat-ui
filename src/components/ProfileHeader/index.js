@@ -6,17 +6,20 @@ import { Image } from 'cloudinary-react';
 import styles from './ProfileHeader.module.scss';
 import profilebackground from '~/assets/images/profilebackground.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faPen } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 const cx = classNames.bind(styles);
 
 function ProfileHeader(data) {
+    console.log(data);
     const [activeTab, setActiveTab] = useState('timeline');
     const location = useLocation();
     const [friendStatus, setFriendStatus] = useState(data.data.friendStatus);
     function handleTabClick(tab) {
         setActiveTab(tab);
     }
+
+    const handleChangeAvatar = () => {};
 
     useEffect(() => {
         switch (location.pathname) {
@@ -199,11 +202,21 @@ function ProfileHeader(data) {
                         }
                         alt="avatar"
                     />
-                    <p className={cx('fullname')}>
-                        {localStorage.getItem('anotherAccountId') === ''
-                            ? localStorage.getItem('fullname')
-                            : localStorage.getItem('anotherAccountName')}
-                    </p>
+                    {localStorage.getItem('anotherAccountId') === '' && (
+                        <button onClick={handleChangeAvatar} className={cx('updateAvatar')}>
+                            <FontAwesomeIcon className={cx('updateAvatarIcon')} icon={faCamera}></FontAwesomeIcon>
+                        </button>
+                    )}
+                    <div className={cx('fullNameContainer')}>
+                        <p className={cx('fullname')}>
+                            {localStorage.getItem('anotherAccountId') === ''
+                                ? localStorage.getItem('fullname')
+                                : localStorage.getItem('anotherAccountName')}
+                        </p>
+                        {localStorage.getItem('anotherAccountId') === '' && (
+                            <FontAwesomeIcon className={cx('updateNameIcon')} icon={faPen}></FontAwesomeIcon>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

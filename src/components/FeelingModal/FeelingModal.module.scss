@@ -30,6 +30,11 @@
 }
 
 .feeling {
+    padding: 6px 0;
     text-align: left;
     margin: 4px 0;
+}
+
+.feeling:hover {
+    background-color: #f1f1f1;
 }

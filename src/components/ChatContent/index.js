@@ -5,7 +5,6 @@ import 'tippy.js/dist/tippy.css';
 import { useRef, useEffect } from 'react';
 
 function ChatContent({ messages }) {
-    console.log('Chat content:' + messages.length);
     const cx = classNames.bind(styles);
     const scrollRef = useRef();
     useEffect(() => {
@@ -14,8 +13,8 @@ function ChatContent({ messages }) {
     return (
         <div className={cx('wrapper')}>
             <ul>
-                {messages.map((msg) => (
-                    <li ref={scrollRef} key={msg._id}>
+                {messages.map((msg, index) => (
+                    <li ref={scrollRef} key={index}>
                         <NewTippy content={new Date(msg.createdAt).toLocaleString()}>
                             <div
                                 className={cx(

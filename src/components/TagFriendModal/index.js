@@ -1,10 +1,8 @@
 import styles from './TagFriendModal.module.scss';
 import classNames from 'classnames/bind';
 import { useEffect, useState, useMemo } from 'react';
-import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from 'react-bootstrap/Modal';
-
 import ListTagFriend from '../ListTagFriend';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 function TagFriendModal({ onClose, visible, withfriend, handleWithFriendChange }) {
@@ -84,7 +82,7 @@ function TagFriendModal({ onClose, visible, withfriend, handleWithFriendChange }
     return (
         // <div className={cx('wrapper')}>
         //     <PopperWrapper>
-        <Modal show={visible} onHide={handleClose} animation={false}>
+        <Modal style={{ marginLeft: '-6.8%' }} show={visible} onHide={handleClose} animation={false}>
             <Modal.Body>
                 <h3 style={{ margin: '0 12px' }}>Select friends to tag:</h3>
                 <button className={cx('delete-image-button')} onClick={handleClose}>
