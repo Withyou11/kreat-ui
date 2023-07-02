@@ -95,7 +95,7 @@ function ShareModal({ data, onClose, visible }) {
         return number.toString().padStart(2, '0');
     }
     return (
-        <Modal style={{ marginLeft: '-105px' }} show={visible} onHide={handleClose} animation={false}>
+        <Modal style={{ marginLeft: '-6.8%' }} show={visible} onHide={handleClose} animation={false}>
             <Modal.Body>
                 <h3 style={{ margin: '0 12px' }}>Share the post</h3>
                 <button className={cx('delete-image-button')} onClick={handleClose}>

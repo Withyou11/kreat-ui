@@ -37,6 +37,8 @@ function Header() {
         localStorage.setItem('anotherAccountId', '');
         localStorage.setItem('anotherAccountName', '');
         localStorage.setItem('anotherAccountAvatar', '');
+        localStorage.setItem('friendStatus', '');
+        localStorage.setItem('idFriendRequest', '');
         // setAccountId('main');
         navigation('/');
     };

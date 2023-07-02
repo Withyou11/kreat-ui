@@ -10,11 +10,10 @@ import { faCamera, faPen } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 const cx = classNames.bind(styles);
 
-function ProfileHeader(data) {
-    console.log(data);
+function ProfileHeader() {
     const [activeTab, setActiveTab] = useState('timeline');
     const location = useLocation();
-    const [friendStatus, setFriendStatus] = useState(data.data.friendStatus);
+    const [friendStatus, setFriendStatus] = useState(localStorage.getItem('friendStatus'));
     function handleTabClick(tab) {
         setActiveTab(tab);
     }
@@ -50,6 +49,7 @@ function ProfileHeader(data) {
             })
             .then((res) => {
                 setFriendStatus('friend request sent');
+                localStorage.setItem('friendStatus', 'friend request sent');
             })
             .catch(() => {});
     }
@@ -66,31 +66,37 @@ function ProfileHeader(data) {
             )
             .then((res) => {
                 setFriendStatus('not friend');
+                localStorage.setItem('friendStatus', 'not friend');
             })
             .catch(() => {});
     }
 
     function handleDeclineRequest(e) {
         axios
-            .delete(`http://localhost:3000/accounts/${data.data.id_friendRequest}/decline_friend_request`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            .delete(
+                `http://localhost:3000/accounts/${localStorage.getItem('idFriendRequest')}/decline_friend_request`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    },
                 },
-            })
+            )
             .then((res) => {
                 setFriendStatus('not friend');
+                localStorage.setItem('friendStatus', 'not friend');
             })
             .catch(() => {});
     }
 
     function handleAcceptRequest(e) {
         axios
-            .delete(`http://localhost:3000/accounts/${data.data.id_friendRequest}/accept_friend_request`, {
+            .delete(`http://localhost:3000/accounts/${localStorage.getItem('idFriendRequest')}/accept_friend_request`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
             })
             .then((res) => {
+                localStorage.setItem('friendStatus', 'friend');
                 window.location.reload();
             })
             .catch(() => {});
@@ -109,6 +115,7 @@ function ProfileHeader(data) {
                     },
                 })
                 .then((res) => {
+                    localStorage.setItem('friendStatus', 'not friend');
                     window.location.reload();
                 })
                 .catch(() => {});

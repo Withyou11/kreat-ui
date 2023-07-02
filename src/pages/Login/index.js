@@ -22,7 +22,6 @@ function Login() {
             })
             .then((res) => {
                 if (res.status === 200) {
-                    console.log('Response success !!!');
                     localStorage.setItem('accessToken', res.data.accessToken);
                     localStorage.setItem('accountId', res.data.id_account);
                     localStorage.setItem('fullname', res.data.fullName);
@@ -30,11 +29,11 @@ function Login() {
                     localStorage.setItem('anotherAccountId', '');
                     navigate('/');
                 } else {
-                    alert('Wrong email or password');
+                    window.alert('Wrong email or password');
                 }
             })
             .catch((error) => {
-                console.log(error);
+                window.alert('Wrong email or password');
             });
     };
 
@@ -45,7 +44,20 @@ function Login() {
         } else if (confirmPassword !== resPassword) {
             window.alert('Confirm password is incorrect');
         } else {
-            // Call API Login
+            axios
+                .post(`http://localhost:3000/auth/signup`, {
+                    email: resEmail,
+                    password: resPassword,
+                    fullname: fullname,
+                })
+                .then((res) => {
+                    if (res.status === 200) {
+                        navigate('/confirm');
+                    }
+                })
+                .catch((error) => {
+                    window.alert('Can not register!!!');
+                });
         }
     };
 
@@ -145,7 +157,7 @@ function Login() {
                             />
                             <input
                                 className={cx('input')}
-                                placeholder="Password"
+                                placeholder="Confirm Password"
                                 type="password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}

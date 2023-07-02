@@ -18,6 +18,10 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+    cursor: pointer;
+    &:hover {
+        opacity: 0.6;
+    }
 }
 
 .username {
@@ -26,15 +30,21 @@
     font-weight: 600;
     margin-left: 12px;
     line-height: 40px;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.form {
+    display: flex;
 }
 
 .input {
     height: 32px;
-    // max-height: 28px;
-    width: 82%;
+    flex: 1;
     margin: 10px;
     padding: 4px 12px;
-    height: auto;
 }
 
 .input::placeholder {

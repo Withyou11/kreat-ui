@@ -29,7 +29,7 @@ function ShowListReact({ data, visible, onClose }) {
         onClose();
     }
     return (
-        <Modal show={visible} onHide={handleClose} animation={false}>
+        <Modal show={visible} onHide={handleClose} animation={false} centered>
             <Modal.Body>
                 <div className={cx('header')}>
                     <Button

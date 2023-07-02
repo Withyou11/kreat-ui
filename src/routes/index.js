@@ -5,6 +5,7 @@ import Profile_AboutMe from '~/pages/Profile_AboutMe';
 import Profile_Friends from '~/pages/Profile_Friends';
 import Profile_Medias from '~/pages/Profile_Medias';
 import Login from '~/pages/Login';
+import ConfirmEmail from '~/pages/ConfirmEmail';
 // public routes
 const publicRoutes = [
     { path: '/', component: Newsfeed },
@@ -14,6 +15,7 @@ const publicRoutes = [
     { path: '/friends', component: Profile_Friends, layout: HeaderOnly },
     { path: '/medias', component: Profile_Medias, layout: HeaderOnly },
     { path: '/authentication', component: Login, layout: NoLayout },
+    { path: '/confirm', component: ConfirmEmail, layout: NoLayout },
 ];
 
 const privateRoutes = [];

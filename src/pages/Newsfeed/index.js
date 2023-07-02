@@ -30,12 +30,10 @@ function Newsfeed() {
         if (localStorage.getItem('accountId')) {
             socket.current.emit('addUser', localStorage.getItem('accountId'));
             socket.current.on('getUser', (onlineFriends) => {
-                console.log(onlineFriends);
                 setOnlineFriendList(onlineFriends);
             });
             socket.current.on('getMessage', (newMessage) => {
                 setFlag((prevCount) => prevCount + 1);
-                console.log(newMessage.messageContent);
                 setNewMessage(newMessage);
                 setSelectedUserId(newMessage.id_sender);
             });

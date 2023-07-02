@@ -1,6 +1,7 @@
 .wrapper {
     width: 91.5%;
     margin: auto;
+    background-color: var(--background-color);
 }
 
 .content {
@@ -16,6 +17,7 @@
     object-fit: cover;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    background-color: var(--background-color);
 }
 
 .tabs-info {

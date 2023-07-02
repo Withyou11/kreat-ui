@@ -38,6 +38,8 @@ function ListPosts() {
                         localStorage.removeItem('anotherAccountName');
                         localStorage.removeItem('anotherAccountAvatar');
                         localStorage.removeItem('accessToken');
+                        localStorage.removeItem('friendStatus');
+                        localStorage.removeItem('idFriendRequest');
                         navigate('/authentication');
                         window.location.reload();
                     }

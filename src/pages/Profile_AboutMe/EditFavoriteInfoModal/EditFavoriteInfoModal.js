@@ -9,7 +9,6 @@ import styles from './EditFavoriteInfoModal.module.scss';
 const cx = classNames.bind(styles);
 
 function EditFavoriteInfoModal({ onClose, favoriteInfo, onSave }) {
-    // console.log(favoriteInfo);
     const [data, setData] = useState(favoriteInfo);
     const handleChange = (event, fieldName) => {
         setData((prevData) => ({
@@ -24,7 +23,7 @@ function EditFavoriteInfoModal({ onClose, favoriteInfo, onSave }) {
     };
 
     return (
-        <Modal show={true} onHide={onClose} animation={false} centered>
+        <Modal style={{ marginLeft: '-6.8%' }} show={true} onHide={onClose} animation={false}>
             <Modal.Body>
                 <div style={{ display: 'flex' }}>
                     <h3 style={{ margin: 'auto 12px', flex: 1 }}>Update your favorite:</h3>

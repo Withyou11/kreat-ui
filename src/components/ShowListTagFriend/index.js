@@ -30,7 +30,7 @@ function ShowListTagFriend({ data, visible, onClose }) {
     }
 
     return (
-        <Modal show={visible} onHide={handleClose} animation={false}>
+        <Modal style={{ marginLeft: '-6.8%' }} show={visible} onHide={handleClose} animation={false}>
             <Modal.Body>
                 <div className={cx('header')}>
                     <Button
@@ -40,8 +40,8 @@ function ShowListTagFriend({ data, visible, onClose }) {
                         onClick={handleClose}
                     ></Button>
                 </div>
-                {listFriend.map((account) => (
-                    <div key={Math.random()}>
+                {listFriend.map((account, index) => (
+                    <div key={index}>
                         <AccountItem data={account.personalInfo} mutualFriends={account.mutualFriends}></AccountItem>
                     </div>
                 ))}

@@ -18,6 +18,8 @@ function MenuItem({ data }) {
             localStorage.removeItem('accountId');
             localStorage.removeItem('anotherAccountName');
             localStorage.removeItem('anotherAccountAvatar');
+            localStorage.removeItem('friendStatus');
+            localStorage.removeItem('idFriendRequest');
             await axios
                 .post(
                     `http://localhost:3000/auth/logout`,
@@ -39,12 +41,13 @@ function MenuItem({ data }) {
                 })
                 .catch((error) => {
                     console.log(error);
-                    // console.log(error);
                 });
         } else if (data.title === 'Your Profile') {
             localStorage.setItem('anotherAccountName', '');
             localStorage.setItem('anotherAccountAvatar', '');
             localStorage.setItem('anotherAccountId', '');
+            localStorage.setItem('friendStatus', '');
+            localStorage.setItem('idFriendRequest', '');
             setTimeout(() => {
                 navigate(`/timelines`);
             }, 10);

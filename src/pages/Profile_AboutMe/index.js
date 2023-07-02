@@ -43,7 +43,6 @@ function Profile_AboutMe(props) {
     };
 
     const handleSavePersonalInfo = (updatedPersonalInfo) => {
-        console.log(updatedPersonalInfo);
         axios
             .patch(
                 `http://localhost:3000/accounts/update_personal_info`,
@@ -81,7 +80,6 @@ function Profile_AboutMe(props) {
     };
 
     const handleSaveFavoriteInfo = (updatedFavoriteInfo) => {
-        console.log(updatedFavoriteInfo);
         axios
             .patch(
                 `http://localhost:3000/accounts/update_favorite_info`,
@@ -152,7 +150,7 @@ function Profile_AboutMe(props) {
 
     return (
         <>
-            <ProfileHeader data={data} />
+            <ProfileHeader />
             {!loading ? (
                 <div className={cx('about-container')}>
                     <div className={cx('about-above')}>

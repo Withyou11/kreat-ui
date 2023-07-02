@@ -49,7 +49,7 @@ function LocationModal({ onClose, visible, handleAtLocationChange }) {
         // eslint-disable-next-line
     }, [selectedLocation]);
     return (
-        <Modal style={{ marginLeft: '-6.8%' }} show={visible} onHide={handleClose} animation={false}>
+        <Modal show={visible} onHide={handleClose} animation={false} centered>
             <Modal.Body>
                 <h3 className={cx('search-title')}>Location: {selectedLocation || ''}</h3>
                 <button className={cx('delete-image-button')} onClick={handleClose}>

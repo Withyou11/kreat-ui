@@ -69,7 +69,6 @@ function FriendItem({ data }) {
                     <Button
                         className={cx('action')}
                         leftIcon={<FontAwesomeIcon icon={faEllipsis} style={{ fontSize: '2.4rem' }} />}
-                        smallest
                         onClick={handleShowAction}
                     ></Button>
                 )}

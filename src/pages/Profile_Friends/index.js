@@ -18,7 +18,6 @@ function Profile_Friends(props) {
     const [listUsers, setListUsers] = useState([]);
     const [listFriendsRequest, setListFriendsRequest] = useState([]);
     const debouncedValue = useDebounce(searchText, 600);
-    const [data, setData] = useState({});
     let id = '';
     if (localStorage.getItem('anotherAccountId') !== '') {
         id = localStorage.getItem('anotherAccountId');
@@ -35,8 +34,6 @@ function Profile_Friends(props) {
                     },
                 });
                 setListUsers(response1.data.listFriend);
-                console.log(response1.data);
-                setData(response1.data);
                 setLoading1(false);
 
                 if (localStorage.getItem('anotherAccountId') === '') {
@@ -86,7 +83,7 @@ function Profile_Friends(props) {
     }, [debouncedValue]);
     return (
         <>
-            <ProfileHeader data={data} />
+            <ProfileHeader />
             {!loading1 ? (
                 <div className={cx('friend-container')}>
                     <div className={cx('search-friend-container')}>

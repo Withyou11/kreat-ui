@@ -14,7 +14,7 @@ function Profile_TimeLines(props) {
         id = localStorage.getItem('accountId');
     }
     useEffect(() => {
-        window.scrollTo(0, 200);
+        window.scrollTo(0, 0);
         axios
             .get(`http://localhost:3000/accounts/${id}/timeline`, {
                 headers: {
@@ -24,7 +24,8 @@ function Profile_TimeLines(props) {
             .then((res) => {
                 setData(res.data);
                 setLoading(false);
-                console.log(res.data);
+                localStorage.setItem('idFriendRequest', res.data.id_friendRequest);
+                localStorage.setItem('friendStatus', res.data.friendStatus);
             })
             .catch(() => {});
     }, []);
@@ -32,7 +33,7 @@ function Profile_TimeLines(props) {
 
     return (
         <>
-            {<ProfileHeader data={data} />}
+            {!loading && <ProfileHeader />}
             {!loading ? (
                 <>
                     <div className={cx('list-post')}>

@@ -5,7 +5,6 @@ import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
 function FriendRequestItem({ data }) {
-    console.log(data);
     const navigate = useNavigate();
     const cx = classNames.bind(styles);
     const onConfirm = (e) => {

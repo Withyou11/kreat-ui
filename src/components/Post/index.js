@@ -12,7 +12,7 @@ import { Carousel } from 'react-bootstrap';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import axios from 'axios';
 import { faHeart, faThumbsUp, faUserGroup, faEarthAmericas, faLock } from '@fortawesome/free-solid-svg-icons';
-import { faComment, faShareFromSquare, faThumbsUp as faThumbsUp1 } from '@fortawesome/free-regular-svg-icons';
+import { faComment, faShareFromSquare } from '@fortawesome/free-regular-svg-icons';
 import ShowListReact from '../ShowListReact';
 import { useNavigate } from 'react-router-dom';
 import RenderUserReact from '../RenderUserReact/RenderUserReact';
@@ -26,8 +26,13 @@ function Post({ data }) {
     const [isReactModalOpen, setIsReactModalOpen] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const [showComment, setShowComment] = useState(false);
-    const [comments, setComments] = useState([]);
-
+    const [selectedImage, setSelectedImage] = useState(null);
+    const handleSelectImage = (image) => {
+        setSelectedImage(image);
+    };
+    const handleCloseImage = () => {
+        setSelectedImage(null);
+    };
     function formatDate(timestamp) {
         const date = new Date(timestamp);
         const now = new Date();
@@ -83,6 +88,8 @@ function Post({ data }) {
                 localStorage.setItem('anotherAccountId', '');
                 localStorage.setItem('anotherAccountName', '');
                 localStorage.setItem('anotherAccountAvatar', '');
+                localStorage.setItem('friendStatus', '');
+                localStorage.setItem('idFriendRequest', '');
                 navigate(`/timelines`);
             } else {
                 localStorage.setItem('anotherAccountId', data.id_account);
@@ -99,7 +106,7 @@ function Post({ data }) {
     };
 
     const handleCommentClick = (id) => {
-        setShowComment(true);
+        setShowComment(!showComment);
     };
     function handleCloseReactList() {
         setIsReactModalOpen(false);
@@ -252,24 +259,28 @@ function Post({ data }) {
                         publicId={data?.avatar}
                     />
                     <div className={cx('post-info-main')}>
-                        <h4 className={cx('name')}>
-                            {data?.fullName}
-                            {data?.postFeeling && (
-                                <div style={{ display: 'inline' }}>
-                                    <span
-                                        style={{
-                                            opacity: 0.6,
-                                            fontSize: '1.7rem',
-                                            marginLeft: '8px',
-                                            marginRight: '4px',
-                                        }}
-                                    >
-                                        is feeling
+                        <div className={cx('name-container')}>
+                            <h4 onClick={() => handleGoTimelines(data.id_account, false)} className={cx('name')}>
+                                {data?.fullName}
+                            </h4>
+                            <p>
+                                {data?.postFeeling && (
+                                    <span style={{ display: 'inline' }}>
+                                        <span
+                                            style={{
+                                                opacity: 0.6,
+                                                fontSize: '1.7rem',
+                                                marginLeft: '8px',
+                                                marginRight: '4px',
+                                            }}
+                                        >
+                                            is feeling
+                                        </span>
+                                        <span style={{ fontSize: '1.7rem' }}> {data?.postFeeling}</span>
                                     </span>
-                                    <span style={{ fontSize: '1.7rem' }}> {data?.postFeeling}</span>
-                                </div>
-                            )}
-                        </h4>
+                                )}
+                            </p>
+                        </div>
                         <div className={cx('time-location')}>
                             <p className={cx('time')}>{formatDate(data?.createdAt)}</p>
                             {data?.postPrivacy === 'friend' && (
@@ -286,7 +297,11 @@ function Post({ data }) {
                     </div>
                     {data?.id_friendTag?.length > 0 && (
                         <div className={cx('friend')} onClick={(e) => handleTagButtonClick(e)}>
-                            <p className={cx('friend-number')}>{data?.id_friendTag.length} people</p>
+                            {data?.id_friendTag.length > 1 ? (
+                                <p className={cx('friend-number')}>{data?.id_friendTag.length} people</p>
+                            ) : (
+                                <p className={cx('friend-number')}>1 person</p>
+                            )}
                         </div>
                     )}
                 </div>
@@ -304,6 +319,7 @@ function Post({ data }) {
                                             className={cx('image')}
                                             cloudName="dzuzcewvj"
                                             publicId={image.url}
+                                            onClick={() => handleSelectImage(image.url)}
                                             crop="scale"
                                         />
                                     </Carousel.Item>
@@ -315,6 +331,7 @@ function Post({ data }) {
                                 className={cx('image')}
                                 cloudName="dzuzcewvj"
                                 publicId={data.id_visualMedia[0].url}
+                                onClick={() => handleSelectImage(data.id_visualMedia[0].url)}
                             />
                         )}
                     </div>
@@ -331,6 +348,7 @@ function Post({ data }) {
                                                     className={cx('image')}
                                                     cloudName="dzuzcewvj"
                                                     publicId={image.url}
+                                                    onClick={() => handleSelectImage(image.url)}
                                                     crop="scale"
                                                 />
                                             </Carousel.Item>
@@ -342,6 +360,9 @@ function Post({ data }) {
                                         className={cx('image')}
                                         cloudName="dzuzcewvj"
                                         publicId={data.shareContent.shared_id_visualMedia[0].url}
+                                        onClick={() =>
+                                            handleSelectImage(data.shareContent.shared_id_visualMedia[0].url)
+                                        }
                                     />
                                 )}
                             </div>
@@ -402,8 +423,12 @@ function Post({ data }) {
                     ) : (
                         <div className={cx('react-number')}></div>
                     )}
-                    <div className={cx('comment-number')}>
-                        <p>{data.commentAmount} comments</p>
+                    <div onClick={() => handleCommentClick(data?._id)} className={cx('comment-number')}>
+                        {data.commentAmout !== 1 ? (
+                            <p>{data.commentAmount} comments</p>
+                        ) : (
+                            <p>{data.commentAmount} comment</p>
+                        )}
                     </div>
                 </div>
                 <div className={cx('action-buttons')}>
@@ -492,6 +517,17 @@ function Post({ data }) {
             )}
             {isShareModalOpen && (
                 <ShareModal data={data} visible={isShareModalOpen} onClose={handleCloseShareModal}></ShareModal>
+            )}
+            {selectedImage && (
+                <div className={cx('overlay')} onClick={handleCloseImage}>
+                    <Image
+                        className={cx('overlay-image')}
+                        cloudName="dzuzcewvj"
+                        publicId={selectedImage}
+                        crop="scale"
+                        alt="selected media"
+                    />
+                </div>
             )}
         </div>
     );

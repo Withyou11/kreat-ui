@@ -78,7 +78,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
     };
 
     return (
-        <Modal show={true} onHide={onClose} animation={false} centered>
+        <Modal style={{ marginLeft: '-6.8%' }} show={true} onHide={onClose} animation={false}>
             <Modal.Body>
                 <div style={{ display: 'flex' }}>
                     <h3 style={{ margin: 'auto 12px', flex: 1 }}>Update your education information:</h3>

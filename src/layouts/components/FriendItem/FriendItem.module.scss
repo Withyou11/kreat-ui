@@ -39,8 +39,15 @@
 
 .action {
     position: absolute;
-    top: 0px;
+    top: 0;
     right: 0;
+    background-color: transparent;
+    color: black;
+    min-width: 40px;
+    padding: 10px 4px;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .friend-container {
@@ -62,19 +69,16 @@
 .about {
     margin: 24px;
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-line-clamp: 3;
     line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 .wrapper:hover .name,
-.wrapper:hover .amount {
+.wrapper:hover .amount,
+.wrapper:hover .action {
     color: var(--primary);
-}
-
-a:hover {
-    color: var(--primary) !important;
 }
 
 .menu {

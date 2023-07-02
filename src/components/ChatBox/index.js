@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 // import { io } from 'socket.io-client';
 import styles from './ChatBox.module.scss';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
-import { useEffect, useRef, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { OnlineFriendContext } from '~/Context/OnlineFriendContext/OnlineFriendContext';
 import ChatContent from '../ChatContent';
 import { faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -11,14 +11,23 @@ import { Image } from 'cloudinary-react';
 import { io } from 'socket.io-client';
 import axios from 'axios';
 import Button from '../Button';
+import { useNavigate } from 'react-router-dom';
 function ChatBox({ updateState, conversationId, userName, userAvatar, userId, flag }) {
     const onlineFriend = useContext(OnlineFriendContext);
+    const navigate = useNavigate();
     const onlineFriendList = onlineFriend.onlineFriendList;
     const [messages, setMessages] = useState([]);
     const cx = classNames.bind(styles);
     function handleClose(e) {
         updateState(null);
     }
+
+    const handleGoTimelines = () => {
+        localStorage.setItem('anotherAccountId', userId);
+        localStorage.setItem('anotherAccountName', userName);
+        localStorage.setItem('anotherAccountAvatar', userAvatar);
+        navigate(`/timelines/${userId}`);
+    };
 
     useEffect(() => {
         axios
@@ -76,14 +85,22 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
         <div id="chatbox">
             <PopperWrapper className={cx('wrapper')}>
                 <div className={cx('header')}>
-                    <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={userAvatar} crop="scale" />
-                    <h4 className={cx('username')}>{userName}</h4>
+                    <Image
+                        onClick={handleGoTimelines}
+                        className={cx('avatar')}
+                        cloudName="dzuzcewvj"
+                        publicId={userAvatar}
+                        crop="scale"
+                    />
+                    <h4 onClick={handleGoTimelines} className={cx('username')}>
+                        {userName}
+                    </h4>
                     <Button leftIcon={<FontAwesomeIcon icon={faTimes} />} smallest onClick={handleClose}></Button>
                 </div>
                 <hr />
                 <ChatContent messages={messages} />
                 <hr />
-                <form onSubmit={handleSubmit}>
+                <form className={cx('form')} onSubmit={handleSubmit}>
                     <input
                         className={cx('input')}
                         type="text"
