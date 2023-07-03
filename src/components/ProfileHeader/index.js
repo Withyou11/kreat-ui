@@ -7,6 +7,7 @@ import styles from './ProfileHeader.module.scss';
 import profilebackground from '~/assets/images/profilebackground.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faPen } from '@fortawesome/free-solid-svg-icons';
+import UpdateNameModal from '../UpdateNameModal';
 import axios from 'axios';
 const cx = classNames.bind(styles);
 
@@ -17,8 +18,6 @@ function ProfileHeader() {
     function handleTabClick(tab) {
         setActiveTab(tab);
     }
-
-    const handleChangeAvatar = () => {};
 
     useEffect(() => {
         switch (location.pathname) {
@@ -124,6 +123,59 @@ function ProfileHeader() {
         }
     }
 
+    const [isUpdateInfoModalOpen, setIsUpdateInfoModalOpen] = useState(false);
+
+    const handleOpenUpdateInfoModal = () => {
+        setIsUpdateInfoModalOpen(true);
+    };
+
+    const handleCloseUpdateInfoModal = () => {
+        setIsUpdateInfoModalOpen(false);
+    };
+    const handleUpdateInfo = (updateInfo) => {
+        console.log(updateInfo);
+        localStorage.setItem('fullname', updateInfo.fullName);
+        if (updateInfo.avatar.includes('base64')) {
+            axios
+                .patch(
+                    `http://localhost:3000/accounts/update_personal_info`,
+                    {
+                        fullName: updateInfo.fullName,
+                        avatarData: updateInfo.avatar,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                        },
+                    },
+                )
+                .then((res) => {
+                    localStorage.setItem('avatar', res.data.url);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
+            axios
+                .patch(
+                    `http://localhost:3000/accounts/update_personal_info`,
+                    {
+                        fullName: updateInfo.fullName,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                        },
+                    },
+                )
+                .then((res) => {})
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        window.location.reload();
+    };
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('content')}>
@@ -210,7 +262,7 @@ function ProfileHeader() {
                         alt="avatar"
                     />
                     {localStorage.getItem('anotherAccountId') === '' && (
-                        <button onClick={handleChangeAvatar} className={cx('updateAvatar')}>
+                        <button onClick={handleOpenUpdateInfoModal} className={cx('updateAvatar')}>
                             <FontAwesomeIcon className={cx('updateAvatarIcon')} icon={faCamera}></FontAwesomeIcon>
                         </button>
                     )}
@@ -221,11 +273,18 @@ function ProfileHeader() {
                                 : localStorage.getItem('anotherAccountName')}
                         </p>
                         {localStorage.getItem('anotherAccountId') === '' && (
-                            <FontAwesomeIcon className={cx('updateNameIcon')} icon={faPen}></FontAwesomeIcon>
+                            <FontAwesomeIcon
+                                onClick={handleOpenUpdateInfoModal}
+                                className={cx('updateNameIcon')}
+                                icon={faPen}
+                            ></FontAwesomeIcon>
                         )}
                     </div>
                 </div>
             </div>
+            {isUpdateInfoModalOpen && (
+                <UpdateNameModal onClose={handleCloseUpdateInfoModal} onSave={handleUpdateInfo} />
+            )}
         </div>
     );
 }

@@ -30,7 +30,7 @@ function ShowListTagFriend({ data, visible, onClose }) {
     }
 
     return (
-        <Modal style={{ marginLeft: '-6.8%' }} show={visible} onHide={handleClose} animation={false}>
+        <Modal show={visible} onHide={handleClose} animation={false} centered>
             <Modal.Body>
                 <div className={cx('header')}>
                     <Button
