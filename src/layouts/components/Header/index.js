@@ -58,6 +58,10 @@ function Header() {
     // Handle logic
     const handleMenuChange = () => {};
     const handleToggleNotification = () => {
+        setUnviewAmount((prevData) => ({
+            ...prevData,
+            unviewedNotificationAmount: 0,
+        }));
         setShowListNotification(!showListNotification);
     };
     return (
@@ -83,7 +87,7 @@ function Header() {
                     </NewTippy>
                     <NewTippy content="Notifications">
                         <div style={{ position: 'relative' }}>
-                            {unviewAmount?.unviewedNotificationAmount && (
+                            {unviewAmount?.unviewedNotificationAmount > 0 && (
                                 <div className={cx('amount-container')}>
                                     <p className={cx('amount')}>{unviewAmount?.unviewedNotificationAmount}</p>
                                 </div>
