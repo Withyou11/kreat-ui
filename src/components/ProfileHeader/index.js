@@ -151,6 +151,9 @@ function ProfileHeader() {
                 )
                 .then((res) => {
                     localStorage.setItem('avatar', res.data.url);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 10);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -168,12 +171,15 @@ function ProfileHeader() {
                         },
                     },
                 )
-                .then((res) => {})
+                .then((res) => {
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 10);
+                })
                 .catch((error) => {
                     console.log(error);
                 });
         }
-        window.location.reload();
     };
 
     return (

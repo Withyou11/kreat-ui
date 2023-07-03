@@ -10,41 +10,56 @@ import logo from '~/assets/images/app_logo.png';
 import { Image } from 'cloudinary-react';
 import Menu from '~/components/Popper/Menu';
 import Search from '../Search';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import ListNotification from '~/components/ListNotification';
 const cx = classNames.bind(styles);
+
 const MENU_ITEMS = [
     {
         icon: <FontAwesomeIcon icon={faUser} />,
         title: 'Your Profile',
-        // to: '/profile',
     },
     {
         icon: <FontAwesomeIcon icon={faGear} />,
         title: 'Setting',
-        // to: '/setting',
     },
     {
         icon: <FontAwesomeIcon icon={faRightFromBracket} />,
         title: 'Logout',
-        // to: '/login',
     },
 ];
 function Header() {
+    const [unviewAmount, setUnviewAmount] = useState();
+    const [showListNotification, setShowListNotification] = useState(false);
     const navigation = useNavigate();
-    // const accountContext = useContext(AccountContext);
-    // const accountId = accountContext.accountId;
-    // const setAccountId = accountContext.setAccountId;
+    useEffect(() => {
+        axios
+            .get(`http://localhost:3000/accounts/unviewed_notification_and_message`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+            })
+            .then((res) => {
+                setUnviewAmount(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
     const handleGoNewsfeed = () => {
         localStorage.setItem('anotherAccountId', '');
         localStorage.setItem('anotherAccountName', '');
         localStorage.setItem('anotherAccountAvatar', '');
         localStorage.setItem('friendStatus', '');
         localStorage.setItem('idFriendRequest', '');
-        // setAccountId('main');
         navigation('/');
     };
     // Handle logic
     const handleMenuChange = () => {};
-
+    const handleToggleNotification = () => {
+        setShowListNotification(!showListNotification);
+    };
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -55,14 +70,29 @@ function Header() {
 
                 <div className={cx('actions')}>
                     <NewTippy content="Chats">
-                        <button className={cx('action_btn')}>
-                            <FontAwesomeIcon icon={faComments} />
-                        </button>
+                        <div style={{ position: 'relative' }}>
+                            {unviewAmount?.unviewedMessageAmount > 0 && (
+                                <div className={cx('amount-container')}>
+                                    <p className={cx('amount')}>{unviewAmount?.unviewedMessageAmount}</p>
+                                </div>
+                            )}
+                            <button className={cx('action_btn')}>
+                                <FontAwesomeIcon icon={faComments} />
+                            </button>
+                        </div>
                     </NewTippy>
                     <NewTippy content="Notifications">
-                        <button className={cx('action_btn')}>
-                            <FontAwesomeIcon icon={faBell} />
-                        </button>
+                        <div style={{ position: 'relative' }}>
+                            {unviewAmount?.unviewedNotificationAmount && (
+                                <div className={cx('amount-container')}>
+                                    <p className={cx('amount')}>{unviewAmount?.unviewedNotificationAmount}</p>
+                                </div>
+                            )}
+                            <button onClick={handleToggleNotification} className={cx('action_btn')}>
+                                <FontAwesomeIcon icon={faBell} />
+                            </button>
+                            {showListNotification && <ListNotification />}
+                        </div>
                     </NewTippy>
                     <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
                         <div>
@@ -74,7 +104,6 @@ function Header() {
                                 crop="scale"
                             />
                         </div>
-                        {/* <img className={cx('user_avatar')} src={localStorage.getItem('avatar')} alt="user" /> */}
                     </Menu>
                 </div>
             </div>

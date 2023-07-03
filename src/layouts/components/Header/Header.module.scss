@@ -53,3 +53,21 @@
     border-radius: 50%;
     cursor: pointer;
 }
+
+.amount-container {
+    position: absolute;
+    top: 0;
+    right: 2px;
+    background-color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    display: flex;
+}
+
+.amount {
+    color: black;
+    font-size: 14px;
+    margin: auto;
+    font-weight: 500;
+}
