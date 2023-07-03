@@ -21,7 +21,7 @@ function DetailPost() {
                 setLoading(false);
             })
             .catch(() => {});
-    }, []);
+    }, [id]);
     const cx = classNames.bind(styles);
 
     return (
