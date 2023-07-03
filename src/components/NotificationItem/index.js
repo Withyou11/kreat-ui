@@ -66,7 +66,7 @@ function NotificationItem({ data }) {
     };
     return (
         <div onClick={handleClick} className={cx('container')}>
-            {data.isViewed ? (
+            {!data.isViewed ? (
                 <div className={cx('wrapper')}>
                     <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} crop="scale" />
                     <div className={cx('info')}>
