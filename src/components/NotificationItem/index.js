@@ -71,7 +71,7 @@ function NotificationItem({ data }) {
                     <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} crop="scale" />
                     <div className={cx('info')}>
                         <p className={cx('content')}>{data?.notificationContent}</p>
-                        <p className={cx('time1')}>{formatDate(data?.updatedAt)}</p>
+                        <p className={cx('time1')}>{formatDate(data?.notificationTime)}</p>
                     </div>
                     <FontAwesomeIcon className={cx('icon')} icon={faCircle}></FontAwesomeIcon>
                 </div>
@@ -80,7 +80,7 @@ function NotificationItem({ data }) {
                     <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} crop="scale" />
                     <div className={cx('info')}>
                         <p className={cx('content')}>{data?.notificationContent}</p>
-                        <p className={cx('time')}>{formatDate(data?.updatedAt)}</p>
+                        <p className={cx('time')}>{formatDate(data?.notificationTime)}</p>
                     </div>
                     <FontAwesomeIcon
                         style={{ display: 'none' }}

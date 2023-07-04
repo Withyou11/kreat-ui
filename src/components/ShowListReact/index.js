@@ -39,8 +39,8 @@ function ShowListReact({ data, visible, onClose }) {
                         onClick={handleClose}
                     ></Button>
                 </div>
-                {listReact.map((account) => (
-                    <div key={Math.random()}>
+                {listReact.map((account, index) => (
+                    <div key={index}>
                         <AccountItem data={account} mutualFriends={account.mutualFriends}></AccountItem>
                     </div>
                 ))}

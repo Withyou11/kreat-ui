@@ -424,7 +424,7 @@ function Post({ data }) {
                         <div className={cx('react-number')}></div>
                     )}
                     <div onClick={() => handleCommentClick(data?._id)} className={cx('comment-number')}>
-                        {data.commentAmout !== 1 ? (
+                        {data.commentAmount !== 1 ? (
                             <p>{data.commentAmount} comments</p>
                         ) : (
                             <p>{data.commentAmount} comment</p>

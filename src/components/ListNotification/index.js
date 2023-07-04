@@ -22,7 +22,7 @@ function ListNotification() {
     const cx = classNames.bind(styles);
     return (
         <div className={cx('wrapper')}>
-            <p className={cx('title')}>Notification</p>
+            <p className={cx('title')}>Notifications</p>
             <div className={cx('container')}>
                 {data?.map((notification, index) => (
                     <div key={index}>
