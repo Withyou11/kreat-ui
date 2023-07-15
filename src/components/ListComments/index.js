@@ -33,6 +33,7 @@ function ListComments({ id_post }) {
             id_post: id_post,
             commentContent: newComment,
         };
+
         axios
             .post(`http://localhost:3000/accounts/comment_post`, body, {
                 headers: {
@@ -51,13 +52,11 @@ function ListComments({ id_post }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('list-comment')}>
-                {/* <PopperWrapper> */}
                 {comments.map((comment, index) => (
                     <div key={index}>
-                        <Comment data={comment}></Comment>
+                        <Comment data={comment} setComments={setComments}></Comment>
                     </div>
                 ))}
-                {/* </PopperWrapper> */}
             </div>
             <div className={cx('comment-input-bar')}>
                 <form onSubmit={handleSubmit}>

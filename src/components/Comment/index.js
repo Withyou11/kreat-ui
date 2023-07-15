@@ -1,18 +1,20 @@
 import styles from './Comment.module.scss';
 import classNames from 'classnames/bind';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import generateReactionList from '../General/generateReactionList';
 import reactIcons from '../General/reactIcons';
 import ShowListReact from '../ShowListReact';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp as faThumbsUp1 } from '@fortawesome/free-regular-svg-icons';
-import { faHeart, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faHeart, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import Button from '../Button';
 import { Image } from 'cloudinary-react';
 import axios from 'axios';
 
-function Comment({ data }) {
-    console.log(data);
+function Comment({ data, setComments }) {
+    const [isUpdateCommentModalOpen, setIsUpdateCommentModalOpen] = useState(false);
+    const menuRef = useRef(null);
+
     const [isReactModalOpen, setIsReactModalOpen] = useState(false);
     const handleReactButtonClick = (event) => {
         setIsReactModalOpen(true);
@@ -20,6 +22,18 @@ function Comment({ data }) {
     function handleCloseReactList() {
         setIsReactModalOpen(false);
     }
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setShowMenu(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [menuRef]);
 
     const [reactionList, setReactionList] = useState(data.listReaction);
 
@@ -135,7 +149,9 @@ function Comment({ data }) {
         const now = new Date();
 
         const diff = (now.getTime() - date.getTime()) / 1000; // Đổi thành giây
-
+        if (diff < 2) {
+            return `Just now`;
+        }
         if (diff < 60) {
             // Dưới 1 phút
             return `${Math.floor(diff)} seconds ago`;
@@ -179,6 +195,39 @@ function Comment({ data }) {
         return number.toString().padStart(2, '0');
     }
 
+    const [showMenu, setShowMenu] = useState(false);
+    function handleShowAction(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        setShowMenu(!showMenu);
+    }
+
+    const handleShowUpdateCommentModal = (e) => {
+        e.preventDefault();
+        setIsUpdateCommentModalOpen(true);
+    };
+
+    function handleCloseUpdateCommentModal() {
+        setIsUpdateCommentModalOpen(false);
+    }
+
+    const handleDeleteComment = (id) => {
+        if (window.confirm(`Are you sure to delete this comment?`)) {
+            axios
+                .delete(`http://localhost:3000/accounts/${id}/delete_comment_post`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    },
+                })
+                .then((res) => {
+                    setShowMenu(false);
+                    setComments((comments) => comments.filter((comment) => comment._id !== id));
+                })
+                .catch(() => {});
+        } else {
+            setShowMenu(false);
+        }
+    };
     useEffect(() => {
         checkCurrentUserReact(currentUser);
         // eslint-disable-next-line
@@ -189,8 +238,29 @@ function Comment({ data }) {
             <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} crop="scale" alt="avatar" />
             <div className={cx('comment-main')}>
                 <div className={cx('comment-info-main')}>
-                    <h4 className={cx('name')}>{data.fullName}</h4>
-                    <p className={cx('time')}>{formatDate(data?.createdAt)}</p>
+                    <div style={{ display: 'flex' }}>
+                        <h4 className={cx('name')}>{data.fullName}</h4>
+                        <p className={cx('time')}>{formatDate(data?.createdAt)}</p>
+                    </div>
+                    <div className={cx('actionButton')}>
+                        {data?.fullName === localStorage.getItem('fullname') && (
+                            <Button
+                                className={cx('actionOnPost')}
+                                leftIcon={<FontAwesomeIcon icon={faEllipsis} style={{ fontSize: '1.8rem' }} />}
+                                onClick={handleShowAction}
+                            ></Button>
+                        )}
+                        {showMenu && (
+                            <div ref={menuRef} className={cx('menu')}>
+                                <button className={cx('menu-item')} onClick={handleShowUpdateCommentModal}>
+                                    Update comment
+                                </button>
+                                <button className={cx('menu-item')} onClick={() => handleDeleteComment(data._id)}>
+                                    Delete comment
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <div className={cx('comment-content')}>{data.commentContent}</div>
                 <div className={cx('react-button')}>

@@ -17,6 +17,8 @@
 .comment-info-main {
     display: flex;
     margin-top: 8px;
+    position: relative;
+    justify-content: space-between;
 }
 
 .avatar {
@@ -170,4 +172,36 @@
 
 .list-reaction {
     float: right;
+}
+
+.actionButton {
+    align-items: flex-end;
+}
+
+.actionOnPost {
+    background-color: transparent;
+    padding: 4px;
+    position: relative;
+}
+
+.menu {
+    z-index: 10;
+    position: absolute;
+    top: 10;
+    right: 0;
+    width: 120px;
+    height: 80px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    color: #000 !important;
+}
+
+.menu-item {
+    flex: 1;
+    font-size: 14px;
+    &:hover {
+        background-color: #f1f1f1;
+    }
 }

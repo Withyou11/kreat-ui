@@ -290,7 +290,7 @@ function Post({ data, results, setResults }) {
     }, []);
 
     const handleDeletePost = (id) => {
-        if (window.confirm(`Are you sure you want to delete this post?`)) {
+        if (window.confirm(`Are you sure to delete this post?`)) {
             axios
                 .delete(`http://localhost:3000/posts/${id}/delete_post`, {
                     headers: {
@@ -298,6 +298,7 @@ function Post({ data, results, setResults }) {
                     },
                 })
                 .then((res) => {
+                    setShowMenu(false);
                     setResults((results) => results.filter((post) => post._id !== id));
                 })
                 .catch(() => {});
