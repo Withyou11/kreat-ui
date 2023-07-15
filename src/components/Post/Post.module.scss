@@ -296,3 +296,8 @@
     object-fit: contain;
     margin-top: 20px;
 }
+
+.actionButtonContainer {
+    display: flex;
+    flex-direction: column;
+}

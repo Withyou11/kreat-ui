@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import RenderUserReact from '../RenderUserReact/RenderUserReact';
 import ShareModal from '../ShareModal';
 function Post({ data }) {
+    console.log(data);
     const navigate = useNavigate();
     const cx = classNames.bind(styles);
     const [reactionList, setReactionList] = useState(data.listReaction);
@@ -60,6 +61,12 @@ function Post({ data }) {
             return formatDateToString(date);
         }
     }
+
+    // function handleShowAction(e) {
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //     setShowMenu(!showMenu);
+    // }
 
     function formatTime(date) {
         const hours = date.getHours();
@@ -295,15 +302,26 @@ function Post({ data }) {
                             <p className={cx('location')}>{data?.location}</p>
                         </div>
                     </div>
-                    {data?.id_friendTag?.length > 0 && (
-                        <div className={cx('friend')} onClick={(e) => handleTagButtonClick(e)}>
-                            {data?.id_friendTag.length > 1 ? (
-                                <p className={cx('friend-number')}>{data?.id_friendTag.length} people</p>
-                            ) : (
-                                <p className={cx('friend-number')}>1 person</p>
-                            )}
+                    <div className={cx('actionButtonContainer')}>
+                        <div className={cx('actionButton')}>
+                            {/* {data?.id_account === localStorage.getItem('accountId') && (
+                                <Button
+                                    className={cx('actionOnPost')}
+                                    leftIcon={<FontAwesomeIcon icon={faEllipsis} style={{ fontSize: '2.4rem' }} />}
+                                    onClick={handleShowAction}
+                                ></Button>
+                            )} */}
                         </div>
-                    )}
+                        {data?.id_friendTag?.length > 0 && (
+                            <div className={cx('friend')} onClick={(e) => handleTagButtonClick(e)}>
+                                {data?.id_friendTag.length > 1 ? (
+                                    <p className={cx('friend-number')}>{data?.id_friendTag.length} people</p>
+                                ) : (
+                                    <p className={cx('friend-number')}>1 person</p>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 <div className={cx('post-content')}>

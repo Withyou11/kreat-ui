@@ -48,10 +48,10 @@ function Login() {
                 .post(`http://localhost:3000/auth/signup`, {
                     email: resEmail,
                     password: resPassword,
-                    fullname: fullname,
+                    fullName: fullname,
                 })
                 .then((res) => {
-                    if (res.status === 200) {
+                    if (res.status === 200 || res.status === 201) {
                         navigate('/confirm');
                     }
                 })
