@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useContext } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '~/components/Button';
 import styles from './FriendItem.module.scss';
@@ -13,14 +13,10 @@ function FriendItem({ data }) {
     const [showMenu, setShowMenu] = useState(false);
     const menuRef = useRef(null);
 
-    // const accountContext = useContext(AccountContext);
-    // const accountId = accountContext.accountId;
-    // const setAccountId = accountContext.setAccountId;
     const handleGoTimeline = () => {
         localStorage.setItem('anotherAccountId', data.id_account);
         localStorage.setItem('anotherAccountName', data.fullName);
         localStorage.setItem('anotherAccountAvatar', data.avatar);
-        // setAccountId(data.id_account);
         navigate(`/timelines/${data.id_account}`);
     };
     function handleShowAction(e) {

@@ -69,7 +69,7 @@ function ListPosts() {
             {!loading ? (
                 results.map((post, index) => (
                     <div key={index}>
-                        <Post data={post} />
+                        <Post data={post} results={results} setResults={setResults} />
                     </div>
                 ))
             ) : (

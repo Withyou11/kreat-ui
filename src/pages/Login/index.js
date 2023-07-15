@@ -28,12 +28,14 @@ function Login() {
                     localStorage.setItem('avatar', res.data.avatar);
                     localStorage.setItem('anotherAccountId', '');
                     navigate('/');
+                } else if (res.status === 400) {
+                    window.alert('Your email has not been verified yet!');
                 } else {
-                    window.alert('Wrong email or password');
+                    window.alert('Login information is incorrect!');
                 }
             })
             .catch((error) => {
-                window.alert('Wrong email or password');
+                window.alert('Login failed!');
             });
     };
 
@@ -56,7 +58,7 @@ function Login() {
                     }
                 })
                 .catch((error) => {
-                    window.alert('Can not register!!!');
+                    window.alert('Register failed!!!');
                 });
         }
     };

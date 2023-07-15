@@ -1,7 +1,7 @@
 import styles from './Post.module.scss';
 import classNames from 'classnames/bind';
 import { Image } from 'cloudinary-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '~/components/Button';
 import ListComments from '../ListComments';
@@ -11,14 +11,22 @@ import generateReactionList from '../General/generateReactionList';
 import { Carousel } from 'react-bootstrap';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import axios from 'axios';
-import { faHeart, faThumbsUp, faUserGroup, faEarthAmericas, faLock } from '@fortawesome/free-solid-svg-icons';
+import {
+    faHeart,
+    faThumbsUp,
+    faUserGroup,
+    faEarthAmericas,
+    faLock,
+    faEllipsis,
+} from '@fortawesome/free-solid-svg-icons';
 import { faComment, faShareFromSquare } from '@fortawesome/free-regular-svg-icons';
 import ShowListReact from '../ShowListReact';
 import { useNavigate } from 'react-router-dom';
 import RenderUserReact from '../RenderUserReact/RenderUserReact';
 import ShareModal from '../ShareModal';
-function Post({ data }) {
-    console.log(data);
+import UpdatePostModal from '../UpdatePostModal';
+function Post({ data, results, setResults }) {
+    const menuRef = useRef(null);
     const navigate = useNavigate();
     const cx = classNames.bind(styles);
     const [reactionList, setReactionList] = useState(data.listReaction);
@@ -26,11 +34,25 @@ function Post({ data }) {
     const [isTagModalOpen, setIsTagModalOpen] = useState(false);
     const [isReactModalOpen, setIsReactModalOpen] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+    const [isUpdatePostModalOpen, setIsUpdatePostModalOpen] = useState(false);
     const [showComment, setShowComment] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const handleSelectImage = (image) => {
         setSelectedImage(image);
     };
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setShowMenu(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [menuRef]);
+
     const handleCloseImage = () => {
         setSelectedImage(null);
     };
@@ -61,12 +83,12 @@ function Post({ data }) {
             return formatDateToString(date);
         }
     }
-
-    // function handleShowAction(e) {
-    //     e.stopPropagation();
-    //     e.preventDefault();
-    //     setShowMenu(!showMenu);
-    // }
+    const [showMenu, setShowMenu] = useState(false);
+    function handleShowAction(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        setShowMenu(!showMenu);
+    }
 
     function formatTime(date) {
         const hours = date.getHours();
@@ -143,6 +165,7 @@ function Post({ data }) {
         setIsReactModalOpen(true);
     };
 
+    // share modal
     const handleShowShareModal = (e) => {
         e.preventDefault();
         if (data.postPrivacy !== 'public' || data.isShared) {
@@ -154,6 +177,17 @@ function Post({ data }) {
 
     function handleCloseShareModal() {
         setIsShareModalOpen(false);
+    }
+
+    // update post modal
+
+    const handleShowUpdatePostModal = (e) => {
+        e.preventDefault();
+        setIsUpdatePostModalOpen(true);
+    };
+
+    function handleCloseUpdatePostModal() {
+        setIsUpdatePostModalOpen(false);
     }
 
     const [totalReactions, setTotalReactions] = useState(0);
@@ -255,6 +289,23 @@ function Post({ data }) {
         // eslint-disable-next-line
     }, []);
 
+    const handleDeletePost = (id) => {
+        if (window.confirm(`Are you sure you want to delete this post?`)) {
+            axios
+                .delete(`http://localhost:3000/posts/${id}/delete_post`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    },
+                })
+                .then((res) => {
+                    setResults((results) => results.filter((post) => post._id !== id));
+                })
+                .catch(() => {});
+        } else {
+            setShowMenu(false);
+        }
+    };
+
     return (
         <div className={cx('wrapper')}>
             <PopperWrapper>
@@ -304,13 +355,23 @@ function Post({ data }) {
                     </div>
                     <div className={cx('actionButtonContainer')}>
                         <div className={cx('actionButton')}>
-                            {/* {data?.id_account === localStorage.getItem('accountId') && (
+                            {data?.id_account === localStorage.getItem('accountId') && (
                                 <Button
                                     className={cx('actionOnPost')}
                                     leftIcon={<FontAwesomeIcon icon={faEllipsis} style={{ fontSize: '2.4rem' }} />}
                                     onClick={handleShowAction}
                                 ></Button>
-                            )} */}
+                            )}
+                            {showMenu && (
+                                <div ref={menuRef} className={cx('menu')}>
+                                    <button className={cx('menu-item')} onClick={handleShowUpdatePostModal}>
+                                        Update post
+                                    </button>
+                                    <button className={cx('menu-item')} onClick={() => handleDeletePost(data._id)}>
+                                        Delete post
+                                    </button>
+                                </div>
+                            )}
                         </div>
                         {data?.id_friendTag?.length > 0 && (
                             <div className={cx('friend')} onClick={(e) => handleTagButtonClick(e)}>
@@ -535,6 +596,15 @@ function Post({ data }) {
             )}
             {isShareModalOpen && (
                 <ShareModal data={data} visible={isShareModalOpen} onClose={handleCloseShareModal}></ShareModal>
+            )}
+            {isUpdatePostModalOpen && (
+                <UpdatePostModal
+                    data={data}
+                    visible={isUpdatePostModalOpen}
+                    onClose={handleCloseUpdatePostModal}
+                    setResults={setResults}
+                    results={results}
+                ></UpdatePostModal>
             )}
             {selectedImage && (
                 <div className={cx('overlay')} onClick={handleCloseImage}>

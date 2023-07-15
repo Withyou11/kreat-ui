@@ -1,0 +1,146 @@
+.buttonDone {
+    font-size: 2rem;
+    color: var(--white);
+    border-radius: 5px;
+    width: 90%;
+    height: 30px;
+    background-color: var(--primary);
+    position: absolute;
+    bottom: 10px;
+    left: 36px;
+}
+
+.buttonDone:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.share-content {
+    width: 90%;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.post-content {
+    display: flex;
+    flex-direction: column;
+    width: '640px';
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.textarea {
+    background-color: #e7e7e7;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.post-info-main {
+    flex: 1;
+    margin-left: 8px;
+    margin-top: 8px;
+}
+
+.name {
+    font-size: 2rem;
+    color: var(--black);
+}
+
+.time-location {
+    display: flex;
+}
+
+.time {
+    margin-right: 8px;
+    font-size: 1.6rem;
+    opacity: 70%;
+}
+
+.post-info {
+    height: 80px;
+    display: flex;
+}
+.privacy {
+    margin: 4px;
+}
+
+.location {
+    margin-left: 16px;
+    font-size: 1.8rem;
+    opacity: 70%;
+}
+
+.friend {
+    margin: 8px 16px;
+    background-color: #d9d9d9;
+    height: 2.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.friend-number {
+    color: var(--black);
+    margin: auto;
+    opacity: 1;
+    padding: 4px;
+}
+
+.avatar {
+    margin-right: 16px;
+    margin-left: 12px;
+    margin-top: 8px;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.post-content-image {
+    width: 90%;
+    margin: auto;
+}
+
+.post-content-image1 {
+    width: 90%;
+    margin: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.image {
+    height: 270px;
+    width: 90%;
+    margin-left: 1%;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.radio-container {
+    margin-left: 50px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-item {
+    display: flex;
+    height: 26px;
+}
+
+.radio-label {
+    color: var(--black);
+    margin: auto 8px;
+}
+
+.form-group {
+    margin: 0 200px;
+}
+
+.form-control2 {
+    border-radius: 6px;
+    padding: 5px;
+}

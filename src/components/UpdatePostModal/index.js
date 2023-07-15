@@ -1,4 +1,4 @@
-import styles from './ShareModal.module.scss';
+import styles from './UpdatePostModal.module.scss';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,30 +7,49 @@ import { Carousel } from 'react-bootstrap';
 import { Image } from 'cloudinary-react';
 import axios from 'axios';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-function ShareModal({ data, onClose, visible }) {
-    const [privacy, setPrivacy] = useState('public');
-    const [feeling, setFeeling] = useState('');
+function UpdatePostModal({ data, onClose, visible, setResults, results }) {
+    const [privacy, setPrivacy] = useState(data.postPrivacy);
+    const [feeling, setFeeling] = useState(data.postFeeling);
     const handleChangeFeeling = (e) => {
         setFeeling(e.target.value);
     };
     const cx = classNames.bind(styles);
-    const [content, setContent] = useState('');
-    const handleShare = (event) => {
+    const [content, setContent] = useState(data.postContent);
+    const handleUpdate = (event) => {
+        console.log(data._id);
         event.preventDefault();
         const postData = {
-            shareId: data._id,
+            _id: data._id,
+            avatar: data.avatar,
+            fullName: data.fullName,
+            id_account: data.id_account,
+            id_friendTag: data.id_friendTag,
+            id_visualMedia: data.id_visualMedia,
+            isShare: data.isShare,
+            listReaction: data.listReaction,
+            location: data.location,
+            shareId: data.shareId,
+            createdAt: data.createdAt,
             postPrivacy: privacy,
             postContent: content,
             postFeeling: feeling === 'No emotion' ? '' : feeling,
         };
         axios
-            .post('http://localhost:3000/posts/share_post', postData, {
+            .patch('http://localhost:3000/posts/update_post', postData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
             })
             .then((res) => {
-                window.location.reload();
+                const updatedPost = postData;
+                const postIndex = results.findIndex((post) => post._id === data._id);
+                if (postIndex !== -1) {
+                    setResults((prevList) => {
+                        const newList = [...prevList];
+                        newList[postIndex] = updatedPost;
+                        return newList;
+                    });
+                }
             })
             .catch((error) => {
                 console.log(error);
@@ -102,7 +121,8 @@ function ShareModal({ data, onClose, visible }) {
                     <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                 </button>
                 <hr style={{ margin: '8px' }} />
-                <input
+                <textarea
+                    className={cx('textarea')}
                     value={content}
                     style={{ width: '90%', marginLeft: '5%' }}
                     placeholder="What are you thinking?"
@@ -208,17 +228,14 @@ function ShareModal({ data, onClose, visible }) {
                                 </div>
                             )}
                         </div>
-                        <div className={cx('post-content-text')}>
-                            <p className={cx('post-text')}>{data.postContent}</p>
-                        </div>
                     </div>
                 </div>
-                <button className={cx('buttonDone')} onClick={(event) => handleShare(event)}>
-                    Share
+                <button className={cx('buttonDone')} onClick={(event) => handleUpdate(event)}>
+                    Update
                 </button>
             </Modal.Body>
         </Modal>
     );
 }
 
-export default ShareModal;
+export default UpdatePostModal;
