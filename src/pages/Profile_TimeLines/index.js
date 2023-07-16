@@ -71,11 +71,15 @@ function Profile_TimeLines(props) {
                                 </div>
                             )}
                             <div className={cx('list-post')}>
-                                {listMyPost?.map((post, index) => (
-                                    <div key={index}>
-                                        <Post data={post} />
-                                    </div>
-                                ))}
+                                {listMyPost?.length > 0 ? (
+                                    listMyPost?.map((post, index) => (
+                                        <div key={index}>
+                                            <Post data={post} />
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className={cx('no-post')}>No posts to show</p>
+                                )}
                             </div>
                         </>
                     }
@@ -99,11 +103,15 @@ function Profile_TimeLines(props) {
                                 </div>
                             )}
                             <div className={cx('list-post')}>
-                                {listTaggedInPost?.map((post, index) => (
-                                    <div key={index}>
-                                        <Post data={post} />
-                                    </div>
-                                ))}
+                                {listTaggedInPost?.length > 0 ? (
+                                    listTaggedInPost?.map((post, index) => (
+                                        <div key={index}>
+                                            <Post data={post} />
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className={cx('no-post')}>No posts to show</p>
+                                )}
                             </div>
                         </>
                     }
