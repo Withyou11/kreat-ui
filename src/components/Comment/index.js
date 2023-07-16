@@ -10,8 +10,9 @@ import { faEllipsis, faHeart, faThumbsUp } from '@fortawesome/free-solid-svg-ico
 import Button from '../Button';
 import { Image } from 'cloudinary-react';
 import axios from 'axios';
+import UpdateCommentModal from '../UpdateCommentModal';
 
-function Comment({ data, setComments }) {
+function Comment({ data, comments, setComments }) {
     const [isUpdateCommentModalOpen, setIsUpdateCommentModalOpen] = useState(false);
     const menuRef = useRef(null);
 
@@ -395,6 +396,15 @@ function Comment({ data, setComments }) {
                     visible={isReactModalOpen}
                     onClose={handleCloseReactList}
                 ></ShowListReact>
+            )}
+            {isUpdateCommentModalOpen && (
+                <UpdateCommentModal
+                    data={data}
+                    visible={isUpdateCommentModalOpen}
+                    onClose={handleCloseUpdateCommentModal}
+                    setComments={setComments}
+                    comments={comments}
+                ></UpdateCommentModal>
             )}
         </div>
     );

@@ -9,7 +9,7 @@ import reactIcons from '../General/reactIcons';
 import axios from 'axios';
 const cx = classNames.bind(styles);
 
-function AccountItem({ data, button, active, inactive, user, onUserSelect, mutualFriends }) {
+function AccountItem({ data, button, active, inactive, user, onUserSelect, mutualFriends, setFriendSuggestionList }) {
     const navigate = useNavigate();
     function handleAddFriend(e) {
         e.stopPropagation();
@@ -23,7 +23,11 @@ function AccountItem({ data, button, active, inactive, user, onUserSelect, mutua
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
             })
-            .then((res) => {})
+            .then((res) => {
+                setFriendSuggestionList((results) =>
+                    results.filter((account) => account.id_account !== data.id_account),
+                );
+            })
             .catch(() => {});
     }
     const handleGoTimelines = () => {

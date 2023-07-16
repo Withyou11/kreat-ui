@@ -54,7 +54,7 @@ function ListComments({ id_post }) {
             <div className={cx('list-comment')}>
                 {comments.map((comment, index) => (
                     <div key={index}>
-                        <Comment data={comment} setComments={setComments}></Comment>
+                        <Comment data={comment} comments={comments} setComments={setComments}></Comment>
                     </div>
                 ))}
             </div>

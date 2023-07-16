@@ -61,6 +61,8 @@ function NotificationItem({ data }) {
         if (data.id_post) {
             navigate(`/post/${data.id_post}`);
         } else {
+            localStorage.setItem('anotherAccountId', data.id_senders[0]);
+            localStorage.setItem('anotherAccountAvatar', data.avatar);
             navigate(`/timelines/${data.id_senders[0]}`);
         }
     };

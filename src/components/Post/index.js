@@ -125,12 +125,14 @@ function Post({ data, results, setResults }) {
                 localStorage.setItem('anotherAccountName', data.fullName);
                 localStorage.setItem('anotherAccountAvatar', data.avatar);
                 navigate(`/timelines/${id}`);
+                window.location.reload();
             }
         } else {
             localStorage.setItem('anotherAccountId', id);
             localStorage.setItem('anotherAccountName', data.shareContent.shared_fullName);
             localStorage.setItem('anotherAccountAvatar', data.shareContent.shared_avatar);
             navigate(`/timelines/${id}`);
+            window.location.reload();
         }
     };
 
@@ -359,7 +361,7 @@ function Post({ data, results, setResults }) {
                             {data?.id_account === localStorage.getItem('accountId') && (
                                 <Button
                                     className={cx('actionOnPost')}
-                                    leftIcon={<FontAwesomeIcon icon={faEllipsis} style={{ fontSize: '2.4rem' }} />}
+                                    leftIcon={<FontAwesomeIcon icon={faEllipsis} style={{ fontSize: '2rem' }} />}
                                     onClick={handleShowAction}
                                 ></Button>
                             )}

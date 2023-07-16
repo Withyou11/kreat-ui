@@ -133,7 +133,6 @@ function ProfileHeader() {
         setIsUpdateInfoModalOpen(false);
     };
     const handleUpdateInfo = (updateInfo) => {
-        console.log(updateInfo);
         localStorage.setItem('fullname', updateInfo.fullName);
         if (updateInfo.avatar.includes('base64')) {
             axios

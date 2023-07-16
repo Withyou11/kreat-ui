@@ -2,19 +2,22 @@ import classNames from 'classnames/bind';
 import styles from './ChatContent.module.scss';
 import NewTippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import { useRef, useEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 
 function ChatContent({ messages }) {
     const cx = classNames.bind(styles);
-    const scrollRef = useRef();
-    useEffect(() => {
-        scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const chatContainerRef = useRef();
+
+    useLayoutEffect(() => {
+        const chatContainer = chatContainerRef.current;
+        chatContainer.scrollTop = chatContainer.scrollHeight;
     }, [messages]);
+
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper')} ref={chatContainerRef}>
             <ul>
                 {messages.map((msg, index) => (
-                    <li ref={scrollRef} key={index}>
+                    <li key={index}>
                         <NewTippy content={new Date(msg.createdAt).toLocaleString()}>
                             <div
                                 className={cx(

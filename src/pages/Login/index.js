@@ -28,14 +28,16 @@ function Login() {
                     localStorage.setItem('avatar', res.data.avatar);
                     localStorage.setItem('anotherAccountId', '');
                     navigate('/');
-                } else if (res.status === 400) {
-                    window.alert('Your email has not been verified yet!');
-                } else {
-                    window.alert('Login information is incorrect!');
                 }
             })
             .catch((error) => {
-                window.alert('Login failed!');
+                if (error.response.status === 400) {
+                    window.alert('Your email has not been verified yet!');
+                } else if (error.response.status === 401) {
+                    window.alert('Login information is incorrect!');
+                } else {
+                    window.alert('Login failed!');
+                }
             });
     };
 

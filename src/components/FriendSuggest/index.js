@@ -36,6 +36,7 @@ function FriendSuggest() {
                                         key={account.id_account}
                                         data={account}
                                         mutualFriends={account.mutualFriends}
+                                        setFriendSuggestionList={setFriendSuggestionList}
                                         button
                                     ></AccountItem>
                                 </div>

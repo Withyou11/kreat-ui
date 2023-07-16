@@ -38,6 +38,12 @@ function PostForm() {
         setFeeling(newFeeling);
     };
 
+    const handleSetPrivate = () => {
+        setPrivacy('private');
+        setWithFriend([]);
+        setWithFriendName([]);
+    };
+
     const [isTagModalOpen, setIsTagModalOpen] = useState(false);
     const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
     const [isFeelingModalOpen, setIsFeelingModalOpen] = useState(false);
@@ -72,6 +78,7 @@ function PostForm() {
                 const visualList = {
                     data: base64DataArray,
                 };
+                // eslint-disable-next-line
                 visualList.data.map((visual) => {
                     visualData.push({ type: 'image', data: visual });
                 });
@@ -266,17 +273,20 @@ function PostForm() {
                                         name="media"
                                         onChange={(event) => handleMediaChange(event)}
                                     />
-                                    <div className={cx('add-image-container')}>
+                                    <div
+                                        className={cx('add-image-container', {
+                                            'private-opacity': privacy === 'private',
+                                        })}
+                                    >
                                         <button
+                                            disabled={privacy === 'private'}
                                             className={cx('add-image-button')}
                                             onClick={(event) => handleTagButtonClick(event)}
                                         >
-                                            <FontAwesomeIcon
-                                                className={cx('add-user-icon')}
-                                                icon={faUserTag}
-                                            ></FontAwesomeIcon>
+                                            <FontAwesomeIcon className={cx('add-user-icon')} icon={faUserTag} />
                                         </button>
                                     </div>
+
                                     {isTagModalOpen && (
                                         <div>
                                             <TagFriendModal
@@ -389,7 +399,7 @@ function PostForm() {
                                         name="privacy"
                                         value="private"
                                         checked={privacy === 'private'}
-                                        onChange={() => setPrivacy('private')}
+                                        onChange={handleSetPrivate}
                                     />
                                     <p className={cx('radio-label')}>Private</p>
                                 </div>

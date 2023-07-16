@@ -73,7 +73,6 @@
 
 .friend-number {
     color: var(--black);
-    margin: auto;
     opacity: 1;
     padding: 4px;
 }
@@ -301,20 +300,21 @@
     display: flex;
     flex-direction: row-reverse;
     position: relative;
-    width: 200px;
+    width: 220px;
 }
 
 .actionOnPost {
     padding-left: 4px;
     padding-right: 4px;
-    width: 20px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .menu {
     z-index: 10;
     position: absolute;
     top: 10;
-    left: 0;
+    right: 10px;
     width: 150px;
     height: 100px;
     border: 1px solid #ccc;
@@ -332,10 +332,10 @@
     }
 }
 
-// .actionButton {
-//     width: 30px;
-//     height: 100%;
-// }
+.actionButton {
+    width: 80px;
+    height: 100%;
+}
 
 // .actionOnPost {
 //     width: 100%;
