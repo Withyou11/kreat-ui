@@ -1,0 +1,56 @@
+.container {
+    width: 100%;
+    &:hover {
+        background-color: #f1f1f1;
+    }
+    cursor: pointer;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin: 0 5%;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: auto 0;
+}
+
+.info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: auto 8px;
+}
+
+.name {
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.content {
+    color: black;
+    font-size: 16px;
+}
+
+.time {
+    color: black;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.time1 {
+    color: var(--primary-darker);
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.icon {
+    color: var(--primary);
+    font-size: 14px;
+    margin: auto 0;
+}

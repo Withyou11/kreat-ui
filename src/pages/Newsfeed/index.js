@@ -37,6 +37,7 @@ function Newsfeed() {
                 setNewMessage(newMessage);
                 setSelectedUserId(newMessage.id_sender);
             });
+            socket.current.on('getNotification', () => {});
         }
     }, []);
 

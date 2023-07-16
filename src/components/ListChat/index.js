@@ -1,20 +1,20 @@
-import styles from './ListNotification.module.scss';
+import styles from './ListChat.module.scss';
 import classNames from 'classnames/bind';
-import NotificationItem from '../NotificationItem';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-function ListNotification() {
+import ChatItem from '../ChatItem';
+function ListChat() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         axios
-            .get(`http://localhost:3000/accounts/notification`, {
+            .get(`http://localhost:3000/chat/conversations`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
             })
             .then((res) => {
-                setData(res.data.listNotification);
+                setData(res.data.listConversation);
                 setLoading(false);
             })
             .catch(() => {});
@@ -23,13 +23,13 @@ function ListNotification() {
     const cx = classNames.bind(styles);
     return (
         <div className={cx('wrapper')}>
-            <p className={cx('title')}>Notifications</p>
+            <p className={cx('title')}>Chats</p>
             {!loading ? (
                 <div className={cx('container')}>
-                    {data.length === 0 && <p className={cx('title1')}>No notifications to show</p>}
+                    {data.length === 0 && <p className={cx('title1')}>No conversations to show</p>}
                     {data?.map((notification, index) => (
                         <div key={index}>
-                            <NotificationItem data={notification}></NotificationItem>
+                            <ChatItem data={notification}></ChatItem>
                             <hr style={{ margin: '0' }} />
                         </div>
                     ))}
@@ -50,4 +50,4 @@ function ListNotification() {
     );
 }
 
-export default ListNotification;
+export default ListChat;

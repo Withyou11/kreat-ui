@@ -25,6 +25,8 @@ import { useNavigate } from 'react-router-dom';
 import RenderUserReact from '../RenderUserReact/RenderUserReact';
 import ShareModal from '../ShareModal';
 import UpdatePostModal from '../UpdatePostModal';
+import { io } from 'socket.io-client';
+
 function Post({ data, results, setResults }) {
     const menuRef = useRef(null);
     const navigate = useNavigate();
@@ -278,7 +280,9 @@ function Post({ data, results, setResults }) {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
                 })
-                .then((res) => {})
+                .then((res) => {
+                    io('ws://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
+                })
                 .catch((error) => {
                     console.log(error);
                 });

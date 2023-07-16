@@ -16,7 +16,6 @@ function UpdatePostModal({ data, onClose, visible, setResults, results }) {
     const cx = classNames.bind(styles);
     const [content, setContent] = useState(data.postContent);
     const handleUpdate = (event) => {
-        console.log(data._id);
         event.preventDefault();
         const postData = {
             _id: data._id,
@@ -115,8 +114,8 @@ function UpdatePostModal({ data, onClose, visible, setResults, results }) {
     }
     return (
         <Modal style={{ marginLeft: '-6.8%' }} show={visible} onHide={handleClose} animation={false}>
-            <Modal.Body>
-                <h3 style={{ margin: '0 12px' }}>Share the post</h3>
+            <Modal.Body style={{ height: '100px' }}>
+                <h3 style={{ margin: '0 12px' }}>Update the post</h3>
                 <button className={cx('delete-image-button')} onClick={handleClose}>
                     <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                 </button>

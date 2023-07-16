@@ -10,9 +10,12 @@ import logo from '~/assets/images/app_logo.png';
 import { Image } from 'cloudinary-react';
 import Menu from '~/components/Popper/Menu';
 import Search from '../Search';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ListNotification from '~/components/ListNotification';
+import ListChat from '~/components/ListChat';
+import { io } from 'socket.io-client';
+
 const cx = classNames.bind(styles);
 
 const MENU_ITEMS = [
@@ -30,9 +33,30 @@ const MENU_ITEMS = [
     },
 ];
 function Header() {
+    const socket = useRef();
+    socket.current = io('ws://localhost:3002');
     const [unviewAmount, setUnviewAmount] = useState();
     const [showListNotification, setShowListNotification] = useState(false);
+    const [showListChats, setShowListChats] = useState(false);
     const navigation = useNavigate();
+    useEffect(() => {
+        socket.current.on('getNotification', () => {
+            console.log('hihihhaha');
+            axios
+                .get(`http://localhost:3000/accounts/unviewed_notification_and_message`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    },
+                })
+                .then((res) => {
+                    setUnviewAmount(res.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        });
+    }, []);
+
     useEffect(() => {
         axios
             .get(`http://localhost:3000/accounts/unviewed_notification_and_message`, {
@@ -47,6 +71,7 @@ function Header() {
                 console.log(error);
             });
     }, []);
+
     const handleGoNewsfeed = () => {
         localStorage.setItem('anotherAccountId', '');
         localStorage.setItem('anotherAccountName', '');
@@ -62,7 +87,12 @@ function Header() {
             ...prevData,
             unviewedNotificationAmount: 0,
         }));
+        setShowListChats(false);
         setShowListNotification(!showListNotification);
+    };
+    const handleToggleChats = () => {
+        setShowListNotification(false);
+        setShowListChats(!showListChats);
     };
     return (
         <header className={cx('wrapper')}>
@@ -80,9 +110,10 @@ function Header() {
                                     <p className={cx('amount')}>{unviewAmount?.unviewedMessageAmount}</p>
                                 </div>
                             )}
-                            <button className={cx('action_btn')}>
+                            <button onClick={handleToggleChats} className={cx('action_btn')}>
                                 <FontAwesomeIcon icon={faComments} />
                             </button>
+                            {showListChats && <ListChat />}
                         </div>
                     </NewTippy>
                     <NewTippy content="Notifications">
