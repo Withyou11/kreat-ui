@@ -33,12 +33,12 @@ const MENU_ITEMS = [
     },
 ];
 function Header() {
-    const socket = useRef();
-    socket.current = io('ws://localhost:3002');
     const [unviewAmount, setUnviewAmount] = useState();
     const [showListNotification, setShowListNotification] = useState(false);
     const [showListChats, setShowListChats] = useState(false);
     const navigation = useNavigate();
+    const socket = useRef();
+    socket.current = io('ws://localhost:3002');
     useEffect(() => {
         socket.current.on('getNotification', () => {
             console.log('hihihhaha');

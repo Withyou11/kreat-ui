@@ -29,6 +29,7 @@ function Profile_TimeLines(props) {
                     },
                 });
                 setListMyPost(response1.data.timeline);
+                localStorage.setItem('friendStatus', response1.data.friendStatus);
                 if (localStorage.getItem('anotherAccountId')) {
                     localStorage.setItem('anotherAccountName', response1.data.fullName);
                 }
