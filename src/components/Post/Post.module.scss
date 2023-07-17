@@ -123,6 +123,9 @@
 
 .react-number-container {
     margin: 8px 0 0 0;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .react-number:hover {

@@ -379,7 +379,9 @@ function PostForm() {
                                         checked={privacy === 'public'}
                                         onChange={() => setPrivacy('public')}
                                     />
-                                    <p className={cx('radio-label')}>Public</p>
+                                    <label htmlFor="public" className={cx('radio-label')}>
+                                        Public
+                                    </label>
                                 </div>
                                 <div className={cx('radio-item')}>
                                     <input
@@ -390,7 +392,9 @@ function PostForm() {
                                         checked={privacy === 'friend'}
                                         onChange={() => setPrivacy('friend')}
                                     />
-                                    <p className={cx('radio-label')}>Friends</p>
+                                    <label htmlFor="friend" className={cx('radio-label')}>
+                                        Friends
+                                    </label>
                                 </div>
                                 <div className={cx('radio-item')}>
                                     <input
@@ -401,7 +405,9 @@ function PostForm() {
                                         checked={privacy === 'private'}
                                         onChange={handleSetPrivate}
                                     />
-                                    <p className={cx('radio-label')}>Private</p>
+                                    <label htmlFor="private" className={cx('radio-label')}>
+                                        Private
+                                    </label>
                                 </div>
                             </div>
                             <Button className={cx('submit-button')} primary small type="submit">

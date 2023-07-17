@@ -386,7 +386,9 @@ function Comment({ data, comments, setComments }) {
                         return renderIcon(reaction);
                     })}
                     {totalReactions > 0 && (
-                        <span style={{ margin: '-2px 8px', fontSize: '1.8rem' }}>{totalReactions}</span>
+                        <span style={{ margin: '-2px 8px', fontSize: '1.8rem' }} className={cx('list-reaction-number')}>
+                            {totalReactions}
+                        </span>
                     )}
                 </div>
             </div>

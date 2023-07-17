@@ -14,7 +14,7 @@ import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ListNotification from '~/components/ListNotification';
 import ListChat from '~/components/ListChat';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 
 const cx = classNames.bind(styles);
 
@@ -37,25 +37,25 @@ function Header() {
     const [showListNotification, setShowListNotification] = useState(false);
     const [showListChats, setShowListChats] = useState(false);
     const navigation = useNavigate();
-    const socket = useRef();
-    socket.current = io('ws://localhost:3002');
-    useEffect(() => {
-        socket.current.on('getNotification', () => {
-            console.log('hihihhaha');
-            axios
-                .get(`http://localhost:3000/accounts/unviewed_notification_and_message`, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                    },
-                })
-                .then((res) => {
-                    setUnviewAmount(res.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        });
-    }, []);
+    // const socket = useRef();
+    // socket.current = io('ws://localhost:3002');
+    // useEffect(() => {
+    //     socket.current.on('getNotification', () => {
+    //         console.log('hihihhaha');
+    //         axios
+    //             .get(`http://localhost:3000/accounts/unviewed_notification_and_message`, {
+    //                 headers: {
+    //                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    //                 },
+    //             })
+    //             .then((res) => {
+    //                 setUnviewAmount(res.data);
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //             });
+    //     });
+    // }, []);
 
     useEffect(() => {
         axios
@@ -126,7 +126,9 @@ function Header() {
                             <button onClick={handleToggleNotification} className={cx('action_btn')}>
                                 <FontAwesomeIcon icon={faBell} />
                             </button>
-                            {showListNotification && <ListNotification />}
+                            {showListNotification && (
+                                <ListNotification setShowListNotification={setShowListNotification} />
+                            )}
                         </div>
                     </NewTippy>
                     <Menu items={MENU_ITEMS} onChange={handleMenuChange}>

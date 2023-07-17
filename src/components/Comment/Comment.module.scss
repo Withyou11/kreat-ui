@@ -172,6 +172,13 @@
 
 .list-reaction {
     float: right;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.list-reaction-number:hover {
+    text-decoration: underline;
 }
 
 .actionButton {

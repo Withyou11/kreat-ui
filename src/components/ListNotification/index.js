@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import NotificationItem from '../NotificationItem';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-function ListNotification() {
+function ListNotification({ setShowListNotification }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -29,7 +29,10 @@ function ListNotification() {
                     {data.length === 0 && <p className={cx('title1')}>No notifications to show</p>}
                     {data?.map((notification, index) => (
                         <div key={index}>
-                            <NotificationItem data={notification}></NotificationItem>
+                            <NotificationItem
+                                data={notification}
+                                setShowListNotification={setShowListNotification}
+                            ></NotificationItem>
                             <hr style={{ margin: '0' }} />
                         </div>
                     ))}

@@ -104,9 +104,7 @@ function ProfileHeader() {
     function handleUnfriend(e) {
         e.stopPropagation();
         e.preventDefault();
-        if (
-            window.location.confirm(`Are you sure you want to unfriend ${localStorage.getItem('anotherAccountName')}?`)
-        ) {
+        if (window.confirm(`Are you sure you want to unfriend ${localStorage.getItem('anotherAccountName')}?`)) {
             axios
                 .delete(`http://localhost:3000/accounts/${localStorage.getItem('anotherAccountId')}/unfriend`, {
                     headers: {
