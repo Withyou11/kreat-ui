@@ -281,7 +281,7 @@ function Post({ data, results, setResults }) {
                     },
                 })
                 .then((res) => {
-                    // io('ws://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
+                    io('ws://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
                 })
                 .catch((error) => {
                     console.log(error);

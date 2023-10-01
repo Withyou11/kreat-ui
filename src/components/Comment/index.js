@@ -13,6 +13,7 @@ import axios from 'axios';
 import UpdateCommentModal from '../UpdateCommentModal';
 
 function Comment({ data, comments, setComments }) {
+    console.log(comments);
     const [isUpdateCommentModalOpen, setIsUpdateCommentModalOpen] = useState(false);
     const menuRef = useRef(null);
 

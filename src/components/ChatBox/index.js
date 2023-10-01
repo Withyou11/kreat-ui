@@ -12,7 +12,7 @@ import { io } from 'socket.io-client';
 import axios from 'axios';
 import Button from '../Button';
 import { useNavigate } from 'react-router-dom';
-function ChatBox({ updateState, conversationId, userName, userAvatar, userId, flag }) {
+function ChatBox({ updateState, conversationId, userName, userAvatar, userId, flag, status }) {
     const onlineFriend = useContext(OnlineFriendContext);
     const navigate = useNavigate();
     const onlineFriendList = onlineFriend.onlineFriendList;
@@ -100,18 +100,22 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
                 <hr />
                 <ChatContent messages={messages} />
                 <hr />
-                <form className={cx('form')} onSubmit={handleSubmit}>
-                    <input
-                        className={cx('input')}
-                        type="text"
-                        value={inputValue}
-                        placeholder="Enter message..."
-                        onChange={(e) => setInputValue(e.target.value)}
-                    />
-                    <button className={cx('submit')} type="submit">
-                        <FontAwesomeIcon icon={faPaperPlane}></FontAwesomeIcon>
-                    </button>
-                </form>
+                {status ? (
+                    <form className={cx('form')} onSubmit={handleSubmit}>
+                        <input
+                            className={cx('input')}
+                            type="text"
+                            value={inputValue}
+                            placeholder="Enter message..."
+                            onChange={(e) => setInputValue(e.target.value)}
+                        />
+                        <button className={cx('submit')} type="submit">
+                            <FontAwesomeIcon icon={faPaperPlane}></FontAwesomeIcon>
+                        </button>
+                    </form>
+                ) : (
+                    <p className={cx('not-friend')}>This person is not your friend now</p>
+                )}
             </PopperWrapper>
         </div>
     );

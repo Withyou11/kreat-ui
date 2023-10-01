@@ -1,12 +1,12 @@
+import { useState } from 'react';
 import { Image } from 'cloudinary-react';
 import styles from './ChatItem.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
-function ChatItem({ data }) {
+function ChatItem({ data, setShowListChats, handleUserSelect }) {
+    console.log(data);
     const cx = classNames.bind(styles);
-    const navigate = useNavigate();
     function formatDate(timestamp) {
         const date = new Date(timestamp);
         const now = new Date();
@@ -57,13 +57,8 @@ function ChatItem({ data }) {
     }
 
     const handleClick = () => {
-        if (data.id_post) {
-            navigate(`/post/${data.id_post}`);
-        } else {
-            localStorage.setItem('anotherAccountId', data.id_senders[0]);
-            localStorage.setItem('anotherAccountAvatar', data.avatar);
-            navigate(`/timelines/${data.id_senders[0]}`);
-        }
+        setShowListChats(false);
+        handleUserSelect(data.id_conversation, data.fullName, data.avatar, data.id_account, data.status);
     };
     return (
         <div onClick={handleClick} className={cx('container')}>
@@ -73,7 +68,7 @@ function ChatItem({ data }) {
                     <div className={cx('info')}>
                         <p className={cx('name')}>{data?.fullName}</p>
                         <p className={cx('content')}>
-                            {data?.isYou ? `You` : ''} {data?.latestMessage}
+                            {data?.isYou ? 'You: ' + data?.latestMessage : data?.latestMessage}
                         </p>
                         <p className={cx('time1')}>{formatDate(data?.latestMessageTime)}</p>
                     </div>
@@ -84,7 +79,9 @@ function ChatItem({ data }) {
                     <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} crop="scale" />
                     <div className={cx('info')}>
                         <p className={cx('name')}>{data?.fullName}</p>
-                        <p className={cx('content')}>{data?.latestMessage}</p>
+                        <p className={cx('content')}>
+                            {data?.isYou ? 'You: ' + data?.latestMessage : data?.latestMessage}
+                        </p>
                         <p className={cx('time')}>{formatDate(data?.latestMessageTime)}</p>
                     </div>
                     <FontAwesomeIcon

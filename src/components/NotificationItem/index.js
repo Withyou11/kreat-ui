@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 function NotificationItem({ data, setShowListNotification }) {
-    console.log(data);
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
     function formatDate(timestamp) {

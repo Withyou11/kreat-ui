@@ -9,9 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faPen } from '@fortawesome/free-solid-svg-icons';
 import UpdateNameModal from '../UpdateNameModal';
 import axios from 'axios';
-const cx = classNames.bind(styles);
+import { io } from 'socket.io-client';
 
 function ProfileHeader() {
+    const cx = classNames.bind(styles);
     const [activeTab, setActiveTab] = useState('timeline');
     const location = useLocation();
     const [friendStatus, setFriendStatus] = useState(localStorage.getItem('friendStatus'));
@@ -47,6 +48,7 @@ function ProfileHeader() {
                 },
             })
             .then((res) => {
+                io('ws://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
                 setFriendStatus('friend request sent');
                 localStorage.setItem('friendStatus', 'friend request sent');
             })
@@ -95,6 +97,8 @@ function ProfileHeader() {
                 },
             })
             .then((res) => {
+                console.log(res.data);
+                io('ws://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
                 localStorage.setItem('friendStatus', 'friend');
                 window.location.reload();
             })

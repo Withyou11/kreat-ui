@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ChatItem from '../ChatItem';
-function ListChat() {
+function ListChat({ setShowListChats, handleUserSelect }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -29,7 +29,11 @@ function ListChat() {
                     {data.length === 0 && <p className={cx('title1')}>No conversations to show</p>}
                     {data?.map((notification, index) => (
                         <div key={index}>
-                            <ChatItem data={notification}></ChatItem>
+                            <ChatItem
+                                data={notification}
+                                setShowListChats={setShowListChats}
+                                handleUserSelect={handleUserSelect}
+                            ></ChatItem>
                             <hr style={{ margin: '0' }} />
                         </div>
                     ))}

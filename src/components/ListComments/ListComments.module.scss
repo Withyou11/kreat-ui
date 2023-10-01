@@ -20,10 +20,20 @@
     border-bottom-right-radius: 8px;
 }
 
+.comment-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
 .input {
-    width: 85%;
+    width: 90%;
 }
 
 .submit {
     padding: 12px;
+}
+
+.form {
+    display: flex;
 }

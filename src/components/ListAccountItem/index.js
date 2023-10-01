@@ -65,6 +65,7 @@ function ListAccountItem({ listContact, onlineFriendList }) {
                     userName={selectedUserName}
                     userAvatar={selectedUserAvatar}
                     userId={selectedUserId}
+                    status={true}
                 />
             )}
         </div>

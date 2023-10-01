@@ -7,9 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import reactIcons from '../General/reactIcons';
 import axios from 'axios';
-const cx = classNames.bind(styles);
+import { io } from 'socket.io-client';
 
 function AccountItem({ data, button, active, inactive, user, onUserSelect, mutualFriends, setFriendSuggestionList }) {
+    const cx = classNames.bind(styles);
     const navigate = useNavigate();
     function handleAddFriend(e) {
         e.stopPropagation();
@@ -24,6 +25,8 @@ function AccountItem({ data, button, active, inactive, user, onUserSelect, mutua
                 },
             })
             .then((res) => {
+                io('ws://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
+
                 setFriendSuggestionList((results) =>
                     results.filter((account) => account.id_account !== data.id_account),
                 );

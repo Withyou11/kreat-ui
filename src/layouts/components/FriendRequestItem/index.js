@@ -4,6 +4,8 @@ import styles from './FriendRequestItem.module.scss';
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
+import { io } from 'socket.io-client';
+
 function FriendRequestItem({ data }) {
     const navigate = useNavigate();
     const cx = classNames.bind(styles);
@@ -17,6 +19,7 @@ function FriendRequestItem({ data }) {
                 },
             })
             .then((res) => {
+                io('ws://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
                 window.location.reload();
             })
             .catch(() => {});

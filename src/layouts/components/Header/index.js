@@ -10,7 +10,7 @@ import logo from '~/assets/images/app_logo.png';
 import { Image } from 'cloudinary-react';
 import Menu from '~/components/Popper/Menu';
 import Search from '../Search';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ListNotification from '~/components/ListNotification';
 import ListChat from '~/components/ListChat';
@@ -32,8 +32,8 @@ const MENU_ITEMS = [
         title: 'Logout',
     },
 ];
-function Header() {
-    const [unviewAmount, setUnviewAmount] = useState();
+function Header({ unviewAmount, setUnviewAmount, handleUserSelect }) {
+    // const [unviewAmount, setUnviewAmount] = useState();
     const [showListNotification, setShowListNotification] = useState(false);
     const [showListChats, setShowListChats] = useState(false);
     const navigation = useNavigate();
@@ -113,7 +113,9 @@ function Header() {
                             <button onClick={handleToggleChats} className={cx('action_btn')}>
                                 <FontAwesomeIcon icon={faComments} />
                             </button>
-                            {showListChats && <ListChat />}
+                            {showListChats && (
+                                <ListChat setShowListChats={setShowListChats} handleUserSelect={handleUserSelect} />
+                            )}
                         </div>
                     </NewTippy>
                     <NewTippy content="Notifications">
