@@ -43,7 +43,7 @@
 }
 
 .comment-content {
-    margin: 0 20px 8px 8px;
+    margin: 0 30px 8px 20px;
 }
 
 .react-button {
@@ -211,4 +211,36 @@
     &:hover {
         background-color: #f1f1f1;
     }
+}
+
+.overlay {
+    position: fixed;
+    background-color: rgba(204, 204, 204, 0.8);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay-image {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    margin-top: 20px;
+}
+
+.image {
+    height: 200px;
+    width: 100%;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.comment-content-image {
+    width: 90%;
+    margin: auto 20px;
 }

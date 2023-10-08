@@ -58,7 +58,7 @@ function AccountItem({ data, button, active, inactive, user, onUserSelect, mutua
                     <h4 className={cx('name')}>{data.fullName}</h4>
                     <p className={cx('amount-common-friend')}>
                         {mutualFriends}
-                        <span> Friends in Common</span>
+                        <span> mutual friends</span>
                     </p>
                 </div>
                 {button && (

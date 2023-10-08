@@ -50,7 +50,7 @@ function ListComments({ id_post }) {
         const promises = [];
         let visualData = [];
         if (selectedImage) {
-            const file = selectedImage; // Lấy tệp hình ảnh đã chọn
+            const file = selectedImage;
             const reader = new FileReader();
             const promise = new Promise((resolve, reject) => {
                 reader.onload = function (event) {
@@ -98,21 +98,6 @@ function ListComments({ id_post }) {
             .catch((error) => {
                 console.error(error);
             });
-
-        // axios
-        //     .post(`http://localhost:3000/accounts/comment_post`, body, {
-        //         headers: {
-        //             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        //         },
-        //     })
-        //     .then((res) => {
-        //         setComments([res.data.newComment, ...comments]);
-        //         setNewComment('');
-        //         setSelectedImage('');
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     });
     };
 
     return (

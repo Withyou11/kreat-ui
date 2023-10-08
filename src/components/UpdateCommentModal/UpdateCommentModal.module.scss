@@ -113,11 +113,11 @@
 }
 
 .image {
-    height: 270px;
+    height: 95%;
     width: 90%;
     margin-left: 1%;
-    border-radius: 6px;
     object-fit: cover;
+    margin: auto;
 }
 
 .radio-container {
@@ -144,4 +144,19 @@
 .form-control2 {
     border-radius: 6px;
     padding: 5px;
+}
+
+.imageContainer {
+    display: flex;
+    width: 100%;
+    height: 350px;
+    position: relative;
+    text-align: center;
+    border: 1px solid #000;
+}
+
+.chooseImageBtn {
+    position: absolute;
+    top: 47%;
+    left: 47%;
 }

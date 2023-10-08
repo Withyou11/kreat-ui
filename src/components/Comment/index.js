@@ -13,7 +13,6 @@ import axios from 'axios';
 import UpdateCommentModal from '../UpdateCommentModal';
 
 function Comment({ data, comments, setComments }) {
-    console.log(comments);
     const [isUpdateCommentModalOpen, setIsUpdateCommentModalOpen] = useState(false);
     const menuRef = useRef(null);
 
@@ -24,6 +23,16 @@ function Comment({ data, comments, setComments }) {
     function handleCloseReactList() {
         setIsReactModalOpen(false);
     }
+
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    const handleSelectImage = (image) => {
+        setSelectedImage(image);
+    };
+
+    const handleCloseImage = () => {
+        setSelectedImage(null);
+    };
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -265,6 +274,16 @@ function Comment({ data, comments, setComments }) {
                     </div>
                 </div>
                 <div className={cx('comment-content')}>{data.commentContent}</div>
+                <div className={cx('comment-content-image')}>
+                    {data?.commentImage && (
+                        <Image
+                            className={cx('image')}
+                            cloudName="dzuzcewvj"
+                            publicId={data.commentImage}
+                            onClick={() => handleSelectImage(data.commentImage)}
+                        />
+                    )}
+                </div>
                 <div className={cx('react-button')}>
                     <div className={cx('hover-reaction')}>
                         <Button
@@ -408,6 +427,17 @@ function Comment({ data, comments, setComments }) {
                     setComments={setComments}
                     comments={comments}
                 ></UpdateCommentModal>
+            )}
+            {selectedImage && (
+                <div className={cx('overlay')} onClick={handleCloseImage}>
+                    <Image
+                        className={cx('overlay-image')}
+                        cloudName="dzuzcewvj"
+                        publicId={selectedImage}
+                        crop="scale"
+                        alt="selected media"
+                    />
+                </div>
             )}
         </div>
     );
