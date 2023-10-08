@@ -3,8 +3,9 @@ import styles from './ChatContent.module.scss';
 import NewTippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { useRef, useLayoutEffect } from 'react';
+import { Image } from 'cloudinary-react';
 
-function ChatContent({ messages }) {
+function ChatContent({ messages, userId }) {
     const cx = classNames.bind(styles);
     const chatContainerRef = useRef();
 
@@ -15,24 +16,58 @@ function ChatContent({ messages }) {
 
     return (
         <div className={cx('wrapper')} ref={chatContainerRef}>
-            <ul>
-                {messages.map((msg, index) => (
-                    <li key={index}>
-                        <NewTippy content={new Date(msg.createdAt).toLocaleString()}>
-                            <div
-                                className={cx(
-                                    `message ${
-                                        msg.id_sender === localStorage.getItem('accountId') ? 'sender' : 'reciever'
-                                    }`,
-                                )}
-                            >
-                                <p className={cx('content-message')}>{msg.messageContent}</p>
-                            </div>
-                        </NewTippy>
-                        <div style={{ clear: 'both' }}></div>
-                    </li>
-                ))}
-            </ul>
+            {userId !== 'null' ? (
+                <ul>
+                    {messages.map((msg, index) => (
+                        <li key={index}>
+                            <NewTippy content={new Date(msg.createdAt).toLocaleString()}>
+                                <div
+                                    className={cx(
+                                        `message ${
+                                            msg.id_sender === localStorage.getItem('accountId') ? 'sender' : 'reciever'
+                                        }`,
+                                    )}
+                                >
+                                    <p className={cx('content-message')}>{msg.messageContent}</p>
+                                </div>
+                            </NewTippy>
+                            <div style={{ clear: 'both' }}></div>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <ul>
+                    {messages.map((msg, index) => (
+                        <li key={index}>
+                            {msg.id_sender !== localStorage.getItem('accountId') && (
+                                <Image
+                                    // onClick={handleGoTimelines}
+                                    className={cx('avatar')}
+                                    cloudName="dzuzcewvj"
+                                    publicId={msg.avatar}
+                                    crop="scale"
+                                />
+                            )}
+                            <NewTippy content={new Date(msg.createdAt).toLocaleString()}>
+                                <div
+                                    className={cx(
+                                        `message ${
+                                            msg.id_sender === localStorage.getItem('accountId') ? 'sender' : 'reciever'
+                                        }`,
+                                    )}
+                                >
+                                    {msg.id_sender !== localStorage.getItem('accountId') && (
+                                        <p className={cx('content-name')}>{msg.fullName}</p>
+                                    )}
+                                    <p className={cx('content-message')}>{msg.messageContent}</p>
+                                </div>
+                            </NewTippy>
+
+                            <div style={{ clear: 'both' }}></div>
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 }

@@ -5,7 +5,6 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 function ChatItem({ data, setShowListChats, handleUserSelect }) {
-    console.log(data);
     const cx = classNames.bind(styles);
     function formatDate(timestamp) {
         const date = new Date(timestamp);
@@ -68,7 +67,7 @@ function ChatItem({ data, setShowListChats, handleUserSelect }) {
                     <div className={cx('info')}>
                         <p className={cx('name')}>{data?.fullName}</p>
                         <p className={cx('content')}>
-                            {data?.isYou ? 'You: ' + data?.latestMessage : data?.latestMessage}
+                            {data?.senderName ? `${data.senderName}: ${data?.latestMessage}` : ''}
                         </p>
                         <p className={cx('time1')}>{formatDate(data?.latestMessageTime)}</p>
                     </div>
@@ -80,7 +79,7 @@ function ChatItem({ data, setShowListChats, handleUserSelect }) {
                     <div className={cx('info')}>
                         <p className={cx('name')}>{data?.fullName}</p>
                         <p className={cx('content')}>
-                            {data?.isYou ? 'You: ' + data?.latestMessage : data?.latestMessage}
+                            {data?.senderName ? `${data.senderName}: ${data?.latestMessage}` : ''}
                         </p>
                         <p className={cx('time')}>{formatDate(data?.latestMessageTime)}</p>
                     </div>

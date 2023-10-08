@@ -3,9 +3,18 @@ import classNames from 'classnames/bind';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ChatItem from '../ChatItem';
+import { faCirclePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Button from '../Button';
+import CreateGroupModal from '../CreateGroupModal';
 function ListChat({ setShowListChats, handleUserSelect }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const handleCreateButtonClick = (event) => {
+        event.preventDefault();
+        setIsCreateModalOpen(true);
+    };
     useEffect(() => {
         axios
             .get(`http://localhost:3000/chat/conversations`, {
@@ -23,7 +32,15 @@ function ListChat({ setShowListChats, handleUserSelect }) {
     const cx = classNames.bind(styles);
     return (
         <div className={cx('wrapper')}>
-            <p className={cx('title')}>Chats</p>
+            <div className={cx('titleContainer')}>
+                <p className={cx('title')}>Chats</p>
+                <Button
+                    leftIcon={<FontAwesomeIcon icon={faCirclePlus} />}
+                    smallest
+                    onClick={(event) => handleCreateButtonClick(event)}
+                    className={cx('plusIcon')}
+                ></Button>
+            </div>
             {!loading ? (
                 <div className={cx('container')}>
                     {data.length === 0 && <p className={cx('title1')}>No conversations to show</p>}
@@ -49,6 +66,9 @@ function ListChat({ setShowListChats, handleUserSelect }) {
                     <div className={cx('dot-spinner__dot')}></div>
                     <div className={cx('dot-spinner__dot')}></div>
                 </div>
+            )}
+            {isCreateModalOpen && (
+                <CreateGroupModal visible={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} />
             )}
         </div>
     );

@@ -9,6 +9,11 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+.titleContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
 .title {
     font-size: 22px;
     margin: 10px;
@@ -128,4 +133,9 @@
         transform: scale(1);
         opacity: 1;
     }
+}
+
+.plusIcon {
+    font-size: 3rem;
+    margin-right: 10px;
 }

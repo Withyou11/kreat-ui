@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Image } from 'cloudinary-react';
 
 function UpdateCommentModal({ data, onClose, visible, setComments, comments }) {
-    console.log(comments);
     const cx = classNames.bind(styles);
     const [content, setContent] = useState(data.commentContent);
     const [chosenImage, setChosenImage] = useState();
@@ -82,9 +81,7 @@ function UpdateCommentModal({ data, onClose, visible, setComments, comments }) {
                         },
                     })
                     .then((res) => {
-                        console.log(res);
                         onClose();
-
                         const updatedComment = {
                             _id: res.data.comment._id,
                             commentContent: res.data.comment.commentContent,

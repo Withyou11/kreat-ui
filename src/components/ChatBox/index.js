@@ -12,21 +12,79 @@ import { io } from 'socket.io-client';
 import axios from 'axios';
 import Button from '../Button';
 import { useNavigate } from 'react-router-dom';
+import UpdateGroupInfoModal from '../UpdateGroupInfoModal';
 function ChatBox({ updateState, conversationId, userName, userAvatar, userId, flag, status }) {
     const onlineFriend = useContext(OnlineFriendContext);
     const navigate = useNavigate();
     const onlineFriendList = onlineFriend.onlineFriendList;
     const [messages, setMessages] = useState([]);
+    const [leader, setLeader] = useState(null);
+    const [isUpdateGroupInfoOpen, setIsUpdateGroupInfoOpen] = useState(false);
     const cx = classNames.bind(styles);
     function handleClose(e) {
         updateState(null);
     }
 
+    const handleCloseUpdateInfoModal = () => {
+        setIsUpdateGroupInfoOpen(false);
+    };
+
+    const handleUpdateInfo = (updateInfo) => {
+        if (updateInfo.picture.includes('base64')) {
+            axios
+                .patch(
+                    `http://localhost:3000/chat/update_group_chat/${conversationId}`,
+                    {
+                        name: updateInfo.name,
+                        picture: updateInfo.picture,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                        },
+                    },
+                )
+                .then((res) => {
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 10);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
+            axios
+                .patch(
+                    `http://localhost:3000/chat/update_group_chat/${conversationId}`,
+                    {
+                        name: updateInfo.name,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                        },
+                    },
+                )
+                .then((res) => {
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 10);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    };
+
     const handleGoTimelines = () => {
-        localStorage.setItem('anotherAccountId', userId);
-        localStorage.setItem('anotherAccountName', userName);
-        localStorage.setItem('anotherAccountAvatar', userAvatar);
-        navigate(`/timelines/${userId}`);
+        if (userId !== 'null') {
+            localStorage.setItem('anotherAccountId', userId);
+            localStorage.setItem('anotherAccountName', userName);
+            localStorage.setItem('anotherAccountAvatar', userAvatar);
+            navigate(`/timelines/${userId}`);
+        } else {
+            setIsUpdateGroupInfoOpen(true);
+        }
     };
 
     useEffect(() => {
@@ -38,6 +96,8 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
             })
             .then((response) => {
                 setMessages(response.data.messages);
+                console.log(response.data.leader);
+                setLeader(response.data.leader);
             })
             .catch((e) => {
                 console.log(e);
@@ -98,7 +158,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
                     <Button leftIcon={<FontAwesomeIcon icon={faTimes} />} smallest onClick={handleClose}></Button>
                 </div>
                 <hr />
-                <ChatContent messages={messages} />
+                <ChatContent messages={messages} userId={userId} />
                 <hr />
                 {status ? (
                     <form className={cx('form')} onSubmit={handleSubmit}>
@@ -117,6 +177,15 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
                     <p className={cx('not-friend')}>This person is not your friend now</p>
                 )}
             </PopperWrapper>
+            {isUpdateGroupInfoOpen && (
+                <UpdateGroupInfoModal
+                    isLeader={leader === localStorage.getItem('accountId')}
+                    groupName={userName}
+                    groupImage={userAvatar}
+                    onClose={handleCloseUpdateInfoModal}
+                    onSave={handleUpdateInfo}
+                />
+            )}
         </div>
     );
 }

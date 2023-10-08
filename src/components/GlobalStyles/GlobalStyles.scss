@@ -83,12 +83,14 @@ hr {
 .sender {
     background-color: var(--primary);
     color: var(--white);
+    // align-self: flex-end;
     float: right;
 }
 
 .reciever {
     background-color: #d9d9d9;
     color: var(--black);
+    // align-self: flex-start;
     float: left;
 }
 
@@ -124,7 +126,7 @@ textarea {
     font-size: 26px;
     background-color: transparent;
     position: absolute;
-    top: 10px;
+    top: 4px;
     right: 10px;
 }
 

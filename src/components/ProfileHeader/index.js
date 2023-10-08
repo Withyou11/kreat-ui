@@ -97,7 +97,6 @@ function ProfileHeader() {
                 },
             })
             .then((res) => {
-                console.log(res.data);
                 io('ws://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
                 localStorage.setItem('friendStatus', 'friend');
                 window.location.reload();
