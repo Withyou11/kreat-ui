@@ -1,0 +1,47 @@
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 9px 16px;
+    cursor: pointer;
+    color: var(--text-color);
+    position: relative;
+    &:hover {
+        background-color: rgba(22, 24, 35, 0.03);
+    }
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.name {
+    text-align: left;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-left: 20px;
+}
+
+.icon {
+    color: rgb(207, 207, 62);
+    position: absolute;
+    top: 32%;
+    right: 20px;
+}
+
+.clickIcon {
+    position: absolute;
+    top: 10%;
+    right: 0px;
+}
+
+.me {
+    position: absolute;
+    top: 32%;
+    right: 4%;
+    font-size: 1.4rem;
+    opacity: 0.7;
+}

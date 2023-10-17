@@ -1,0 +1,107 @@
+import styles from './AddMemberModal.module.scss';
+import classNames from 'classnames/bind';
+import { useState, useEffect, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import ListTagFriend from '../ListTagFriend';
+import Modal from 'react-bootstrap/Modal';
+import axios from 'axios';
+
+function AddMemberModal({ groupId, onClose, visible }) {
+    const cx = classNames.bind(styles);
+    const [data, setData] = useState([]);
+
+    const [withfriend, setWithfriend] = useState([]);
+    const [withfriendName, setWithFriendName] = useState([]);
+
+    const handleWithFriendChange = (newListFriend, newListFriendName) => {
+        setWithfriend(newListFriend);
+        setWithFriendName(newListFriendName);
+    };
+
+    const handleAddMember = (event) => {
+        console.log(withfriend);
+        const body = {
+            newMembers: withfriend,
+        };
+        axios
+            .patch(`http://localhost:3000/chat/add_members_group_chat/${groupId}`, body, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+            })
+            .then((res) => {
+                handleClose();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:3000/chat/get_all_friends_for_group_chat/${groupId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+            })
+            .then((response) => {
+                setData(response.data.listFriend);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }, []);
+
+    const [searchText, setSearchText] = useState('');
+    const [searchResults, setSearchResults] = useState(data);
+    const handleChange = (e) => {
+        const searchValue = e.target.value;
+        if (!searchValue.startsWith(' ')) {
+            setSearchText(e.target.value);
+        }
+    };
+
+    useEffect(() => {
+        const filteredData = data.filter((friend) => friend.fullName.toLowerCase().includes(searchText.toLowerCase()));
+        setSearchResults(filteredData);
+    }, [searchText, data]);
+
+    function handleClose() {
+        onClose();
+    }
+
+    return (
+        <Modal show={true} onHide={handleClose} animation={false} centered>
+            <Modal.Body>
+                <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                    <h2>Add friend to this group chat</h2>
+                    <button className={cx('delete-image-button')} onClick={handleClose}>
+                        <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
+                    </button>
+                    <hr style={{ margin: '8px' }} />
+                    <input
+                        value={searchText}
+                        style={{ width: '90%' }}
+                        placeholder="Find your friend..."
+                        spellCheck="false"
+                        onChange={(e) => handleChange(e)}
+                    />
+                    <div style={{ flex: 1 }}>
+                        <ListTagFriend
+                            data={searchResults}
+                            handleWithFriendChange={handleWithFriendChange}
+                            withfriend={withfriend}
+                            withfriendName={withfriendName}
+                        />
+                    </div>
+                    <button className={cx('buttonDone')} onClick={(event) => handleAddMember(event)}>
+                        Add
+                    </button>
+                </div>
+            </Modal.Body>
+        </Modal>
+    );
+}
+
+export default AddMemberModal;

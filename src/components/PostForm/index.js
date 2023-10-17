@@ -63,7 +63,23 @@ function PostForm() {
             const promise = new Promise((resolve, reject) => {
                 reader.onload = function (event) {
                     const base64Data = event.target.result;
-                    resolve(base64Data);
+                    resolve({ type: 'image', data: base64Data });
+                };
+                reader.onerror = function (error) {
+                    reject(error);
+                };
+            });
+            reader.readAsDataURL(file);
+            promises.push(promise);
+        });
+
+        selectedVideos.forEach((video) => {
+            const file = video;
+            const reader = new FileReader();
+            const promise = new Promise((resolve, reject) => {
+                reader.onload = function (event) {
+                    const base64Data = event.target.result;
+                    resolve({ type: 'video', data: base64Data });
                 };
                 reader.onerror = function (error) {
                     reject(error);
@@ -74,13 +90,9 @@ function PostForm() {
         });
 
         Promise.all(promises)
-            .then((base64DataArray) => {
-                const visualList = {
-                    data: base64DataArray,
-                };
-                // eslint-disable-next-line
-                visualList.data.map((visual) => {
-                    visualData.push({ type: 'image', data: visual });
+            .then((mediaDataArray) => {
+                mediaDataArray.forEach((media) => {
+                    visualData.push(media);
                 });
                 const postData = {
                     visualData: visualData,

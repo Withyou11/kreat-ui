@@ -1,6 +1,6 @@
 import styles from './Post.module.scss';
 import classNames from 'classnames/bind';
-import { Image } from 'cloudinary-react';
+import { Image, Video } from 'cloudinary-react';
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '~/components/Button';
@@ -412,7 +412,18 @@ function Post({ data, results, setResults }) {
                                 ))}
                             </Carousel>
                         )}
-                        {data?.id_visualMedia?.length === 1 && (
+                        {data?.id_visualMedia?.length === 1 && data.id_visualMedia[0].type === 'video' && (
+                            <Video
+                                publicId={data.id_visualMedia[0].url}
+                                cloudName="dzuzcewvj"
+                                width="100%"
+                                height="360px"
+                                controls
+                                // poster="your-poster-image-public-id"
+                                sourceTypes={['webm', 'mp4']}
+                            ></Video>
+                        )}
+                        {data?.id_visualMedia?.length === 1 && data.id_visualMedia[0].type === 'image' && (
                             <Image
                                 className={cx('image')}
                                 cloudName="dzuzcewvj"
@@ -441,16 +452,29 @@ function Post({ data, results, setResults }) {
                                         ))}
                                     </Carousel>
                                 )}
-                                {data?.shareContent.shared_id_visualMedia.length === 1 && (
-                                    <Image
-                                        className={cx('image')}
-                                        cloudName="dzuzcewvj"
-                                        publicId={data.shareContent.shared_id_visualMedia[0].url}
-                                        onClick={() =>
-                                            handleSelectImage(data.shareContent.shared_id_visualMedia[0].url)
-                                        }
-                                    />
-                                )}
+                                {data?.shareContent.shared_id_visualMedia.length === 1 &&
+                                    data?.shareContent.shared_id_visualMedia[0].type === 'image' && (
+                                        <Image
+                                            className={cx('image')}
+                                            cloudName="dzuzcewvj"
+                                            publicId={data.shareContent.shared_id_visualMedia[0].url}
+                                            onClick={() =>
+                                                handleSelectImage(data.shareContent.shared_id_visualMedia[0].url)
+                                            }
+                                        />
+                                    )}
+                                {data?.shareContent.shared_id_visualMedia.length === 1 &&
+                                    data?.shareContent.shared_id_visualMedia[0].type === 'video' && (
+                                        <Video
+                                            publicId={data.shareContent.shared_id_visualMedia[0].url}
+                                            cloudName="dzuzcewvj"
+                                            width="100%"
+                                            height="360"
+                                            controls
+                                            // poster="your-poster-image-public-id"
+                                            sourceTypes={['webm', 'mp4']}
+                                        ></Video>
+                                    )}
                             </div>
                             <div className={cx('post-info')}>
                                 <Image

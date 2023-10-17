@@ -61,6 +61,7 @@ function CreateGroupModal({ onClose, visible }) {
                 },
             })
             .then((response) => {
+                console.log(response.data.listFriend);
                 setData(response.data.listFriend);
             })
             .catch((e) => {
@@ -143,7 +144,7 @@ function CreateGroupModal({ onClose, visible }) {
                             className={cx('form-control')}
                         />
                     </div>
-                    <h3 style={{ margin: '0 12px' }}>Select friends to add to the chat group:</h3>
+                    <h3 style={{ margin: '0 12px' }}>Select friends to add to the group chat:</h3>
                     <button className={cx('delete-image-button')} onClick={handleClose}>
                         <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                     </button>

@@ -61,12 +61,14 @@ function TagFriendModal({ onClose, visible, withfriend, withfriendName, handleWi
                     spellCheck="false"
                     onChange={(e) => handleChange(e)}
                 />
-                <ListTagFriend
-                    data={searchResults}
-                    handleWithFriendChange={handleWithFriendChange}
-                    withfriend={withfriend}
-                    withfriendName={withfriendName}
-                />
+                <div style={{ height: '77%' }}>
+                    <ListTagFriend
+                        data={searchResults}
+                        handleWithFriendChange={handleWithFriendChange}
+                        withfriend={withfriend}
+                        withfriendName={withfriendName}
+                    />
+                </div>
                 <button className={cx('buttonDone')} onClick={(event) => handleCompleteTag(event)}>
                     Done
                 </button>

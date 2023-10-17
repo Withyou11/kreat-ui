@@ -25,6 +25,14 @@ function ListTagFriend({ data, handleWithFriendChange, withfriend, withfriendNam
     useEffect(() => {
         setSelectedFriends(withfriend);
     }, [withfriend]);
+
+    const originalError = console.error;
+    console.error = (message) => {
+        if (message.startsWith('Warning: A component is changing an uncontrolled input to be controlled')) {
+            return;
+        }
+        originalError(message);
+    };
     return (
         <div className={cx('wrapper')}>
             {data &&
@@ -34,18 +42,22 @@ function ListTagFriend({ data, handleWithFriendChange, withfriend, withfriendNam
                             <input
                                 type="checkbox"
                                 value={friend.id_account}
-                                checked={selectedFriends.includes(friend.id_account)}
+                                checked={
+                                    selectedFriends.includes(friend.id_account) ||
+                                    (friend.isJoined && friend.isJoined === true)
+                                }
                                 onChange={() => handleFriendSelection(friend.fullName, friend.id_account)}
+                                disabled={friend.isJoined === true}
                             />
                             <div>
                                 <Image
-                                    className={cx('avatar')}
+                                    className={cx('avatar', { muted: friend.isJoined === true })}
                                     cloudName="dzuzcewvj"
                                     publicId={friend.avatar}
                                     alt="Avatar"
                                 />
                             </div>
-                            <div className={cx('name')}>{friend.fullName}</div>
+                            <div className={cx('name', { muted: friend.isJoined === true })}>{friend.fullName}</div>
                         </label>
                     </div>
                 ))}

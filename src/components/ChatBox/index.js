@@ -5,7 +5,7 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { useEffect, useState, useContext } from 'react';
 import { OnlineFriendContext } from '~/Context/OnlineFriendContext/OnlineFriendContext';
 import ChatContent from '../ChatContent';
-import { faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Image } from 'cloudinary-react';
 import { io } from 'socket.io-client';
@@ -13,6 +13,7 @@ import axios from 'axios';
 import Button from '../Button';
 import { useNavigate } from 'react-router-dom';
 import UpdateGroupInfoModal from '../UpdateGroupInfoModal';
+import AddMemberModal from '../AddMemberModal';
 function ChatBox({ updateState, conversationId, userName, userAvatar, userId, flag, status }) {
     const onlineFriend = useContext(OnlineFriendContext);
     const navigate = useNavigate();
@@ -20,6 +21,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
     const [messages, setMessages] = useState([]);
     const [leader, setLeader] = useState(null);
     const [isUpdateGroupInfoOpen, setIsUpdateGroupInfoOpen] = useState(false);
+    const [isAddMemberOpen, setIsAddMemberOpen] = useState(false);
     const cx = classNames.bind(styles);
     function handleClose(e) {
         updateState(null);
@@ -27,6 +29,14 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
 
     const handleCloseUpdateInfoModal = () => {
         setIsUpdateGroupInfoOpen(false);
+    };
+
+    const handleOpenAddMemberModal = () => {
+        setIsAddMemberOpen(true);
+    };
+
+    const handleCloseAddMemberModal = () => {
+        setIsAddMemberOpen(false);
     };
 
     const handleUpdateInfo = (updateInfo) => {
@@ -96,7 +106,6 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
             })
             .then((response) => {
                 setMessages(response.data.messages);
-                console.log(response.data.leader);
                 setLeader(response.data.leader);
             })
             .catch((e) => {
@@ -155,6 +164,11 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
                     <h4 onClick={handleGoTimelines} className={cx('username')}>
                         {userName}
                     </h4>
+                    <Button
+                        leftIcon={<FontAwesomeIcon icon={faPlus} />}
+                        smallest
+                        onClick={handleOpenAddMemberModal}
+                    ></Button>
                     <Button leftIcon={<FontAwesomeIcon icon={faTimes} />} smallest onClick={handleClose}></Button>
                 </div>
                 <hr />
@@ -179,12 +193,16 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
             </PopperWrapper>
             {isUpdateGroupInfoOpen && (
                 <UpdateGroupInfoModal
+                    groupId={conversationId}
                     isLeader={leader === localStorage.getItem('accountId')}
                     groupName={userName}
                     groupImage={userAvatar}
                     onClose={handleCloseUpdateInfoModal}
                     onSave={handleUpdateInfo}
                 />
+            )}
+            {isAddMemberOpen && (
+                <AddMemberModal groupId={conversationId} onClose={handleCloseAddMemberModal}></AddMemberModal>
             )}
         </div>
     );

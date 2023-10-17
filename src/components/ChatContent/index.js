@@ -39,7 +39,7 @@ function ChatContent({ messages, userId }) {
                 <ul>
                     {messages.map((msg, index) => (
                         <li key={index}>
-                            {msg.id_sender !== localStorage.getItem('accountId') && (
+                            {msg.type !== 'notification' && msg.id_sender !== localStorage.getItem('accountId') && (
                                 <Image
                                     // onClick={handleGoTimelines}
                                     className={cx('avatar')}
@@ -48,20 +48,26 @@ function ChatContent({ messages, userId }) {
                                     crop="scale"
                                 />
                             )}
-                            <NewTippy content={new Date(msg.createdAt).toLocaleString()}>
-                                <div
-                                    className={cx(
-                                        `message ${
-                                            msg.id_sender === localStorage.getItem('accountId') ? 'sender' : 'reciever'
-                                        }`,
-                                    )}
-                                >
-                                    {msg.id_sender !== localStorage.getItem('accountId') && (
-                                        <p className={cx('content-name')}>{msg.fullName}</p>
-                                    )}
-                                    <p className={cx('content-message')}>{msg.messageContent}</p>
-                                </div>
-                            </NewTippy>
+                            {msg.type !== 'notification' ? (
+                                <NewTippy content={new Date(msg.createdAt).toLocaleString()}>
+                                    <div
+                                        className={cx(
+                                            `message ${
+                                                msg.id_sender === localStorage.getItem('accountId')
+                                                    ? 'sender'
+                                                    : 'reciever'
+                                            }`,
+                                        )}
+                                    >
+                                        {msg.id_sender !== localStorage.getItem('accountId') && (
+                                            <p className={cx('content-name')}>{msg.fullName}</p>
+                                        )}
+                                        <p className={cx('content-message')}>{msg.messageContent}</p>
+                                    </div>
+                                </NewTippy>
+                            ) : (
+                                <p className={cx('notification')}>{msg.messageContent}</p>
+                            )}
 
                             <div style={{ clear: 'both' }}></div>
                         </li>
