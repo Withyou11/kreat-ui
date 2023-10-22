@@ -76,6 +76,10 @@ function Login() {
     const [resEmail, setResEmail] = useState('');
     const [resPassword, setResPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    const handleForgotPassword = () => {
+        navigate('/forgot_password');
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('aside')}>
@@ -122,7 +126,7 @@ function Login() {
                                 value="Forget your password?"
                                 className={cx('forget')}
                                 type="submit"
-                                onClick={alert}
+                                onClick={handleForgotPassword}
                             />
                         </form>
                     </div>

@@ -7,6 +7,7 @@ import Profile_Medias from '~/pages/Profile_Medias';
 import Login from '~/pages/Login';
 import ConfirmEmail from '~/pages/ConfirmEmail';
 import DetailPost from '~/pages/DetailPost';
+import ForgotPassword from '~/pages/ForgotPassword';
 // public routes
 const publicRoutes = [
     { path: '/', component: Newsfeed },
@@ -17,6 +18,7 @@ const publicRoutes = [
     { path: '/medias', component: Profile_Medias, layout: HeaderOnly },
     { path: '/authentication', component: Login, layout: NoLayout },
     { path: '/confirm', component: ConfirmEmail, layout: NoLayout },
+    { path: '/forgot_password', component: ForgotPassword, layout: NoLayout },
     { path: '/post/:id', component: DetailPost, layout: HeaderOnly },
 ];
 
