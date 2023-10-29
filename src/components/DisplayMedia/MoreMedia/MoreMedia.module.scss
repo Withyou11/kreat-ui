@@ -1,0 +1,52 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 400px;
+    width: 100%;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    width: 49.5%;
+    height: 400px;
+}
+
+.image {
+    flex: 1;
+    height: 49.5%;
+    border-radius: 6px;
+    object-fit: cover;
+    margin: 0 2px;
+    cursor: pointer;
+}
+
+.image1 {
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.image:first-child {
+    margin-bottom: 4px;
+}
+
+.specialImage {
+    height: 49.5%;
+    margin: 0 2px;
+    position: relative;
+    opacity: 0.7;
+}
+
+.number {
+    opacity: 1;
+    position: absolute;
+    top: 35%;
+    left: 45%;
+    font-size: 4rem;
+    font-weight: 500;
+    color: black;
+    user-select: none;
+}

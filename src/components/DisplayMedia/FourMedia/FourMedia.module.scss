@@ -1,0 +1,25 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 400px;
+    width: 100%;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    width: 49.5%;
+    height: 400px;
+}
+
+.image {
+    flex: 1;
+    height: 49.5%;
+    border-radius: 6px;
+    object-fit: cover;
+    margin: 0 2px;
+}
+
+.image:first-child {
+    margin-bottom: 4px;
+}

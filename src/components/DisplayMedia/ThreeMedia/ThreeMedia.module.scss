@@ -1,0 +1,33 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 400px;
+}
+
+.remaining {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.image {
+    cursor: pointer;
+    width: 50%;
+    height: 400px;
+    border-radius: 6px;
+    object-fit: cover;
+    margin: 0 2px;
+}
+
+.image1 {
+    cursor: pointer;
+    flex: 1;
+    height: 49.5%;
+    border-radius: 6px;
+    object-fit: cover;
+    margin: 0 2px;
+}
+
+.image1:first-child {
+    margin-bottom: 4px;
+}

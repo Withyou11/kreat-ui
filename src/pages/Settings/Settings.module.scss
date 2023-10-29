@@ -1,0 +1,57 @@
+.wrapper {
+    height: 100%;
+    width: 100%;
+    background-color: var(--background-color);
+    overflow: hidden;
+}
+
+.settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100%;
+}
+
+.sidebar {
+    height: 100%;
+    width: 20%;
+    background-color: #d9d9d9;
+    padding: 20px 8px;
+    font-size: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+    cursor: pointer;
+    padding: 10px 4px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.sidebar li:hover {
+    background-color: #b4b4b4;
+}
+
+.content {
+    flex: 1;
+}
+
+.tab {
+    cursor: pointer;
+    padding: 6px;
+    background-color: #e1e1e1;
+}
+
+.tab.active {
+    background-color: #a2a2a2;
+    color: black;
+}
+
+.hr {
+    border-top: 2px solid black;
+}

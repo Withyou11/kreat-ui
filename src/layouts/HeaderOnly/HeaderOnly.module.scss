@@ -1,10 +1,17 @@
+.wrapper {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: var(--background-color);
+}
+
 .container_header_only {
     width: 100%;
-    min-height: 1000px;
     background-color: var(--background-color);
     margin-top: var(--default-layout-header-height, 70px);
 }
 
 .content {
     width: 100%;
+    height: calc(100vh - var(--default-layout-header-height));
 }

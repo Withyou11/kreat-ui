@@ -8,6 +8,7 @@ import Login from '~/pages/Login';
 import ConfirmEmail from '~/pages/ConfirmEmail';
 import DetailPost from '~/pages/DetailPost';
 import ForgotPassword from '~/pages/ForgotPassword';
+import Settings from '~/pages/Settings';
 // public routes
 const publicRoutes = [
     { path: '/', component: Newsfeed },
@@ -19,6 +20,7 @@ const publicRoutes = [
     { path: '/authentication', component: Login, layout: NoLayout },
     { path: '/confirm', component: ConfirmEmail, layout: NoLayout },
     { path: '/forgot_password', component: ForgotPassword, layout: NoLayout },
+    { path: '/settings', component: Settings, layout: HeaderOnly },
     { path: '/post/:id', component: DetailPost, layout: HeaderOnly },
 ];
 

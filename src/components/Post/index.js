@@ -26,6 +26,10 @@ import RenderUserReact from '../RenderUserReact/RenderUserReact';
 import ShareModal from '../ShareModal';
 import UpdatePostModal from '../UpdatePostModal';
 import { io } from 'socket.io-client';
+import TwoMedia from '../DisplayMedia/TwoMedia';
+import ThreeMedia from '../DisplayMedia/ThreeMedia';
+import FourMedia from '../DisplayMedia/FourMedia';
+import MoreMedia from '../DisplayMedia/MoreMedia';
 
 function Post({ data, results, setResults }) {
     const menuRef = useRef(null);
@@ -397,7 +401,25 @@ function Post({ data, results, setResults }) {
                         <p className={cx('post-text')}>{data?.postContent}</p>
                     </div>
                     <div className={cx('post-content-image')}>
-                        {data?.id_visualMedia?.length > 1 && (
+                        {data?.id_visualMedia?.length === 1 && data.id_visualMedia[0].type === 'video' && (
+                            <Video
+                                publicId={data.id_visualMedia[0].url}
+                                cloudName="dzuzcewvj"
+                                width="100%"
+                                height="360px"
+                                controls
+                                sourceTypes={['webm', 'mp4']}
+                            ></Video>
+                        )}
+                        {data?.id_visualMedia?.length === 1 && data.id_visualMedia[0].type === 'image' && (
+                            <Image
+                                className={cx('image')}
+                                cloudName="dzuzcewvj"
+                                publicId={data.id_visualMedia[0].url}
+                                onClick={() => handleSelectImage(data.id_visualMedia[0].url)}
+                            />
+                        )}
+                        {data?.id_visualMedia?.length > 1 && localStorage.getItem('display') === 'slider' && (
                             <Carousel>
                                 {data?.id_visualMedia?.map((image) => (
                                     <Carousel.Item key={Math.random()}>
@@ -412,24 +434,17 @@ function Post({ data, results, setResults }) {
                                 ))}
                             </Carousel>
                         )}
-                        {data?.id_visualMedia?.length === 1 && data.id_visualMedia[0].type === 'video' && (
-                            <Video
-                                publicId={data.id_visualMedia[0].url}
-                                cloudName="dzuzcewvj"
-                                width="100%"
-                                height="360px"
-                                controls
-                                // poster="your-poster-image-public-id"
-                                sourceTypes={['webm', 'mp4']}
-                            ></Video>
+                        {data?.id_visualMedia?.length === 2 && localStorage.getItem('display') === 'grid' && (
+                            <TwoMedia data={data.id_visualMedia}></TwoMedia>
                         )}
-                        {data?.id_visualMedia?.length === 1 && data.id_visualMedia[0].type === 'image' && (
-                            <Image
-                                className={cx('image')}
-                                cloudName="dzuzcewvj"
-                                publicId={data.id_visualMedia[0].url}
-                                onClick={() => handleSelectImage(data.id_visualMedia[0].url)}
-                            />
+                        {data?.id_visualMedia?.length === 3 && localStorage.getItem('display') === 'grid' && (
+                            <ThreeMedia data={data.id_visualMedia}></ThreeMedia>
+                        )}
+                        {data?.id_visualMedia?.length === 4 && localStorage.getItem('display') === 'grid' && (
+                            <FourMedia data={data.id_visualMedia}></FourMedia>
+                        )}
+                        {data?.id_visualMedia?.length > 4 && localStorage.getItem('display') === 'grid' && (
+                            <MoreMedia data={data.id_visualMedia}></MoreMedia>
                         )}
                     </div>
                 </div>
@@ -437,21 +452,6 @@ function Post({ data, results, setResults }) {
                     <div className={cx('share-content')}>
                         <div className={cx('post-content')}>
                             <div className={cx('post-content-image1')} style={{ marginTop: '12px', width: '640px' }}>
-                                {data?.shareContent?.shared_id_visualMedia.length > 1 && (
-                                    <Carousel>
-                                        {data?.shareContent.shared_id_visualMedia.map((image) => (
-                                            <Carousel.Item key={Math.random()}>
-                                                <Image
-                                                    className={cx('image')}
-                                                    cloudName="dzuzcewvj"
-                                                    publicId={image.url}
-                                                    onClick={() => handleSelectImage(image.url)}
-                                                    crop="scale"
-                                                />
-                                            </Carousel.Item>
-                                        ))}
-                                    </Carousel>
-                                )}
                                 {data?.shareContent.shared_id_visualMedia.length === 1 &&
                                     data?.shareContent.shared_id_visualMedia[0].type === 'image' && (
                                         <Image
@@ -474,6 +474,38 @@ function Post({ data, results, setResults }) {
                                             // poster="your-poster-image-public-id"
                                             sourceTypes={['webm', 'mp4']}
                                         ></Video>
+                                    )}
+                                {data?.shareContent?.shared_id_visualMedia.length > 1 &&
+                                    localStorage.getItem('display') === 'slider' && (
+                                        <Carousel>
+                                            {data?.shareContent.shared_id_visualMedia.map((image) => (
+                                                <Carousel.Item key={Math.random()}>
+                                                    <Image
+                                                        className={cx('image')}
+                                                        cloudName="dzuzcewvj"
+                                                        publicId={image.url}
+                                                        onClick={() => handleSelectImage(image.url)}
+                                                        crop="scale"
+                                                    />
+                                                </Carousel.Item>
+                                            ))}
+                                        </Carousel>
+                                    )}
+                                {data?.shareContent?.shared_id_visualMedia.length === 2 &&
+                                    localStorage.getItem('display') === 'grid' && (
+                                        <TwoMedia data={data.shareContent.shared_id_visualMedia}></TwoMedia>
+                                    )}
+                                {data?.shareContent?.shared_id_visualMedia.length === 3 &&
+                                    localStorage.getItem('display') === 'grid' && (
+                                        <ThreeMedia data={data.shareContent.shared_id_visualMedia}></ThreeMedia>
+                                    )}
+                                {data?.shareContent?.shared_id_visualMedia.length === 4 &&
+                                    localStorage.getItem('display') === 'grid' && (
+                                        <FourMedia data={data.shareContent.shared_id_visualMedia}></FourMedia>
+                                    )}
+                                {data?.shareContent?.shared_id_visualMedia.length > 4 &&
+                                    localStorage.getItem('display') === 'grid' && (
+                                        <MoreMedia data={data.shareContent.shared_id_visualMedia}></MoreMedia>
                                     )}
                             </div>
                             <div className={cx('post-info')}>

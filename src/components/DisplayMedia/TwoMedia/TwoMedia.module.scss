@@ -1,0 +1,14 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+}
+
+.image {
+    width: 49%;
+    height: 400px;
+    border-radius: 6px;
+    object-fit: cover;
+    margin: 0 2px;
+    cursor: pointer;
+}

@@ -20,6 +20,7 @@ function MenuItem({ data }) {
             localStorage.removeItem('anotherAccountAvatar');
             localStorage.removeItem('friendStatus');
             localStorage.removeItem('idFriendRequest');
+            localStorage.removeItem('display');
             await axios
                 .post(
                     `http://localhost:3000/auth/logout`,
@@ -51,6 +52,8 @@ function MenuItem({ data }) {
             setTimeout(() => {
                 navigate(`/timelines`);
             }, 10);
+        } else {
+            navigate(`/settings`);
         }
     };
     return (
