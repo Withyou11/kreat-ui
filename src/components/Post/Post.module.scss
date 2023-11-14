@@ -2,7 +2,6 @@
     width: 85%;
     margin: 10px auto;
     position: relative;
-    overflow: hidden;
 }
 
 .post-info {
@@ -182,14 +181,14 @@
     position: relative;
 }
 
-.action-button > Button {
+.action-button {
     padding: 6px 0px;
     border-radius: 0;
     flex: 1;
 }
 
 .share-button {
-    width: 200px;
+    width: 100%;
 }
 
 .hover-reaction {
@@ -203,6 +202,10 @@
     top: -50px;
     left: 0;
     z-index: 1000;
+}
+
+.react-btn {
+    flex: 1;
 }
 
 .react-btn:hover > .hover-reaction {
@@ -308,10 +311,8 @@
 }
 
 .actionOnPost {
-    padding-left: 4px;
-    padding-right: 4px;
     width: 100%;
-    margin: 0 auto;
+    margin: 15% auto;
 }
 
 .menu {

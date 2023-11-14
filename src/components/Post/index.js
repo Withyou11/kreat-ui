@@ -367,11 +367,9 @@ function Post({ data, results, setResults }) {
                     <div className={cx('actionButtonContainer')}>
                         <div className={cx('actionButton')}>
                             {data?.id_account === localStorage.getItem('accountId') && (
-                                <Button
-                                    className={cx('actionOnPost')}
-                                    leftIcon={<FontAwesomeIcon icon={faEllipsis} style={{ fontSize: '2rem' }} />}
-                                    onClick={handleShowAction}
-                                ></Button>
+                                <button onClick={handleShowAction} className={cx('actionOnPost')}>
+                                    <FontAwesomeIcon icon={faEllipsis} style={{ fontSize: '2rem' }} />
+                                </button>
                             )}
                             {showMenu && (
                                 <div ref={menuRef} className={cx('menu')}>
@@ -621,9 +619,9 @@ function Post({ data, results, setResults }) {
                     </div>
                     <div className={cx('action-button')}>
                         <Button
+                            className={cx('share-button')}
                             leftIcon={<FontAwesomeIcon icon={faComment} />}
                             outline
-                            large
                             onClick={() => handleCommentClick(data?._id)}
                         >
                             Comment
@@ -634,7 +632,6 @@ function Post({ data, results, setResults }) {
                             className={cx('share-button')}
                             leftIcon={<FontAwesomeIcon icon={faShareFromSquare} />}
                             outline
-                            large
                             onClick={handleShowShareModal}
                         >
                             Share

@@ -5,14 +5,15 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Comment from '../Comment';
 import { faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { faImage } from '@fortawesome/free-regular-svg-icons';
-
+import { faImage, faSmile } from '@fortawesome/free-regular-svg-icons';
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
 function ListComments({ id_post }) {
     const cx = classNames.bind(styles);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [selectedImage, setSelectedImage] = useState('');
-
+    const [showPicker, setShowPicker] = useState(false);
     const handleMediaDelete = (media) => {
         setSelectedImage('');
         URL.revokeObjectURL(media.preview);
@@ -30,6 +31,16 @@ function ListComments({ id_post }) {
         fileInput.click();
     };
 
+    const addEmoji = (e) => {
+        const sym = e.unified.split('_');
+        const codeArray = [];
+        sym.forEach((ele) => {
+            codeArray.push('0x' + ele);
+            let emoji = String.fromCodePoint(...codeArray);
+            setNewComment(newComment + emoji);
+        });
+    };
+
     useEffect(() => {
         axios
             .get(`http://localhost:3000/posts/${id_post}/get_all_comment`, {
@@ -44,6 +55,10 @@ function ListComments({ id_post }) {
                 console.log(error);
             });
     }, [id_post]);
+
+    const handleShowEmojiList = () => {
+        setShowPicker(!showPicker);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -138,6 +153,24 @@ function ListComments({ id_post }) {
                                         ></FontAwesomeIcon>
                                     </button>
                                 </div>
+                            </div>
+                        )}
+                    </div>
+                    <div className={cx('emoji-container')}>
+                        <button onClick={handleShowEmojiList} type="button">
+                            <FontAwesomeIcon icon={faSmile} className={cx('emoji-icon')}></FontAwesomeIcon>
+                        </button>
+                        {showPicker && (
+                            <div className={cx('picker')}>
+                                <Picker
+                                    emojiButtonSize={28}
+                                    data={data}
+                                    onEmojiSelect={addEmoji}
+                                    maxFrequentRows={0}
+                                    theme={'light'}
+                                    previewPosition={'none'}
+                                    perLine={12}
+                                ></Picker>
                             </div>
                         )}
                     </div>

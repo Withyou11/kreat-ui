@@ -17,7 +17,6 @@ const RenderUserReact = ({ currentUserReact, handleCancelReaction, handleChooseR
                         className={cx('liked-button')}
                         leftIcon={<FontAwesomeIcon icon={faThumbsUp} />}
                         outline
-                        large
                         onClick={handleCancelReaction}
                     >
                         Like
@@ -31,7 +30,6 @@ const RenderUserReact = ({ currentUserReact, handleCancelReaction, handleChooseR
                         className={cx('loved-button')}
                         leftIcon={<FontAwesomeIcon icon={faHeart} />}
                         outline
-                        large
                         onClick={handleCancelReaction}
                     >
                         Love
@@ -41,7 +39,7 @@ const RenderUserReact = ({ currentUserReact, handleCancelReaction, handleChooseR
         } else if (currentUserReact === 'haha') {
             setUserReactContent(
                 <div className={cx('action-button')}>
-                    <Button className={cx('haha-button')} haha outline large onClick={handleCancelReaction}>
+                    <Button className={cx('haha-button')} haha outline onClick={handleCancelReaction}>
                         Haha
                     </Button>
                 </div>,
@@ -49,7 +47,7 @@ const RenderUserReact = ({ currentUserReact, handleCancelReaction, handleChooseR
         } else if (currentUserReact === 'wow') {
             setUserReactContent(
                 <div className={cx('action-button')}>
-                    <Button className={cx('haha-button')} wow outline large onClick={handleCancelReaction}>
+                    <Button className={cx('haha-button')} wow outline onClick={handleCancelReaction}>
                         Wow
                     </Button>
                 </div>,
@@ -57,7 +55,7 @@ const RenderUserReact = ({ currentUserReact, handleCancelReaction, handleChooseR
         } else if (currentUserReact === 'sad') {
             setUserReactContent(
                 <div className={cx('action-button')}>
-                    <Button className={cx('haha-button')} sad outline large onClick={handleCancelReaction}>
+                    <Button className={cx('haha-button')} sad outline onClick={handleCancelReaction}>
                         Sad
                     </Button>
                 </div>,
@@ -65,7 +63,7 @@ const RenderUserReact = ({ currentUserReact, handleCancelReaction, handleChooseR
         } else if (currentUserReact === 'angry') {
             setUserReactContent(
                 <div className={cx('action-button')}>
-                    <Button className={cx('angry-button')} angry outline large onClick={handleCancelReaction}>
+                    <Button className={cx('angry-button')} angry outline onClick={handleCancelReaction}>
                         Angry
                     </Button>
                 </div>,
@@ -77,7 +75,6 @@ const RenderUserReact = ({ currentUserReact, handleCancelReaction, handleChooseR
                         className={cx('like-button')}
                         leftIcon={<FontAwesomeIcon icon={faThumbsUp1} />}
                         outline
-                        large
                         onClick={() => handleChooseReaction('like')}
                     >
                         Like

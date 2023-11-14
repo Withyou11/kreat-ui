@@ -37,3 +37,19 @@
 .form {
     display: flex;
 }
+
+.emoji-container {
+    margin-right: 12px;
+    display: flex;
+    position: relative;
+}
+
+.emoji-icon {
+    margin: auto;
+}
+
+.picker {
+    position: absolute;
+    top: 50px;
+    z-index: 999;
+}

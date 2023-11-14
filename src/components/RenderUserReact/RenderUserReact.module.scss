@@ -1,4 +1,4 @@
-.action-button > Button {
+.action-button {
     padding: 6px 0px;
     border-radius: 0;
     flex: 1;
@@ -6,12 +6,19 @@
 
 .liked-button {
     color: var(--primary);
+    width: 100%;
 }
 
 .loved-button {
     color: #f12f4a;
+    width: 100%;
 }
 
 .haha-button {
     color: #f9c556;
+    width: 100%;
+}
+
+.like-button {
+    width: 100%;
 }
