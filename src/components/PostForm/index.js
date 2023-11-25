@@ -12,18 +12,34 @@ import { faFaceSmile, faLocationDot, faTimes, faUserTag } from '@fortawesome/fre
 import LocationModal from '../LocationModal';
 import { useNavigate } from 'react-router-dom';
 import FeelingModal from '../FeelingModal';
-
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 function PostForm() {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState('');
     const [selectedImages, setSelectedImages] = useState([]);
     const [selectedVideos, setSelectedVideos] = useState([]);
     const [privacy, setPrivacy] = useState('public');
-
     const [withfriend, setWithFriend] = useState([]);
     const [withfriendName, setWithFriendName] = useState([]);
     const [atLocation, setAtLocation] = useState('');
     const [feeling, setFeeling] = useState('');
+    const [time, setTime] = useState(null);
+    const formatDate = (M) => {
+        if (M && M.$isDayjsObject) {
+            const utcDate = dayjs.utc(M.$d);
+
+            const formattedDate = utcDate.toISOString();
+
+            return formattedDate;
+        } else {
+            return null;
+        }
+    };
 
     const handleWithFriendChange = (newListFriend, newListFriendName) => {
         setWithFriend(newListFriend);
@@ -94,14 +110,28 @@ function PostForm() {
                 mediaDataArray.forEach((media) => {
                     visualData.push(media);
                 });
-                const postData = {
-                    visualData: visualData,
-                    postContent: inputValue,
-                    postPrivacy: privacy,
-                    id_friendTag: withfriend,
-                    location: atLocation,
-                    postFeeling: feeling,
-                };
+                let postData;
+                if (!time) {
+                    postData = {
+                        visualData: visualData,
+                        postContent: inputValue,
+                        postPrivacy: privacy,
+                        id_friendTag: withfriend,
+                        location: atLocation,
+                        postFeeling: feeling,
+                    };
+                } else {
+                    postData = {
+                        isScheduled: true,
+                        scheduleDate: formatDate(time),
+                        visualData: visualData,
+                        postContent: inputValue,
+                        postPrivacy: privacy,
+                        id_friendTag: withfriend,
+                        location: atLocation,
+                        postFeeling: feeling,
+                    };
+                }
                 axios
                     .post('http://localhost:3000/posts/create_post', postData, {
                         headers: {
@@ -118,11 +148,6 @@ function PostForm() {
             .catch((error) => {
                 console.error(error);
             });
-
-        // selectedVideos.forEach((video) => {
-        //     id_visualMedia.push({ key: 'video', value: video });
-        // });
-
         // Biến tag bạn bè: withfriend, biến location: atLocation, biến nội dung: inputValue, biến ảnh: selectedImages, biến video: selectedVideos, biến quyền riêng tư: privacy
     };
 
@@ -260,6 +285,17 @@ function PostForm() {
                             ))}
                         </div>
                         <hr />
+
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DemoContainer components={['DateTimePicker', 'DateTimePicker']}>
+                                <DateTimePicker
+                                    label="Choose date and time to post (optional)"
+                                    value={time}
+                                    onChange={(newValue) => setTime(newValue)}
+                                    disablePast
+                                />
+                            </DemoContainer>
+                        </LocalizationProvider>
                         <div className={cx('post-actions')}>
                             <div className={cx('add-image-button-container')}>
                                 <div className={cx('add-image-button-2')}>
