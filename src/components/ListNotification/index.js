@@ -8,7 +8,7 @@ function ListNotification({ setShowListNotification }) {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         axios
-            .get(`http://localhost:3000/accounts/notification`, {
+            .get(`https://kreat-api.onrender.com/accounts/notification`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

@@ -11,7 +11,7 @@ function FriendSuggest() {
     const [friendSuggestionList, setFriendSuggestionList] = useState([]);
     useEffect(() => {
         axios
-            .get(`http://localhost:3000/accounts/friend_suggestion`, {
+            .get(`https://kreat-api.onrender.com/accounts/friend_suggestion`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

@@ -23,7 +23,7 @@ function MenuItem({ data }) {
             localStorage.removeItem('display');
             await axios
                 .post(
-                    `http://localhost:3000/auth/logout`,
+                    `https://kreat-api.onrender.com/auth/logout`,
                     {},
                     {
                         headers: {

@@ -43,7 +43,7 @@ function ListComments({ id_post }) {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3000/posts/${id_post}/get_all_comment`, {
+            .get(`https://kreat-api.onrender.com/posts/${id_post}/get_all_comment`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
@@ -96,7 +96,7 @@ function ListComments({ id_post }) {
                 };
 
                 axios
-                    .post('http://localhost:3000/accounts/comment_post', body, {
+                    .post('https://kreat-api.onrender.com/accounts/comment_post', body, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                         },

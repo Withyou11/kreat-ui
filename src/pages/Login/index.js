@@ -16,7 +16,7 @@ function Login() {
     const onLogin = (e) => {
         e.preventDefault();
         axios
-            .post(`http://localhost:3000/auth/login`, {
+            .post(`https://kreat-api.onrender.com/auth/login`, {
                 email: email,
                 password: password,
             })
@@ -50,7 +50,7 @@ function Login() {
             window.alert('Confirm password is incorrect');
         } else {
             axios
-                .post(`http://localhost:3000/auth/signup`, {
+                .post(`https://kreat-api.onrender.com/auth/signup`, {
                     email: resEmail,
                     password: resPassword,
                     fullName: fullname,

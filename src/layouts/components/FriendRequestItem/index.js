@@ -13,7 +13,7 @@ function FriendRequestItem({ data }) {
         e.stopPropagation();
         e.preventDefault();
         axios
-            .delete(`http://localhost:3000/accounts/${data.id_friendRequest}/accept_friend_request`, {
+            .delete(`https://kreat-api.onrender.com/accounts/${data.id_friendRequest}/accept_friend_request`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
@@ -28,7 +28,7 @@ function FriendRequestItem({ data }) {
         e.stopPropagation();
         e.preventDefault();
         axios
-            .delete(`http://localhost:3000/accounts/${data.id_friendRequest}/decline_friend_request`, {
+            .delete(`https://kreat-api.onrender.com/accounts/${data.id_friendRequest}/decline_friend_request`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

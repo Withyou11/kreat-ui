@@ -42,7 +42,7 @@ function UpdateGroupInfoModal({ groupId, isLeader, groupName, groupImage, onClos
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3000/chat/get_all_members_group_chat/${groupId}`, {
+            .get(`https://kreat-api.onrender.com/chat/get_all_members_group_chat/${groupId}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
@@ -84,7 +84,7 @@ function UpdateGroupInfoModal({ groupId, isLeader, groupName, groupImage, onClos
         if (window.confirm(`Are you sure to leave this group chat?`)) {
             axios
                 .patch(
-                    `http://localhost:3000/chat/leave_group_chat/${groupId}`,
+                    `https://kreat-api.onrender.com/chat/leave_group_chat/${groupId}`,
                     {},
                     {
                         headers: {

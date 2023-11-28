@@ -75,7 +75,7 @@ function UpdateCommentModal({ data, onClose, visible, setComments, comments }) {
                       };
 
                 axios
-                    .patch('http://localhost:3000/accounts/update_comment_post', commentData, {
+                    .patch('https://kreat-api.onrender.com/accounts/update_comment_post', commentData, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                         },

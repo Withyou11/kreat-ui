@@ -11,7 +11,7 @@ function DetailPost() {
     useEffect(() => {
         window.scrollTo(0, 0);
         axios
-            .get(`http://localhost:3000/posts/${id}`, {
+            .get(`https://kreat-api.onrender.com/posts/${id}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

@@ -23,7 +23,7 @@ function Profile_TimeLines(props) {
 
         const fetchData = async () => {
             try {
-                const response1 = await axios.get(`http://localhost:3000/accounts/${id}/timeline`, {
+                const response1 = await axios.get(`https://kreat-api.onrender.com/accounts/${id}/timeline`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
@@ -36,7 +36,7 @@ function Profile_TimeLines(props) {
                 }
                 setLoading(false);
 
-                const response2 = await axios.get(`http://localhost:3000/accounts/tagged-in_post`, {
+                const response2 = await axios.get(`https://kreat-api.onrender.com/accounts/tagged-in_post`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },

@@ -27,7 +27,7 @@ function Profile_Medias() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response1 = await axios.get(`http://localhost:3000/accounts/${id}/visual_media`, {
+                const response1 = await axios.get(`https://kreat-api.onrender.com/accounts/${id}/visual_media`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
@@ -35,7 +35,7 @@ function Profile_Medias() {
                 setListImage(response1.data.listURL);
                 setLoading(false);
 
-                const response2 = await axios.get(`http://localhost:3000/accounts/${id}/avatar`, {
+                const response2 = await axios.get(`https://kreat-api.onrender.com/accounts/${id}/avatar`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },

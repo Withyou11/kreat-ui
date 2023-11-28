@@ -29,7 +29,7 @@ function FriendItem({ data }) {
         e.stopPropagation();
         e.preventDefault();
         axios
-            .delete(`http://localhost:3000/accounts/${data.id_account}/unfriend`, {
+            .delete(`https://kreat-api.onrender.com/accounts/${data.id_account}/unfriend`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

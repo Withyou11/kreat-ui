@@ -19,7 +19,7 @@ function AccountItem({ data, button, active, inactive, user, onUserSelect, mutua
             id_receiver: data.id_account,
         };
         axios
-            .post(`http://localhost:3000/accounts/send_friend_request`, receiver, {
+            .post(`https://kreat-api.onrender.com/accounts/send_friend_request`, receiver, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

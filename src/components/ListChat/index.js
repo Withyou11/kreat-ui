@@ -17,7 +17,7 @@ function ListChat({ setShowListChats, handleUserSelect }) {
     };
     useEffect(() => {
         axios
-            .get(`http://localhost:3000/chat/conversations`, {
+            .get(`https://kreat-api.onrender.com/chat/conversations`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

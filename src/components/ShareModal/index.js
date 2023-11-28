@@ -24,7 +24,7 @@ function ShareModal({ data, onClose, visible }) {
             postFeeling: feeling === 'No emotion' ? '' : feeling,
         };
         axios
-            .post('http://localhost:3000/posts/share_post', postData, {
+            .post('https://kreat-api.onrender.com/posts/share_post', postData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

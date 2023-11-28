@@ -17,7 +17,7 @@ function ForgotPassword() {
         };
         if (code !== '' && newPassword !== '' && newPassword === confirmNewPassword) {
             axios
-                .post(`http://localhost:3000/accounts/reset_forgotten_password`, body, {
+                .post(`https://kreat-api.onrender.com/accounts/reset_forgotten_password`, body, {
                     headers: {},
                 })
                 .then((res) => {
@@ -41,7 +41,7 @@ function ForgotPassword() {
             email: enterEmail,
         };
         axios
-            .post(`http://localhost:3000/accounts/send_code`, body, {
+            .post(`https://kreat-api.onrender.com/accounts/send_code`, body, {
                 headers: {},
             })
             .then((res) => {

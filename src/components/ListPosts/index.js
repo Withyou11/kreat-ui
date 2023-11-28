@@ -16,7 +16,7 @@ function ListPosts() {
     useEffect(() => {
         if (!stop) {
             axios
-                .get(`http://localhost:3000/posts/get_all_post/${page}`, {
+                .get(`https://kreat-api.onrender.com/posts/get_all_post/${page}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },

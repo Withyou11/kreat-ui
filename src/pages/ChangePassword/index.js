@@ -17,7 +17,7 @@ function ChangePassword() {
         };
         if (oldPassword !== '' && newPassword !== '' && newPassword === confirmNewPassword) {
             axios
-                .post(`http://localhost:3000/accounts/reset_password`, body, {
+                .post(`https://kreat-api.onrender.com/accounts/reset_password`, body, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },

@@ -12,7 +12,7 @@ function Contact() {
     const [listContact, setListContact] = useState([]);
     useEffect(() => {
         axios
-            .get(`http://localhost:3000/accounts/contact`, {
+            .get(`https://kreat-api.onrender.com/accounts/contact`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

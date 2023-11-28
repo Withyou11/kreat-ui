@@ -52,7 +52,7 @@ function DefaultLayout({ children }) {
             });
             socket.current.on('getNotification', () => {
                 axios
-                    .get(`http://localhost:3000/accounts/unviewed_notification_and_message`, {
+                    .get(`https://kreat-api.onrender.com/accounts/unviewed_notification_and_message`, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                         },

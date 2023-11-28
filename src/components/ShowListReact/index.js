@@ -12,7 +12,7 @@ function ShowListReact({ data, visible, onClose }) {
     const [listReact, setListReact] = useState([]);
     useEffect(() => {
         axios
-            .get(`http://localhost:3000/posts/${data}/get_all_reaction`, {
+            .get(`https://kreat-api.onrender.com/posts/${data}/get_all_reaction`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

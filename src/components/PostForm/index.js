@@ -134,7 +134,7 @@ function PostForm() {
                     };
                 }
                 axios
-                    .post('http://localhost:3000/posts/create_post', postData, {
+                    .post('https://kreat-api.onrender.com/posts/create_post', postData, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                         },

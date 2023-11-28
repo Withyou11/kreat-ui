@@ -244,7 +244,7 @@ function Post({ data, results, setResults }) {
         handleRemoveItem();
         setCurrentUserReact('');
         axios
-            .delete(`http://localhost:3000/accounts/${data._id}/unreact_post`, {
+            .delete(`https://kreat-api.onrender.com/accounts/${data._id}/unreact_post`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -264,7 +264,7 @@ function Post({ data, results, setResults }) {
                 reactType: reaction,
             };
             axios
-                .patch(`http://localhost:3000/accounts/update_react`, body, {
+                .patch(`https://kreat-api.onrender.com/accounts/update_react`, body, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
@@ -279,7 +279,7 @@ function Post({ data, results, setResults }) {
                 reactType: reaction,
             };
             axios
-                .post(`http://localhost:3000/accounts/react`, body, {
+                .post(`https://kreat-api.onrender.com/accounts/react`, body, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
@@ -302,7 +302,7 @@ function Post({ data, results, setResults }) {
     const handleDeletePost = (id) => {
         if (window.confirm(`Are you sure to delete this post?`)) {
             axios
-                .delete(`http://localhost:3000/posts/${id}/delete_post`, {
+                .delete(`https://kreat-api.onrender.com/posts/${id}/delete_post`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },

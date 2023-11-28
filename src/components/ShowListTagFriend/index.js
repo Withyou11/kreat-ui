@@ -13,7 +13,7 @@ function ShowListTagFriend({ data, visible, onClose }) {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3000/posts/${data}/get_all_tagged_friend`, {
+            .get(`https://kreat-api.onrender.com/posts/${data}/get_all_tagged_friend`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

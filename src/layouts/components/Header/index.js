@@ -43,7 +43,7 @@ function Header({ unviewAmount, setUnviewAmount, handleUserSelect }) {
     //     socket.current.on('getNotification', () => {
     //         console.log('hihihhaha');
     //         axios
-    //             .get(`http://localhost:3000/accounts/unviewed_notification_and_message`, {
+    //             .get(`https://kreat-api.onrender.com/accounts/unviewed_notification_and_message`, {
     //                 headers: {
     //                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
     //                 },
@@ -59,7 +59,7 @@ function Header({ unviewAmount, setUnviewAmount, handleUserSelect }) {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3000/accounts/unviewed_notification_and_message`, {
+            .get(`https://kreat-api.onrender.com/accounts/unviewed_notification_and_message`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
