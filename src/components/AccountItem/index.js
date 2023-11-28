@@ -25,7 +25,7 @@ function AccountItem({ data, button, active, inactive, user, onUserSelect, mutua
                 },
             })
             .then((res) => {
-                io('ws://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
+                io('https://kreat-socket.onrender.com').emit('sendNotification', res.data.id_notification_receivers);
 
                 setFriendSuggestionList((results) =>
                     results.filter((account) => account.id_account !== data.id_account),

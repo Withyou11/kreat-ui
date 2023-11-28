@@ -48,7 +48,7 @@ function ProfileHeader() {
                 },
             })
             .then((res) => {
-                io('ws://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
+                io('https://kreat-socket.onrender.com').emit('sendNotification', res.data.id_notification_receivers);
                 setFriendStatus('friend request sent');
                 localStorage.setItem('friendStatus', 'friend request sent');
             })
@@ -106,7 +106,7 @@ function ProfileHeader() {
                 },
             )
             .then((res) => {
-                io('ws://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
+                io('https://kreat-socket.onrender.com').emit('sendNotification', res.data.id_notification_receivers);
                 localStorage.setItem('friendStatus', 'friend');
                 window.location.reload();
             })

@@ -11,7 +11,7 @@ function MenuItem({ data }) {
     const navigate = useNavigate();
     const handleClick = async () => {
         if (data.title === 'Logout') {
-            io('ws://localhost:3002').emit('logout', localStorage.getItem('accountId'));
+            io('https://kreat-socket.onrender.com').emit('logout', localStorage.getItem('accountId'));
             localStorage.removeItem('avatar');
             localStorage.removeItem('fullname');
             localStorage.removeItem('anotherAccountId');

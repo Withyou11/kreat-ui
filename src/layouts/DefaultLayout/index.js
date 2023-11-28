@@ -31,7 +31,7 @@ function DefaultLayout({ children }) {
     const onlineFriend = useContext(OnlineFriendContext);
     const setOnlineFriendList = onlineFriend.setOnlineFriendList;
     let socket = useRef();
-    socket.current = io('ws://localhost:3002');
+    socket.current = io('https://kreat-socket.onrender.com');
     useEffect(() => {
         window.scrollTo(0, 0);
         if (localStorage.getItem('accountId')) {

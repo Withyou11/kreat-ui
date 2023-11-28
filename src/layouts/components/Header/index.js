@@ -38,7 +38,7 @@ function Header({ unviewAmount, setUnviewAmount, handleUserSelect }) {
     const [showListChats, setShowListChats] = useState(false);
     const navigation = useNavigate();
     // const socket = useRef();
-    // socket.current = io('ws://localhost:3002');
+    // socket.current = io('https://kreat-socket.onrender.com');
     // useEffect(() => {
     //     socket.current.on('getNotification', () => {
     //         console.log('hihihhaha');

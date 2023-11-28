@@ -138,7 +138,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
                             id_receiver: userId,
                             messageContent: inputValue,
                         };
-                        io('ws://localhost:3002').emit('sendMessage', data);
+                        io('https://kreat-socket.onrender.com').emit('sendMessage', data);
                     }
 
                     setMessages([...messages, response.data.newMessage]);
