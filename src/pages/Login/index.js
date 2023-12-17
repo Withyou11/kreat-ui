@@ -27,6 +27,7 @@ function Login() {
                     localStorage.setItem('fullname', res.data.fullName);
                     localStorage.setItem('avatar', res.data.avatar);
                     localStorage.setItem('display', res.data.setting.postDisplay);
+                    localStorage.setItem('language', res.data.setting.language);
                     localStorage.setItem('anotherAccountId', '');
                     navigate('/');
                 }

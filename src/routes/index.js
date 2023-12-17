@@ -9,6 +9,7 @@ import ConfirmEmail from '~/pages/ConfirmEmail';
 import DetailPost from '~/pages/DetailPost';
 import ForgotPassword from '~/pages/ForgotPassword';
 import Settings from '~/pages/Settings';
+import VideoCall from '~/pages/VideoCall';
 // public routes
 const publicRoutes = [
     { path: '/', component: Newsfeed },
@@ -22,6 +23,7 @@ const publicRoutes = [
     { path: '/forgot_password', component: ForgotPassword, layout: NoLayout },
     { path: '/settings', component: Settings, layout: HeaderOnly },
     { path: '/post/:id', component: DetailPost, layout: HeaderOnly },
+    { path: '/video-call/:id', component: VideoCall, layout: NoLayout },
 ];
 
 const privateRoutes = [];

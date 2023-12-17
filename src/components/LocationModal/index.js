@@ -8,12 +8,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import ListLocation from '../ListLocation';
 import Modal from 'react-bootstrap/Modal';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 function LocationModal({ onClose, visible, handleAtLocationChange }) {
     const APIKey = 'kreat';
     const cx = classNames.bind(styles);
     const inputRef = useRef();
 
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
     const [searchText, setSearchText] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [selectedLocation, setSelectedLocation] = useState('');
@@ -51,7 +64,9 @@ function LocationModal({ onClose, visible, handleAtLocationChange }) {
     return (
         <Modal show={visible} onHide={handleClose} animation={false} centered>
             <Modal.Body>
-                <h3 className={cx('search-title')}>Location: {selectedLocation || ''}</h3>
+                <h3 className={cx('search-title')}>
+                    {dict.Location} {selectedLocation || ''}
+                </h3>
                 <button className={cx('delete-image-button')} onClick={handleClose}>
                     <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                 </button>
@@ -71,14 +86,14 @@ function LocationModal({ onClose, visible, handleAtLocationChange }) {
                             className={cx('input')}
                             ref={inputRef}
                             value={searchText}
-                            placeholder="Enter location..."
+                            placeholder={dict.Enter_location}
                             spellCheck="false"
                             onChange={(e) => handleChange(e)}
                         />
                     </div>
                 </Tippy>
                 <button className={cx('buttonDone')} onClick={(event) => handleCompleteLocation(event)}>
-                    Done
+                    {dict.Done}
                 </button>
             </Modal.Body>
         </Modal>

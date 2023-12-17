@@ -18,6 +18,9 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
+
 dayjs.extend(utc);
 function PostForm() {
     const navigate = useNavigate();
@@ -30,6 +33,18 @@ function PostForm() {
     const [atLocation, setAtLocation] = useState('');
     const [feeling, setFeeling] = useState('');
     const [time, setTime] = useState(null);
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const formatDate = (M) => {
         if (M && M.$isDayjsObject) {
             const utcDate = dayjs.utc(M.$d);
@@ -200,7 +215,7 @@ function PostForm() {
         setIsFeelingModalOpen(true);
     };
 
-    const placeholder = `What are you thinking, ${localStorage.getItem('fullname')}?`;
+    const placeholder = `${dict.What_are_you_thinking}, ${localStorage.getItem('fullname')}?`;
 
     useEffect(() => {
         const urls = [];
@@ -290,7 +305,7 @@ function PostForm() {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={['DateTimePicker', 'DateTimePicker']}>
                                 <DateTimePicker
-                                    label="Choose date and time to post (optional)"
+                                    label={dict.Choose_date_and_time_to_post}
                                     value={time}
                                     onChange={(newValue) => setTime(newValue)}
                                     disablePast
@@ -393,11 +408,11 @@ function PostForm() {
                             </div>
                             <div className={cx('post-info')}>
                                 <span className={cx('location-info')}>
-                                    <h4 style={{ display: 'inline-block', marginLeft: '4px' }}>At:</h4>
+                                    <h4 style={{ display: 'inline-block', marginLeft: '4px' }}>{dict.At}</h4>
                                     <p style={{ display: 'inline-block', marginLeft: '4px' }}>{atLocation}</p>
                                 </span>
                                 <span style={{ display: 'flex' }} className={cx('location-info')}>
-                                    <h4 style={{ display: 'inline-block', marginLeft: '4px' }}>With:</h4>
+                                    <h4 style={{ display: 'inline-block', marginLeft: '4px' }}>{dict.With}</h4>
                                     <div className={cx('limit-width')}>
                                         {withfriendName.map((item, index) => (
                                             <p
@@ -413,7 +428,7 @@ function PostForm() {
                                     </div>
                                 </span>
                                 <span className={cx('location-info')}>
-                                    <h4 style={{ display: 'inline-block', marginLeft: '4px' }}>Feeling:</h4>
+                                    <h4 style={{ display: 'inline-block', marginLeft: '4px' }}>{dict.Feeling}</h4>
                                     <p style={{ display: 'inline-block', marginLeft: '4px' }}>{feeling}</p>
                                 </span>
                             </div>
@@ -429,7 +444,7 @@ function PostForm() {
                                         onChange={() => setPrivacy('public')}
                                     />
                                     <label htmlFor="public" className={cx('radio-label')}>
-                                        Public
+                                        {dict.Public}
                                     </label>
                                 </div>
                                 <div className={cx('radio-item')}>
@@ -442,7 +457,7 @@ function PostForm() {
                                         onChange={() => setPrivacy('friend')}
                                     />
                                     <label htmlFor="friend" className={cx('radio-label')}>
-                                        Friends
+                                        {dict.Friends}
                                     </label>
                                 </div>
                                 <div className={cx('radio-item')}>
@@ -455,12 +470,12 @@ function PostForm() {
                                         onChange={handleSetPrivate}
                                     />
                                     <label htmlFor="private" className={cx('radio-label')}>
-                                        Private
+                                        {dict.Private}
                                     </label>
                                 </div>
                             </div>
                             <Button className={cx('submit-button')} primary small type="submit">
-                                Post
+                                {dict?.Post}
                             </Button>
                         </div>
                     </form>

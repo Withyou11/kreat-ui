@@ -14,7 +14,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ListNotification from '~/components/ListNotification';
 import ListChat from '~/components/ListChat';
-// import { io } from 'socket.io-client';
 
 const cx = classNames.bind(styles);
 
@@ -38,9 +37,9 @@ function Header({ unviewAmount, setUnviewAmount, handleUserSelect }) {
     const [showListChats, setShowListChats] = useState(false);
     const navigation = useNavigate();
     // const socket = useRef();
-    // socket.current = io('https://kreat-socket.onrender.com');
+    // socket = io('https://kreat-socket.onrender.com');
     // useEffect(() => {
-    //     socket.current.on('getNotification', () => {
+    //     socket.on('getNotification', () => {
     //         console.log('hihihhaha');
     //         axios
     //             .get(`https://kreat-api.onrender.com/accounts/unviewed_notification_and_message`, {

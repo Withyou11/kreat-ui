@@ -1,11 +1,10 @@
 import classNames from 'classnames/bind';
-// import { io } from 'socket.io-client';
 import styles from './ChatBox.module.scss';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { OnlineFriendContext } from '~/Context/OnlineFriendContext/OnlineFriendContext';
 import ChatContent from '../ChatContent';
-import { faPaperPlane, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faPlus, faTimes, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Image } from 'cloudinary-react';
 import { io } from 'socket.io-client';
@@ -14,14 +13,48 @@ import Button from '../Button';
 import { useNavigate } from 'react-router-dom';
 import UpdateGroupInfoModal from '../UpdateGroupInfoModal';
 import AddMemberModal from '../AddMemberModal';
+import SimplePeer from 'simple-peer';
+import { SocketContext } from '~/Context/SocketContext/SocketContext';
+import VideoCall from '~/pages/VideoCall';
+
+// const socket = io.connect('https://kreat-socket.onrender.com');
+
 function ChatBox({ updateState, conversationId, userName, userAvatar, userId, flag, status }) {
+    const socket = useContext(SocketContext);
     const onlineFriend = useContext(OnlineFriendContext);
     const navigate = useNavigate();
     const onlineFriendList = onlineFriend.onlineFriendList;
     const [messages, setMessages] = useState([]);
+    const [isGroup, setIsGroup] = useState();
     const [leader, setLeader] = useState(null);
     const [isUpdateGroupInfoOpen, setIsUpdateGroupInfoOpen] = useState(false);
     const [isAddMemberOpen, setIsAddMemberOpen] = useState(false);
+    const [peer, setPeer] = useState(null);
+    // Define Call video variables
+    const [stream, setStream] = useState();
+    const [calling, setCalling] = useState(false);
+
+    const myVideo = useRef();
+    const userVideo = useRef();
+    const connectionRef = useRef();
+    const callUser = () => {
+        const peer = new SimplePeer({
+            initiator: true,
+            trickle: false,
+            stream: stream,
+        });
+        setPeer(peer);
+        peer.on('signal', (peerData) => {
+            console.log(123);
+            socket.emit('callUser', {
+                id_conversation: conversationId,
+                peerData: peerData,
+                id_sender: localStorage.getItem('accountId'),
+                id_receiver: userId,
+            });
+        });
+    };
+
     const cx = classNames.bind(styles);
     function handleClose(e) {
         updateState(null);
@@ -105,6 +138,8 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
                 },
             })
             .then((response) => {
+                console.log(response.data);
+                setIsGroup(response.data.leader);
                 setMessages(response.data.messages);
                 setLeader(response.data.leader);
             })
@@ -150,6 +185,11 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
         }
     };
 
+    const handleCallVideo = () => {
+        callUser();
+        setCalling(true);
+    };
+
     return (
         <div id="chatbox">
             <PopperWrapper className={cx('wrapper')}>
@@ -164,11 +204,20 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
                     <h4 onClick={handleGoTimelines} className={cx('username')}>
                         {userName}
                     </h4>
-                    <Button
-                        leftIcon={<FontAwesomeIcon icon={faPlus} />}
-                        smallest
-                        onClick={handleOpenAddMemberModal}
-                    ></Button>
+                    {isGroup && (
+                        <Button
+                            leftIcon={<FontAwesomeIcon icon={faPlus} />}
+                            smallest
+                            onClick={handleOpenAddMemberModal}
+                        ></Button>
+                    )}
+                    {!isGroup && (
+                        <Button
+                            leftIcon={<FontAwesomeIcon icon={faVideo} />}
+                            smallest
+                            onClick={handleCallVideo}
+                        ></Button>
+                    )}
                     <Button leftIcon={<FontAwesomeIcon icon={faTimes} />} smallest onClick={handleClose}></Button>
                 </div>
                 <hr />
@@ -204,6 +253,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
             {isAddMemberOpen && (
                 <AddMemberModal groupId={conversationId} onClose={handleCloseAddMemberModal}></AddMemberModal>
             )}
+            {calling && peer && <VideoCall peer={peer}></VideoCall>}
         </div>
     );
 }

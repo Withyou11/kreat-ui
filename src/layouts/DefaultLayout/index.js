@@ -7,7 +7,12 @@ import { useEffect, useRef, useContext, useState, cloneElement } from 'react';
 import { io } from 'socket.io-client';
 import { OnlineFriendContext } from '~/Context/OnlineFriendContext/OnlineFriendContext';
 import axios from 'axios';
+import ConfirmVideoCall from '~/components/ConfirmVideoCall';
+import { SocketContext } from '~/Context/SocketContext/SocketContext';
+
 function DefaultLayout({ children }) {
+    const socket = useContext(SocketContext);
+
     const cx = classNames.bind(styles);
     const [selectedConversationId, setSelectedConversatioId] = useState(null);
     const [selectedUserName, setSelectedUserName] = useState(null);
@@ -17,6 +22,8 @@ function DefaultLayout({ children }) {
     const [flag, setFlag] = useState(0);
     const [status, setStatus] = useState(null);
     const [unviewAmount, setUnviewAmount] = useState();
+
+    const [callingData, setCallingData] = useState();
 
     const handleUserSelect = (conversationId, userName, userAvatar, userId, status) => {
         setStatus(status);
@@ -30,16 +37,16 @@ function DefaultLayout({ children }) {
     };
     const onlineFriend = useContext(OnlineFriendContext);
     const setOnlineFriendList = onlineFriend.setOnlineFriendList;
-    let socket = useRef();
-    socket.current = io('https://kreat-socket.onrender.com');
+    // let socket = useRef();
+    // socket = io('https://kreat-socket.onrender.com');
     useEffect(() => {
         window.scrollTo(0, 0);
         if (localStorage.getItem('accountId')) {
-            socket.current.emit('addUser', localStorage.getItem('accountId'));
-            socket.current.on('getUser', (onlineFriends) => {
+            socket.emit('addUser', localStorage.getItem('accountId'));
+            socket.on('getUser', (onlineFriends) => {
                 setOnlineFriendList(onlineFriends);
             });
-            socket.current.on('getMessage', (newMessage) => {
+            socket.on('getMessage', (newMessage) => {
                 setFlag((prevCount) => prevCount + 1);
                 setNewMessage(newMessage);
                 handleUserSelect(
@@ -50,7 +57,7 @@ function DefaultLayout({ children }) {
                     true,
                 );
             });
-            socket.current.on('getNotification', () => {
+            socket.on('getNotification', () => {
                 axios
                     .get(`https://kreat-api.onrender.com/accounts/unviewed_notification_and_message`, {
                         headers: {
@@ -63,6 +70,10 @@ function DefaultLayout({ children }) {
                     .catch((error) => {
                         console.log(error);
                     });
+            });
+            socket.on('getCall', (data) => {
+                console.log('getCall: ', data);
+                setCallingData(data);
             });
         }
     }, []);
@@ -92,6 +103,9 @@ function DefaultLayout({ children }) {
                             flag: flag,
                             status: status,
                         })}
+                        {callingData && (
+                            <ConfirmVideoCall data={callingData} setCallingData={setCallingData}></ConfirmVideoCall>
+                        )}
                     </div>
                     <RightSidebar />
                 </div>

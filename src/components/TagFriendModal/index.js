@@ -6,6 +6,9 @@ import Modal from 'react-bootstrap/Modal';
 import ListTagFriend from '../ListTagFriend';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
+
 function TagFriendModal({ onClose, visible, withfriend, withfriendName, handleWithFriendChange }) {
     const cx = classNames.bind(styles);
     const [data, setData] = useState([]);
@@ -13,6 +16,18 @@ function TagFriendModal({ onClose, visible, withfriend, withfriendName, handleWi
         event.preventDefault();
         onClose();
     };
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
 
     useEffect(() => {
         axios
@@ -49,7 +64,7 @@ function TagFriendModal({ onClose, visible, withfriend, withfriendName, handleWi
     return (
         <Modal show={visible} onHide={handleClose} animation={false} centered>
             <Modal.Body>
-                <h3 style={{ margin: '0 12px' }}>Select friends to tag:</h3>
+                <h3 style={{ margin: '0 12px' }}>{dict.Select_friends_to_tag}</h3>
                 <button className={cx('delete-image-button')} onClick={handleClose}>
                     <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                 </button>
@@ -57,7 +72,7 @@ function TagFriendModal({ onClose, visible, withfriend, withfriendName, handleWi
                 <input
                     value={searchText}
                     style={{ width: '90%' }}
-                    placeholder="Find your friend..."
+                    placeholder={dict.Find_your_friends}
                     spellCheck="false"
                     onChange={(e) => handleChange(e)}
                 />
@@ -70,7 +85,7 @@ function TagFriendModal({ onClose, visible, withfriend, withfriendName, handleWi
                     />
                 </div>
                 <button className={cx('buttonDone')} onClick={(event) => handleCompleteTag(event)}>
-                    Done
+                    {dict.Done}
                 </button>
             </Modal.Body>
         </Modal>

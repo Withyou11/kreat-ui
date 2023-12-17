@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 function FeelingModal({ onClose, visible, handleFeelingChange }) {
     const feelingsList = [
@@ -21,6 +23,18 @@ function FeelingModal({ onClose, visible, handleFeelingChange }) {
     ];
     const [selectedFeeling, setSelectedFeeling] = useState('');
     const cx = classNames.bind(styles);
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
 
     const handleCompleteFeeling = (event) => {
         event.preventDefault();
@@ -43,7 +57,9 @@ function FeelingModal({ onClose, visible, handleFeelingChange }) {
     return (
         <Modal show={visible} onHide={handleClose} animation={false} centered>
             <Modal.Body>
-                <h3 className={cx('search-title')}>Feeling: {selectedFeeling || ''}</h3>
+                <h3 className={cx('search-title')}>
+                    {dict.Feeling} {selectedFeeling || ''}
+                </h3>
                 <button className={cx('delete-image-button')} onClick={handleClose}>
                     <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                 </button>
@@ -55,7 +71,7 @@ function FeelingModal({ onClose, visible, handleFeelingChange }) {
                     ))}
                 </div>
                 <button className={cx('buttonDone')} onClick={(event) => handleCompleteFeeling(event)}>
-                    Done
+                    {dict.Done}
                 </button>
             </Modal.Body>
         </Modal>

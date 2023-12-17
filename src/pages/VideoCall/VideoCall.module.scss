@@ -1,0 +1,15 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.videoContainer {
+    margin: auto 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.end {
+    margin: auto;
+}
