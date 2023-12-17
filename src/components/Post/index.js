@@ -30,8 +30,22 @@ import TwoMedia from '../DisplayMedia/TwoMedia';
 import ThreeMedia from '../DisplayMedia/ThreeMedia';
 import FourMedia from '../DisplayMedia/FourMedia';
 import MoreMedia from '../DisplayMedia/MoreMedia';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 function Post({ data, results, setResults }) {
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const menuRef = useRef(null);
     const navigate = useNavigate();
     const cx = classNames.bind(styles);
@@ -346,7 +360,7 @@ function Post({ data, results, setResults }) {
                                                 marginRight: '4px',
                                             }}
                                         >
-                                            is feeling
+                                            {dict.is_feeling}
                                         </span>
                                         <span style={{ fontSize: '1.7rem' }}> {data?.postFeeling}</span>
                                     </span>
@@ -377,10 +391,10 @@ function Post({ data, results, setResults }) {
                             {showMenu && (
                                 <div ref={menuRef} className={cx('menu')}>
                                     <button className={cx('menu-item')} onClick={handleShowUpdatePostModal}>
-                                        Update post
+                                        {dict.Update_post}
                                     </button>
                                     <button className={cx('menu-item')} onClick={() => handleDeletePost(data._id)}>
-                                        Delete post
+                                        {dict.Delete_post}
                                     </button>
                                 </div>
                             )}
@@ -388,9 +402,11 @@ function Post({ data, results, setResults }) {
                         {data?.id_friendTag?.length > 0 && (
                             <div className={cx('friend')} onClick={(e) => handleTagButtonClick(e)}>
                                 {data?.id_friendTag.length > 1 ? (
-                                    <p className={cx('friend-number')}>{data?.id_friendTag.length} people</p>
+                                    <p className={cx('friend-number')}>
+                                        {data?.id_friendTag.length} {dict.people}
+                                    </p>
                                 ) : (
-                                    <p className={cx('friend-number')}>1 person</p>
+                                    <p className={cx('friend-number')}>1 {dict.person}</p>
                                 )}
                             </div>
                         )}
@@ -530,7 +546,7 @@ function Post({ data, results, setResults }) {
                                 {data?.shareContent.shared_id_friendTag.length > 0 && (
                                     <div className={cx('friend')} onClick={(e) => handleTagButtonClick(e)}>
                                         <p className={cx('friend-number')}>
-                                            {data?.shareContent.shared_id_friendTag.length} people
+                                            {data?.shareContent.shared_id_friendTag.length} {dict.people}
                                         </p>
                                     </div>
                                 )}
@@ -568,9 +584,13 @@ function Post({ data, results, setResults }) {
                     )}
                     <div onClick={() => handleCommentClick(data?._id)} className={cx('comment-number')}>
                         {data.commentAmount !== 1 ? (
-                            <p>{data.commentAmount} comments</p>
+                            <p>
+                                {data.commentAmount} {dict.comments}
+                            </p>
                         ) : (
-                            <p>{data.commentAmount} comment</p>
+                            <p>
+                                {data.commentAmount} {dict.comment}
+                            </p>
                         )}
                     </div>
                 </div>
@@ -627,7 +647,7 @@ function Post({ data, results, setResults }) {
                             outline
                             onClick={() => handleCommentClick(data?._id)}
                         >
-                            Comment
+                            {dict.Comment}
                         </Button>
                     </div>
                     <div className={cx('action-button')}>
@@ -637,7 +657,7 @@ function Post({ data, results, setResults }) {
                             outline
                             onClick={handleShowShareModal}
                         >
-                            Share
+                            {dict.Share}
                         </Button>
                     </div>
                 </div>

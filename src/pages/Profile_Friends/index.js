@@ -8,8 +8,21 @@ import FriendItem from '~/layouts/components/FriendItem';
 import { useDebounce } from '~/hooks';
 import axios from 'axios';
 import FriendRequestItem from '~/layouts/components/FriendRequestItem';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 function Profile_Friends(props) {
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
     const cx = classNames.bind(styles);
     const [searchText, setSearchText] = useState('');
     const [searchResults, setSearchResults] = useState([]);
@@ -88,14 +101,14 @@ function Profile_Friends(props) {
                 <div className={cx('friend-container')}>
                     <div className={cx('search-friend-container')}>
                         <div className={cx('friend-amout')}>
-                            <p className={cx('your-friends')}>All friends</p>
+                            <p className={cx('your-friends')}>{dict.All_friends}</p>
                             <p className={cx('amount')}>{listUsers.length}</p>
                         </div>
                         <div className={cx('search')}>
                             <input
                                 ref={inputRef}
                                 value={searchText}
-                                placeholder="Find friends..."
+                                placeholder={dict.Find_your_friends}
                                 spellCheck="false"
                                 onChange={(e) => handleChange(e)}
                             />
@@ -115,7 +128,7 @@ function Profile_Friends(props) {
                         </div>
                     </div>
 
-                    <h2 style={{ textAlign: 'center', marginTop: '30px' }}>ALL FRIENDS</h2>
+                    <h2 style={{ textAlign: 'center', marginTop: '30px' }}>{dict.ALL_FRIENDS}</h2>
                     {searchResults.length > 0 || debouncedValue === '' ? (
                         <div className={cx('list-friend-container')}>
                             {searchResults.length > 0
@@ -132,12 +145,12 @@ function Profile_Friends(props) {
                         </div>
                     ) : (
                         <div className={cx('list-friend-container')}>
-                            <p style={{ fontWeight: 600, fontSize: '20px', margin: '50px auto' }}>Not Found</p>
+                            <p style={{ fontWeight: 600, fontSize: '20px', margin: '50px auto' }}>{dict.Not_Found}</p>
                         </div>
                     )}
                     {localStorage.getItem('anotherAccountId') === '' && (
                         <div>
-                            <h2 style={{ textAlign: 'center', marginTop: '30px' }}>FRIEND REQUESTS</h2>
+                            <h2 style={{ textAlign: 'center', marginTop: '30px' }}>{dict.FRIEND_REQUESTS}</h2>
                             {listFriendsRequest?.length > 0 && (
                                 <div className={cx('list-friend-container')}>
                                     {listFriendsRequest?.map((user) => (
@@ -149,7 +162,7 @@ function Profile_Friends(props) {
                             )}
                             {listFriendsRequest?.length === 0 && (
                                 <div className={cx('list-friend-container')}>
-                                    <p className={cx('title')}>You have no friend requests</p>
+                                    <p className={cx('title')}>{dict.You_have_no_friend_requests}</p>
                                 </div>
                             )}
                         </div>

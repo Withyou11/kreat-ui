@@ -13,11 +13,8 @@ import Button from '../Button';
 import { useNavigate } from 'react-router-dom';
 import UpdateGroupInfoModal from '../UpdateGroupInfoModal';
 import AddMemberModal from '../AddMemberModal';
-import SimplePeer from 'simple-peer';
 import { SocketContext } from '~/Context/SocketContext/SocketContext';
 import VideoCall from '~/pages/VideoCall';
-
-// const socket = io.connect('https://kreat-socket.onrender.com');
 
 function ChatBox({ updateState, conversationId, userName, userAvatar, userId, flag, status }) {
     const socket = useContext(SocketContext);
@@ -33,27 +30,6 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
     // Define Call video variables
     const [stream, setStream] = useState();
     const [calling, setCalling] = useState(false);
-
-    const myVideo = useRef();
-    const userVideo = useRef();
-    const connectionRef = useRef();
-    const callUser = () => {
-        const peer = new SimplePeer({
-            initiator: true,
-            trickle: false,
-            stream: stream,
-        });
-        setPeer(peer);
-        peer.on('signal', (peerData) => {
-            console.log(123);
-            socket.emit('callUser', {
-                id_conversation: conversationId,
-                peerData: peerData,
-                id_sender: localStorage.getItem('accountId'),
-                id_receiver: userId,
-            });
-        });
-    };
 
     const cx = classNames.bind(styles);
     function handleClose(e) {
@@ -186,7 +162,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
     };
 
     const handleCallVideo = () => {
-        callUser();
+        // callUser();
         setCalling(true);
     };
 
@@ -253,7 +229,14 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
             {isAddMemberOpen && (
                 <AddMemberModal groupId={conversationId} onClose={handleCloseAddMemberModal}></AddMemberModal>
             )}
-            {calling && peer && <VideoCall peer={peer}></VideoCall>}
+            {calling && (
+                <VideoCall
+                    conversationId={conversationId}
+                    userId={userId}
+                    currentUser={'caller'}
+                    peerData={null}
+                ></VideoCall>
+            )}
         </div>
     );
 }

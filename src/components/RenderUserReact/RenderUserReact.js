@@ -5,9 +5,25 @@ import Button from '../Button';
 import { useState, useEffect, memo } from 'react';
 import styles from './RenderUserReact.module.scss';
 import classNames from 'classnames/bind';
+
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
+
 const RenderUserReact = ({ currentUserReact, handleCancelReaction, handleChooseReaction }) => {
     const [userReactContent, setUserReactContent] = useState(null);
     const cx = classNames.bind(styles);
+    const [dict, setDict] = useState({});
+
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
 
     useEffect(() => {
         if (currentUserReact === 'like') {
@@ -19,7 +35,7 @@ const RenderUserReact = ({ currentUserReact, handleCancelReaction, handleChooseR
                         outline
                         onClick={handleCancelReaction}
                     >
-                        Like
+                        {dict.like}
                     </Button>
                 </div>,
             );
@@ -32,7 +48,7 @@ const RenderUserReact = ({ currentUserReact, handleCancelReaction, handleChooseR
                         outline
                         onClick={handleCancelReaction}
                     >
-                        Love
+                        {dict.love}
                     </Button>
                 </div>,
             );
@@ -56,7 +72,7 @@ const RenderUserReact = ({ currentUserReact, handleCancelReaction, handleChooseR
             setUserReactContent(
                 <div className={cx('action-button')}>
                     <Button className={cx('haha-button')} sad outline onClick={handleCancelReaction}>
-                        Sad
+                        {dict.sad}
                     </Button>
                 </div>,
             );
@@ -64,7 +80,7 @@ const RenderUserReact = ({ currentUserReact, handleCancelReaction, handleChooseR
             setUserReactContent(
                 <div className={cx('action-button')}>
                     <Button className={cx('angry-button')} angry outline onClick={handleCancelReaction}>
-                        Angry
+                        {dict.angry}
                     </Button>
                 </div>,
             );
@@ -77,7 +93,7 @@ const RenderUserReact = ({ currentUserReact, handleCancelReaction, handleChooseR
                         outline
                         onClick={() => handleChooseReaction('like')}
                     >
-                        Like
+                        {dict.like}
                     </Button>
                 </div>,
             );

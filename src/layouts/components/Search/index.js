@@ -8,9 +8,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDebounce } from '~/hooks';
 import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 const cx = classNames.bind(styles);
 function Search() {
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const [searchText, setSearchText] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [showResults, setShowResults] = useState(true);
@@ -63,7 +77,7 @@ function Search() {
                 render={(attr) => (
                     <div className={cx('search-result')} tabIndex="-1" {...attr}>
                         <PopperWrapper>
-                            <h3 className={cx('search-title')}>Account</h3>
+                            <h3 className={cx('search-title')}>{dict.Account}</h3>
                             {searchResults.map((result) => (
                                 <AccountItem
                                     key={result.id_account}
@@ -80,7 +94,7 @@ function Search() {
                     <input
                         ref={inputRef}
                         value={searchText}
-                        placeholder="Search people on KreaT..."
+                        placeholder={dict.Search_people_on_Kreat}
                         spellCheck="false"
                         onChange={(e) => handleChange(e)}
                         onFocus={() => setShowResults(true)}

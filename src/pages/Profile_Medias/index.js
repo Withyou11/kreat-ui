@@ -4,7 +4,23 @@ import styles from './Profile_Medias.module.scss';
 import classNames from 'classnames/bind';
 import { Image } from 'cloudinary-react';
 import axios from 'axios';
+
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
+
 function Profile_Medias() {
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const [selectedImage, setSelectedImage] = useState(null);
     const [listImage, setListImage] = useState([]);
     const [listAvatar, setListAvatar] = useState([]);
@@ -71,8 +87,8 @@ function Profile_Medias() {
                             value={selectedMode}
                             onChange={(e) => handleChangeMode(e)}
                         >
-                            <option value="image">Uploads</option>
-                            <option value="avatar">Avatars</option>
+                            <option value="image">{dict.Uploads}</option>
+                            <option value="avatar">{dict.Avatars}</option>
                         </select>
                     </div>
                     <div className={cx('wrapper')}>
@@ -102,8 +118,8 @@ function Profile_Medias() {
                             value={selectedMode}
                             onChange={(e) => handleChangeMode(e)}
                         >
-                            <option value="image">Uploads</option>
-                            <option value="avatar">Avatars</option>
+                            <option value="image">{dict.Uploads}</option>
+                            <option value="avatar">{dict.Avatars}</option>
                         </select>
                     </div>
                     <div className={cx('wrapper')}>

@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import { useState, useEffect } from 'react';
 import styles from './AccountItem.module.scss';
 import { Image } from 'cloudinary-react';
 import { useNavigate } from 'react-router-dom';
@@ -8,9 +9,24 @@ import { faCircle, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import reactIcons from '../General/reactIcons';
 import axios from 'axios';
 import { io } from 'socket.io-client';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 function AccountItem({ data, button, active, inactive, user, onUserSelect, mutualFriends, setFriendSuggestionList }) {
     const cx = classNames.bind(styles);
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const navigate = useNavigate();
     function handleAddFriend(e) {
         e.stopPropagation();
@@ -58,7 +74,7 @@ function AccountItem({ data, button, active, inactive, user, onUserSelect, mutua
                     <h4 className={cx('name')}>{data.fullName}</h4>
                     <p className={cx('amount-common-friend')}>
                         {mutualFriends}
-                        <span> mutual friends</span>
+                        <span> {dict.Mutual_friends}</span>
                     </p>
                 </div>
                 {button && (

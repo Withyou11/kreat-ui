@@ -82,7 +82,7 @@
 }
 
 .active {
-    color: #0093ff;
+    color: var(--primary-light);
 }
 
 .buttonContainer {
@@ -107,13 +107,13 @@
 }
 
 .addButton:hover {
-    background-color: #6fc5ff;
+    background-color: var(--primary-light);
     box-shadow: 0 0 20px #6fc5ff50;
     transform: scale(1.1);
 }
 
 .addButton:active {
-    background-color: #3d94cf;
+    background-color: var(--primary-light);
     transition: all 0.25s;
     -webkit-transition: all 0.25s;
     box-shadow: none;

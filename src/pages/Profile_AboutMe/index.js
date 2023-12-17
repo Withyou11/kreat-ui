@@ -8,7 +8,24 @@ import EditPersonalInfoModal from './EditPersonalInfoModal/EditPersonalInfoModal
 import EditFavoriteInfoModal from './EditFavoriteInfoModal/EditFavoriteInfoModal';
 import EditEducationInfoModal from './EditEducationInfoModal/EditEducationInfoModal';
 import axios from 'axios';
+
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
+
 function Profile_AboutMe(props) {
+    const [dict, setDict] = useState({});
+
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(true);
     let id = '';
@@ -156,7 +173,7 @@ function Profile_AboutMe(props) {
                     <div className={cx('about-above')}>
                         <div className={cx('personal-info')}>
                             <div className={cx('header')}>
-                                <h3 className={cx('header-text')}>Personal Info</h3>
+                                <h3 className={cx('header-text')}>{dict.Personal_Info}</h3>
                                 {!localStorage.getItem('anotherAccountId') && (
                                     <FontAwesomeIcon
                                         onClick={handleOpenEditPersonalInfoModal}
@@ -167,41 +184,41 @@ function Profile_AboutMe(props) {
                             </div>
                             <hr />
                             <div className={cx('personal-info-detail')}>
-                                <p className={cx('title')}>About me:</p>
+                                <p className={cx('title')}>{dict.About_me}</p>
                                 <p className={cx('content')}>{data.personalInfo?.aboutMe}</p>
                             </div>
                             <div className={cx('personal-info-detail')}>
-                                <p className={cx('title')}>Birthday:</p>
+                                <p className={cx('title')}>{dict.Birthday}</p>
                                 <p className={cx('content')}> {data.personalInfo?.birthday}</p>
                             </div>
                             <div className={cx('personal-info-detail')}>
-                                <p className={cx('title')}>Lives in:</p>
+                                <p className={cx('title')}>{dict.Lives_in}</p>
                                 <p className={cx('content')}> {data.personalInfo?.liveIn}</p>
                             </div>
                             <div className={cx('personal-info-detail')}>
-                                <p className={cx('title')}>Occupation:</p>
+                                <p className={cx('title')}>{dict.Occupation}</p>
                                 <p className={cx('content')}> {data.personalInfo?.occupation}</p>
                             </div>
                             <div className={cx('personal-info-detail')}>
-                                <p className={cx('title')}>Joined:</p>
+                                <p className={cx('title')}>{dict.Joined}</p>
                                 <p className={cx('content')}>{data.peronalInfo?.joined}</p>
                             </div>
                             <div className={cx('personal-info-detail')}>
-                                <p className={cx('title')}>Gender:</p>
+                                <p className={cx('title')}>{dict.Gender}</p>
                                 <p className={cx('content')}>{data.personalInfo?.gender}</p>
                             </div>
                             <div className={cx('personal-info-detail')}>
-                                <p className={cx('title')}>Status:</p>
+                                <p className={cx('title')}>{dict.Status}</p>
                                 <p className={cx('content')}>{data.personalInfo?.maritalStatus}</p>
                             </div>
                             <div className={cx('personal-info-detail')}>
-                                <p className={cx('title')}>Religion:</p>
+                                <p className={cx('title')}>{dict.Religion}</p>
                                 <p className={cx('content')}>{data.personalInfo?.religion}</p>
                             </div>
                         </div>
                         <div className={cx('hobbies')}>
                             <div className={cx('header')}>
-                                <h3 className={cx('header-text')}>Hobbies and Interests</h3>
+                                <h3 className={cx('header-text')}>{dict.Hobbies_and_Interests}</h3>
                                 {!localStorage.getItem('anotherAccountId') && (
                                     <FontAwesomeIcon
                                         onClick={handleOpenEditFavoriteInfoModal}
@@ -216,37 +233,37 @@ function Profile_AboutMe(props) {
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <p className={cx('title')}>Hobbies:</p>
+                                                <p className={cx('title')}>{dict.Hobbies}</p>
                                                 <p className={cx('content')}>{data.favoriteInfo?.hobbies}</p>
                                             </td>
                                             <td>
-                                                <p className={cx('title')}>Favourite Music Bands / Artists:</p>
+                                                <p className={cx('title')}>{dict.Favourite_Music_Bands}</p>
                                                 <p className={cx('content')}>{data.favoriteInfo?.favoriteMusicBands}</p>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <p className={cx('title')}>Favourite TV Shows:</p>
+                                                <p className={cx('title')}>{dict.Favourite_TV_Shows}</p>
                                                 <p className={cx('content')}>{data.favoriteInfo?.favoriteTVShows}</p>
                                             </td>
                                             <td>
-                                                <p className={cx('title')}>Favourite Books:</p>
+                                                <p className={cx('title')}>{dict.Favourite_Books}</p>
                                                 <p className={cx('content')}>{data.favoriteInfo?.favoriteBooks}</p>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <p className={cx('title')}>Favourite Movies:</p>
+                                                <p className={cx('title')}>{dict.Favourite_Movies}</p>
                                                 <p className={cx('content')}>{data.favoriteInfo?.favoriteMovies}</p>
                                             </td>
                                             <td>
-                                                <p className={cx('title')}>Favourite Sports:</p>
+                                                <p className={cx('title')}>{dict.Favourite_Sports}</p>
                                                 <p className={cx('content')}>{data.favoriteInfo?.favoriteSports}</p>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <p className={cx('title')}>Favourite Games:</p>
+                                                <p className={cx('title')}>{dict.Favourite_Games}</p>
                                                 <p className={cx('content')}>{data.favoriteInfo?.favoriteGames}</p>
                                             </td>
                                         </tr>
@@ -257,7 +274,7 @@ function Profile_AboutMe(props) {
                     </div>
                     <div className={cx('education')}>
                         <div className={cx('header')}>
-                            <h3 className={cx('header-text')}>Education and Employement</h3>
+                            <h3 className={cx('header-text')}>{dict.Education_and_Employement}</h3>
                             {!localStorage.getItem('anotherAccountId') && (
                                 <FontAwesomeIcon
                                     onClick={handleOpenEditEducationInfoModal}
@@ -272,7 +289,7 @@ function Profile_AboutMe(props) {
                                 <tr>
                                     <td>
                                         <p className={cx('title')}>
-                                            Primary school: {data.educationInfo?.primarySchool}
+                                            {dict.Primary_school} {data.educationInfo?.primarySchool}
                                         </p>
                                         <p className={cx('content')}>
                                             {data.educationInfo?.yearStartPrimarySchool} -{' '}
@@ -281,7 +298,7 @@ function Profile_AboutMe(props) {
                                     </td>
                                     <td>
                                         <p className={cx('title')}>
-                                            Secondary school: {data.educationInfo?.secondarySchool}{' '}
+                                            {dict.Secondary_school} {data.educationInfo?.secondarySchool}{' '}
                                         </p>
                                         <p className={cx('content')}>
                                             {data.educationInfo?.yearStartSecondarySchool} -{' '}
@@ -289,7 +306,9 @@ function Profile_AboutMe(props) {
                                         </p>
                                     </td>
                                     <td>
-                                        <p className={cx('title')}>High school: {data.educationInfo?.highSchool}</p>
+                                        <p className={cx('title')}>
+                                            {dict.High_school} {data.educationInfo?.highSchool}
+                                        </p>
                                         <p className={cx('content')}>
                                             {data.educationInfo?.yearStartHighSchool} -{' '}
                                             {data.educationInfo?.yearEndHighSchool}
@@ -298,7 +317,9 @@ function Profile_AboutMe(props) {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <p className={cx('title')}>University: {data.educationInfo?.university}</p>
+                                        <p className={cx('title')}>
+                                            {dict.University} {data.educationInfo?.university}
+                                        </p>
                                         <p className={cx('content')}>
                                             {data.educationInfo?.yearStartUniversity} -{' '}
                                             {data.educationInfo?.yearEndUniversity}

@@ -5,7 +5,23 @@ import styles from './Contact.module.scss';
 import { OnlineFriendContext } from '~/Context/OnlineFriendContext/OnlineFriendContext';
 import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
+
 function Contact() {
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const onlineFriend = useContext(OnlineFriendContext);
     const onlineFriendList = onlineFriend.onlineFriendList;
     const [loading, setLoading] = useState(true);
@@ -32,8 +48,8 @@ function Contact() {
                 <div className={cx('wrapper')}>
                     <PopperWrapper>
                         <div className={cx('title-container')}>
-                            <h3 className={cx('title')}>Contacts</h3>
-                            <input placeholder="Find your friends..." spellCheck="false" />
+                            <h3 className={cx('title')}>{dict.Contacts}</h3>
+                            <input placeholder={dict.Find_your_friends} spellCheck="false" />
                             <hr />
                         </div>
                         <ListAccountItem listContact={listContact} onlineFriendList={onlineFriendList} />

@@ -6,9 +6,24 @@ import axios from 'axios';
 import { useState, useRef, useEffect } from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 function UpdateNameModal({ onClose, onSave }) {
     const cx = classNames.bind(styles);
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const personalInfo = {
         fullName: `${localStorage.getItem('fullname')}`,
         avatar: `${localStorage.getItem('avatar')}`,
@@ -67,7 +82,7 @@ function UpdateNameModal({ onClose, onSave }) {
         <Modal show={true} onHide={handleClose} animation={false} centered>
             <Modal.Body>
                 <div style={{ display: 'flex' }}>
-                    <h3 style={{ margin: 'auto 12px', flex: 1 }}>Update your name and avatar:</h3>
+                    <h3 style={{ margin: 'auto 12px', flex: 1 }}>{dict.Update_your_name_and_avatar}</h3>
                     <button className={cx('delete-image-button')} onClick={onClose}>
                         <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                     </button>
@@ -92,7 +107,7 @@ function UpdateNameModal({ onClose, onSave }) {
                     </div>
                     <div className={cx('add-image-container')}>
                         <button className={cx('add-image-button')} onClick={(event) => handleInputButtonClick(event)}>
-                            Choose image...
+                            {dict.Choose_image}
                         </button>
                     </div>
                     <input
@@ -108,7 +123,7 @@ function UpdateNameModal({ onClose, onSave }) {
                 </div>
                 <div className={cx('form-group')}>
                     <label className={cx('label1')} htmlFor="fullName">
-                        Full Name:
+                        {dict.Full_Name}
                     </label>
                     <input
                         type="text"
@@ -119,7 +134,7 @@ function UpdateNameModal({ onClose, onSave }) {
                     />
                 </div>
                 <button className={cx('buttonDone')} onClick={handleSave}>
-                    Update
+                    {dict.Update}
                 </button>
             </Modal.Body>
         </Modal>

@@ -14,24 +14,38 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ListNotification from '~/components/ListNotification';
 import ListChat from '~/components/ListChat';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
-const cx = classNames.bind(styles);
-
-const MENU_ITEMS = [
-    {
-        icon: <FontAwesomeIcon icon={faUser} />,
-        title: 'Your Profile',
-    },
-    {
-        icon: <FontAwesomeIcon icon={faGear} />,
-        title: 'Setting',
-    },
-    {
-        icon: <FontAwesomeIcon icon={faRightFromBracket} />,
-        title: 'Logout',
-    },
-];
 function Header({ unviewAmount, setUnviewAmount, handleUserSelect }) {
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
+    const cx = classNames.bind(styles);
+
+    const MENU_ITEMS = [
+        {
+            icon: <FontAwesomeIcon icon={faUser} />,
+            title: dict.Your_Profile,
+        },
+        {
+            icon: <FontAwesomeIcon icon={faGear} />,
+            title: dict.Setting,
+        },
+        {
+            icon: <FontAwesomeIcon icon={faRightFromBracket} />,
+            title: dict.Logout,
+        },
+    ];
     // const [unviewAmount, setUnviewAmount] = useState();
     const [showListNotification, setShowListNotification] = useState(false);
     const [showListChats, setShowListChats] = useState(false);

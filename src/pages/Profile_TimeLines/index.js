@@ -4,10 +4,26 @@ import classNames from 'classnames/bind';
 import ProfileHeader from '~/components/ProfileHeader';
 import Post from '~/components/Post';
 import axios from 'axios';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
+
 function Profile_TimeLines(props) {
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const [loading, setLoading] = useState(true);
     const [listMyPost, setListMyPost] = useState([]);
     const [listTaggedInPost, setListTaggedInPost] = useState([]);
+    const [listSchedulePost, setListSchedulePost] = useState([]);
     const [selectedMode, setSelectedMode] = useState('mypost');
     let id = '';
     if (localStorage.getItem('anotherAccountId')) {
@@ -42,6 +58,13 @@ function Profile_TimeLines(props) {
                     },
                 });
                 setListTaggedInPost(response2.data.listPost);
+
+                const response3 = await axios.get(`https://kreat-api.onrender.com/accounts/scheduled_posts`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    },
+                });
+                setListSchedulePost(response3.data.listPost);
             } catch (e) {
                 console.log(e);
             }
@@ -66,8 +89,9 @@ function Profile_TimeLines(props) {
                                         value={selectedMode}
                                         onChange={(e) => handleChangeMode(e)}
                                     >
-                                        <option value="mypost">My posts</option>
-                                        <option value="myTagged">My tagged-in posts</option>
+                                        <option value="mypost">{dict.My_posts}</option>
+                                        <option value="myTagged">{dict.My_taggedin_posts}</option>
+                                        <option value="myScheduled">{dict.My_scheduled_posts}</option>
                                     </select>
                                 </div>
                             )}
@@ -79,7 +103,7 @@ function Profile_TimeLines(props) {
                                         </div>
                                     ))
                                 ) : (
-                                    <p className={cx('no-post')}>No posts to show</p>
+                                    <p className={cx('no-post')}>{dict.No_posts_to_show}</p>
                                 )}
                             </div>
                         </>
@@ -98,14 +122,49 @@ function Profile_TimeLines(props) {
                                         value={selectedMode}
                                         onChange={(e) => handleChangeMode(e)}
                                     >
-                                        <option value="mypost">My posts</option>
-                                        <option value="myTagged">My tagged-in posts</option>
+                                        <option value="mypost">{dict.My_posts}</option>
+                                        <option value="myTagged">{dict.My_taggedin_posts}</option>
+                                        <option value="myScheduled">{dict.My_scheduled_posts}</option>
                                     </select>
                                 </div>
                             )}
                             <div className={cx('list-post')}>
                                 {listTaggedInPost?.length > 0 ? (
                                     listTaggedInPost?.map((post, index) => (
+                                        <div key={index}>
+                                            <Post data={post} />
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className={cx('no-post')}>No posts to show</p>
+                                )}
+                            </div>
+                        </>
+                    }
+                </>
+            )}
+
+            {!loading && selectedMode === 'myScheduled' && (
+                <>
+                    {
+                        <>
+                            {!localStorage.getItem('anotherAccountId') && (
+                                <div>
+                                    <select
+                                        className={cx('changeMode')}
+                                        id="view-mode"
+                                        value={selectedMode}
+                                        onChange={(e) => handleChangeMode(e)}
+                                    >
+                                        <option value="mypost">{dict.My_posts}</option>
+                                        <option value="myTagged">{dict.My_taggedin_posts}</option>
+                                        <option value="myScheduled">{dict.My_scheduled_posts}</option>
+                                    </select>
+                                </div>
+                            )}
+                            <div className={cx('list-post')}>
+                                {listSchedulePost?.length > 0 ? (
+                                    listSchedulePost?.map((post, index) => (
                                         <div key={index}>
                                             <Post data={post} />
                                         </div>

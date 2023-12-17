@@ -1,14 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
-
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 import styles from './EditEducationInfoModal.module.scss';
 
 const cx = classNames.bind(styles);
 
 function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const [data, setData] = useState(educationInfo);
     function getCurrentYear() {
         return new Date().getFullYear();
@@ -81,7 +94,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
         <Modal style={{ marginLeft: '-6.8%' }} show={true} onHide={onClose} animation={false}>
             <Modal.Body>
                 <div style={{ display: 'flex' }}>
-                    <h3 style={{ margin: 'auto 12px', flex: 1 }}>Update your education information:</h3>
+                    <h3 style={{ margin: 'auto 12px', flex: 1 }}>{dict.Update_your_education_information}</h3>
                     <button className={cx('delete-image-button')} onClick={onClose}>
                         <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                     </button>
@@ -90,7 +103,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
                 <form>
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="primarySchool">
-                            Primary School:
+                            {dict.Primary_school}
                         </label>
                         <input
                             id="primarySchool"
@@ -102,7 +115,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
                     <div className={cx('yearContainer')}>
                         <div className={cx('form-group')}>
                             <label className={cx('label1')} htmlFor="yearStartPrimarySchool">
-                                Start:
+                                {dict.Start}
                             </label>
                             <select
                                 className={cx('form-control2')}
@@ -115,7 +128,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
                         </div>
                         <div className={cx('form-group')}>
                             <label className={cx('label2')} htmlFor="yearEndPrimarySchool">
-                                End:
+                                {dict.End}
                             </label>
                             <select
                                 className={cx('form-control2')}
@@ -132,7 +145,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="secondarySchool">
-                            Secondary School:
+                            {dict.Secondary_school}
                         </label>
                         <input
                             id="secondarySchool"
@@ -144,7 +157,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
                     <div className={cx('yearContainer')}>
                         <div className={cx('form-group')}>
                             <label className={cx('label1')} htmlFor="yearStartSecondarySchool">
-                                Start:
+                                {dict.Start}
                             </label>
                             <select
                                 className={cx('form-control2')}
@@ -157,7 +170,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
                         </div>
                         <div className={cx('form-group')}>
                             <label className={cx('label2')} htmlFor="yearEndSecondarySchool">
-                                End:
+                                {dict.End}
                             </label>
                             <select
                                 className={cx('form-control2')}
@@ -174,7 +187,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="highSchool">
-                            High School:
+                            {dict.High_school}
                         </label>
                         <input
                             id="highSchool"
@@ -186,7 +199,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
                     <div className={cx('yearContainer')}>
                         <div className={cx('form-group')}>
                             <label className={cx('label1')} htmlFor="yearStartHighSchool">
-                                Start:
+                                {dict.Start}
                             </label>
                             <select
                                 className={cx('form-control2')}
@@ -199,7 +212,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
                         </div>
                         <div className={cx('form-group')}>
                             <label className={cx('label2')} htmlFor="yearEndHighSchool">
-                                End:
+                                {dict.End}
                             </label>
                             <select
                                 className={cx('form-control2')}
@@ -216,7 +229,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="university">
-                            University:
+                            {dict.University}
                         </label>
                         <input
                             id="university"
@@ -228,7 +241,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
                     <div className={cx('yearContainer')}>
                         <div className={cx('form-group')}>
                             <label className={cx('label1')} htmlFor="yearStartUniversity">
-                                Start:
+                                {dict.Start}
                             </label>
                             <select
                                 className={cx('form-control2')}
@@ -241,7 +254,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
                         </div>
                         <div className={cx('form-group')}>
                             <label className={cx('label2')} htmlFor="yearEndUniversity">
-                                End:
+                                {dict.End}
                             </label>
                             <select
                                 className={cx('form-control2')}
@@ -255,7 +268,7 @@ function EditEducationInfoModal({ onClose, educationInfo, onSave }) {
                     </div>
                 </form>
                 <button className={cx('buttonDone')} onClick={handleSave}>
-                    Update
+                    {dict.Update}
                 </button>
             </Modal.Body>
         </Modal>

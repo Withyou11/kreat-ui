@@ -4,8 +4,22 @@ import classNames from 'classnames/bind';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '../AccountItem';
 import styles from './FriendSuggest.module.scss';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
+
 const cx = classNames.bind(styles);
 function FriendSuggest() {
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
     const [loading, setLoading] = useState(true);
 
     const [friendSuggestionList, setFriendSuggestionList] = useState([]);
@@ -28,7 +42,7 @@ function FriendSuggest() {
                 <div className={cx('wrapper')}>
                     <div style={{ height: '100%' }}>
                         <PopperWrapper>
-                            <h3 className={cx('title')}>Friend Suggestions</h3>
+                            <h3 className={cx('title')}>{dict.Friend_Suggestions}</h3>
                             <hr />
                             {friendSuggestionList.map((account) => (
                                 <div key={Math.random()}>

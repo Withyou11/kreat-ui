@@ -11,8 +11,24 @@ import UpdateNameModal from '../UpdateNameModal';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
+
 function ProfileHeader() {
     const cx = classNames.bind(styles);
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const [activeTab, setActiveTab] = useState('timeline');
     const location = useLocation();
     const [friendStatus, setFriendStatus] = useState(localStorage.getItem('friendStatus'));
@@ -205,7 +221,7 @@ function ProfileHeader() {
                         className={cx('tab', { active: activeTab === 'timeline' })}
                         onClick={() => handleTabClick('timeline')}
                     >
-                        Timeline
+                        {dict.Timeline}
                     </Link>
                     <Link
                         style={{ textDecoration: 'none' }}
@@ -213,7 +229,7 @@ function ProfileHeader() {
                         className={cx('tab', { active: activeTab === 'about' })}
                         onClick={() => handleTabClick('about')}
                     >
-                        About
+                        {dict.About}
                     </Link>
                     <Link
                         style={{ textDecoration: 'none' }}
@@ -221,7 +237,7 @@ function ProfileHeader() {
                         className={cx('tab', { active: activeTab === 'friends' })}
                         onClick={() => handleTabClick('friends')}
                     >
-                        Friends
+                        {dict.Friends}
                     </Link>
                     <Link
                         style={{ textDecoration: 'none' }}
@@ -229,7 +245,7 @@ function ProfileHeader() {
                         className={cx('tab', { active: activeTab === 'medias' })}
                         onClick={() => handleTabClick('medias')}
                     >
-                        Photos & Videos
+                        {dict.Photos_Videos}
                     </Link>
                 </div>
                 <div className={cx('info')}>
@@ -237,7 +253,7 @@ function ProfileHeader() {
                     {friendStatus === 'not friend' && localStorage.getItem('anotherAccountId') && (
                         <div className={cx('buttonContainer')}>
                             <button onClick={handleAddFriend} className={cx('addButton')}>
-                                Add Friend
+                                {dict.Add_Friend}
                             </button>
                         </div>
                     )}
@@ -245,7 +261,7 @@ function ProfileHeader() {
                     {friendStatus === 'friend request sent' && localStorage.getItem('anotherAccountId') && (
                         <div className={cx('buttonContainer')}>
                             <button onClick={handleCancelRequest} className={cx('addButton1')}>
-                                Cancel Request
+                                {dict.Cancel_Request}
                             </button>
                         </div>
                     )}
@@ -253,19 +269,19 @@ function ProfileHeader() {
                     {friendStatus === 'friend request received' && localStorage.getItem('anotherAccountId') && (
                         <div className={cx('buttonContainer')}>
                             <button onClick={handleDeclineRequest} className={cx('addButton1')}>
-                                Decline Request
+                                {dict.Decline_Request}
                             </button>
                             <button onClick={handleAcceptRequest} className={cx('addButton')}>
-                                Accept Friend
+                                {dict.Accept_Friend}
                             </button>
                         </div>
                     )}
                     {/* 4 */}
                     {friendStatus === 'friend' && localStorage.getItem('anotherAccountId') && (
                         <div className={cx('buttonContainer')}>
-                            <p className={cx('friend')}>Friend</p>
+                            <p className={cx('friend')}>{dict.Friend}</p>
                             <button onClick={handleUnfriend} className={cx('addButton1')}>
-                                Unfriend
+                                {dict.Unfriend}
                             </button>
                         </div>
                     )}

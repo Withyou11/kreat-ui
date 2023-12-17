@@ -1,14 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
 
 import styles from './EditPersonalInfoModal.module.scss';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 const cx = classNames.bind(styles);
 
 function EditPersonalInfoModal({ onClose, personalInfo, onSave }) {
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const [data, setData] = useState(personalInfo);
     const [gender, setGender] = useState(data.gender);
     const handleChangeGender = (e) => {
@@ -37,7 +51,7 @@ function EditPersonalInfoModal({ onClose, personalInfo, onSave }) {
         <Modal style={{ marginLeft: '-6.8%' }} show={true} onHide={onClose} animation={false}>
             <Modal.Body>
                 <div style={{ display: 'flex' }}>
-                    <h3 style={{ margin: 'auto 12px', flex: 1 }}>Update your information:</h3>
+                    <h3 style={{ margin: 'auto 12px', flex: 1 }}>{dict.Update_your_information}</h3>
                     <button className={cx('delete-image-button')} onClick={onClose}>
                         <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                     </button>
@@ -46,7 +60,7 @@ function EditPersonalInfoModal({ onClose, personalInfo, onSave }) {
                 <form>
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="aboutMe">
-                            About Me:
+                            {dict.About_me}
                         </label>
                         <textarea
                             id="aboutMe"
@@ -58,7 +72,7 @@ function EditPersonalInfoModal({ onClose, personalInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="birthday">
-                            Birthday:
+                            {dict.Birthday}
                         </label>
                         <input
                             type="text"
@@ -71,7 +85,7 @@ function EditPersonalInfoModal({ onClose, personalInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="liveIn">
-                            Lives in:
+                            {dict.Lives_in}
                         </label>
                         <input
                             type="text"
@@ -84,7 +98,7 @@ function EditPersonalInfoModal({ onClose, personalInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="occupation">
-                            Occupation:
+                            {dict.Occupation}
                         </label>
                         <input
                             type="text"
@@ -97,7 +111,7 @@ function EditPersonalInfoModal({ onClose, personalInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="gender">
-                            Gender:
+                            {dict.Gender}
                         </label>
                         <select
                             className={cx('form-control2')}
@@ -113,7 +127,7 @@ function EditPersonalInfoModal({ onClose, personalInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="marital">
-                            Marital Status:
+                            {dict.Status}
                         </label>
                         <select
                             className={cx('form-control2')}
@@ -129,7 +143,7 @@ function EditPersonalInfoModal({ onClose, personalInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="religion">
-                            Religion:
+                            {dict.Religion}
                         </label>
                         <input
                             type="text"
@@ -142,7 +156,7 @@ function EditPersonalInfoModal({ onClose, personalInfo, onSave }) {
                 </form>
 
                 <button className={cx('buttonDone')} onClick={handleSave}>
-                    Update
+                    {dict.Update}
                 </button>
             </Modal.Body>
         </Modal>

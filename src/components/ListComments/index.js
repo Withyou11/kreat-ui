@@ -8,7 +8,22 @@ import { faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faImage, faSmile } from '@fortawesome/free-regular-svg-icons';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
+
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 function ListComments({ id_post }) {
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const cx = classNames.bind(styles);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
@@ -130,7 +145,7 @@ function ListComments({ id_post }) {
                         <input
                             className={cx('input')}
                             type="text"
-                            placeholder="Write your comment here..."
+                            placeholder={dict.Write_your_comment_here}
                             value={newComment}
                             onChange={(e) => setNewComment(e.target.value)}
                         />

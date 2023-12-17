@@ -1,14 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 import styles from './EditFavoriteInfoModal.module.scss';
 
-const cx = classNames.bind(styles);
-
 function EditFavoriteInfoModal({ onClose, favoriteInfo, onSave }) {
+    const cx = classNames.bind(styles);
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const [data, setData] = useState(favoriteInfo);
     const handleChange = (event, fieldName) => {
         setData((prevData) => ({
@@ -26,7 +39,7 @@ function EditFavoriteInfoModal({ onClose, favoriteInfo, onSave }) {
         <Modal style={{ marginLeft: '-6.8%' }} show={true} onHide={onClose} animation={false}>
             <Modal.Body>
                 <div style={{ display: 'flex' }}>
-                    <h3 style={{ margin: 'auto 12px', flex: 1 }}>Update your favorite:</h3>
+                    <h3 style={{ margin: 'auto 12px', flex: 1 }}>{dict.Update_your_favorite}</h3>
                     <button className={cx('delete-image-button')} onClick={onClose}>
                         <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                     </button>
@@ -35,7 +48,7 @@ function EditFavoriteInfoModal({ onClose, favoriteInfo, onSave }) {
                 <form>
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="hobbies">
-                            Hobbies:
+                            {dict.Hobbies}
                         </label>
                         <textarea
                             id="hobbies"
@@ -47,7 +60,7 @@ function EditFavoriteInfoModal({ onClose, favoriteInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="favoriteMusicBands">
-                            Favourite Music Bands / Artists:
+                            {dict.Favourite_Music_Bands}
                         </label>
                         <input
                             type="text"
@@ -60,7 +73,7 @@ function EditFavoriteInfoModal({ onClose, favoriteInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="favoriteTVShows">
-                            Favourite TV Shows:
+                            {dict.Favourite_TV_Shows}
                         </label>
                         <input
                             type="text"
@@ -73,7 +86,7 @@ function EditFavoriteInfoModal({ onClose, favoriteInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="favoriteBooks">
-                            Favourite Books:
+                            {dict.Favourite_Books}
                         </label>
                         <input
                             type="text"
@@ -86,7 +99,7 @@ function EditFavoriteInfoModal({ onClose, favoriteInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="favoriteMovies">
-                            Favourite Movies:
+                            {dict.Favourite_Books}
                         </label>
                         <input
                             type="text"
@@ -99,7 +112,7 @@ function EditFavoriteInfoModal({ onClose, favoriteInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="favoriteSports">
-                            Favourite Sports:
+                            {dict.Favourite_Sports}
                         </label>
                         <input
                             type="text"
@@ -112,7 +125,7 @@ function EditFavoriteInfoModal({ onClose, favoriteInfo, onSave }) {
 
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="favoriteGames">
-                            Favourite Games:
+                            {dict.Favourite_Games}
                         </label>
                         <input
                             type="text"
@@ -125,7 +138,7 @@ function EditFavoriteInfoModal({ onClose, favoriteInfo, onSave }) {
                 </form>
 
                 <button className={cx('buttonDone')} onClick={handleSave}>
-                    Update
+                    {dict.Update}
                 </button>
             </Modal.Body>
         </Modal>

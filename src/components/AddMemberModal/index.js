@@ -6,8 +6,22 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import ListTagFriend from '../ListTagFriend';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 function AddMemberModal({ groupId, onClose, visible }) {
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const cx = classNames.bind(styles);
     const [data, setData] = useState([]);
 
@@ -75,7 +89,7 @@ function AddMemberModal({ groupId, onClose, visible }) {
         <Modal show={true} onHide={handleClose} animation={false} centered>
             <Modal.Body>
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                    <h2>Add friend to this group chat</h2>
+                    <h2>{dict.Add_friend_to_this_group_chat}</h2>
                     <button className={cx('delete-image-button')} onClick={handleClose}>
                         <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                     </button>
@@ -83,7 +97,7 @@ function AddMemberModal({ groupId, onClose, visible }) {
                     <input
                         value={searchText}
                         style={{ width: '90%' }}
-                        placeholder="Find your friend..."
+                        placeholder={dict.Find_your_friends}
                         spellCheck="false"
                         onChange={(e) => handleChange(e)}
                     />
@@ -96,7 +110,7 @@ function AddMemberModal({ groupId, onClose, visible }) {
                         />
                     </div>
                     <button className={cx('buttonDone')} onClick={(event) => handleAddMember(event)}>
-                        Add
+                        {dict.Add}
                     </button>
                 </div>
             </Modal.Body>

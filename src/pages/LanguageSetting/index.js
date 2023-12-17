@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import styles from './DisplaySetting.module.scss';
+import styles from './LanguageSetting.module.scss';
 import classNames from 'classnames/bind';
 import axios from 'axios';
 
 import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
-function DisplaySetting() {
+function LanguageSetting() {
     const cx = classNames.bind(styles);
 
     const [dict, setDict] = useState({});
@@ -21,14 +21,14 @@ function DisplaySetting() {
         }
     }, []);
 
-    const [selectedMode, setSelectedMode] = useState(localStorage.getItem('display'));
+    const [selectedMode, setSelectedMode] = useState(localStorage.getItem('language'));
     const handleChangeMode = (e) => {
         setSelectedMode(e.target.value);
     };
 
     const handleSave = () => {
         const body = {
-            postDisplay: selectedMode,
+            language: selectedMode,
         };
 
         axios
@@ -38,7 +38,7 @@ function DisplaySetting() {
                 },
             })
             .then((res) => {
-                localStorage.setItem('display', selectedMode);
+                localStorage.setItem('language', selectedMode);
             })
             .catch((error) => {
                 console.log(error);
@@ -46,15 +46,15 @@ function DisplaySetting() {
     };
     return (
         <div className={cx('wrapper')}>
-            <h2>{dict.Change_display_style}</h2>
+            <h2>{dict.Change_language}</h2>
             <select
                 className={cx('changeMode')}
                 id="view-mode"
                 value={selectedMode}
                 onChange={(e) => handleChangeMode(e)}
             >
-                <option value="slider">{dict.Slider}</option>
-                <option value="grid">{dict.Grid}</option>
+                <option value="english">{dict.English}</option>
+                <option value="vietnamese">{dict.Vietnamese}</option>
             </select>
             <button className={cx('buttonDone')} onClick={handleSave}>
                 {dict.Save}
@@ -63,4 +63,4 @@ function DisplaySetting() {
     );
 }
 
-export default DisplaySetting;
+export default LanguageSetting;
