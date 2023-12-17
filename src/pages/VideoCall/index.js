@@ -121,7 +121,6 @@ function VideoCall({ conversationId, userId, currentUser, peerData }) {
                         {callAccepted && (
                             <video
                                 playsInline
-                                muted
                                 ref={userVideo}
                                 autoPlay
                                 style={{ width: '23vw', margin: 'auto' }}
