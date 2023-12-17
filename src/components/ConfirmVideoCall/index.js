@@ -2,11 +2,13 @@ import styles from './ConfirmVideoCall.module.scss';
 import classNames from 'classnames/bind';
 import Modal from 'react-bootstrap/Modal';
 import { Image } from 'cloudinary-react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { faPhoneVolume, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { io } from 'socket.io-client';
 import VideoCall from '~/pages/VideoCall';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 function ConfirmVideoCall({ data, setCallingData }) {
     const cx = classNames.bind(styles);
@@ -14,6 +16,18 @@ function ConfirmVideoCall({ data, setCallingData }) {
     const [calling, setCalling] = useState(false);
     const [callEnded, setCallEnded] = useState(false);
     const connectionRef = useRef();
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
 
     const leaveCall = () => {
         setCallEnded(true);
@@ -39,7 +53,7 @@ function ConfirmVideoCall({ data, setCallingData }) {
                 <div style={{ display: 'flex' }}>
                     <div className={cx('titleContainer')}>
                         <FontAwesomeIcon icon={faPhoneVolume} style={{ marginRight: '10px' }} />
-                        <i className={cx('title')}>is calling you</i>
+                        <i className={cx('title')}>{dict.is_calling_you}</i>
                     </div>
                 </div>
                 <div className={cx('loading')}>
@@ -54,10 +68,10 @@ function ConfirmVideoCall({ data, setCallingData }) {
 
                 <div className={cx('btnContainer')}>
                     <button className={cx('buttonDeny')} onClick={handleCancel}>
-                        Deny
+                        {dict.Deny}
                     </button>
                     <button className={cx('buttonConfirm')} onClick={handleConfirm}>
-                        Accept
+                        {dict.Accept}
                     </button>
                 </div>
             </Modal.Body>
@@ -68,6 +82,7 @@ function ConfirmVideoCall({ data, setCallingData }) {
             userId={data?.id_sender}
             currentUser={'answerer'}
             peerData={data?.peerData}
+            userName={data.fullName}
         ></VideoCall>
     ) : null;
 }

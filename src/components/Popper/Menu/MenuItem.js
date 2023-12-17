@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 function MenuItem({ data }) {
     const navigate = useNavigate();
     const handleClick = async () => {
-        if (data.title === 'Logout') {
+        if (data.title === 'Logout' || data.title === 'Đăng xuất') {
             io('https://kreat-socket.onrender.com').emit('logout', localStorage.getItem('accountId'));
             localStorage.removeItem('avatar');
             localStorage.removeItem('fullname');
@@ -43,7 +43,7 @@ function MenuItem({ data }) {
                 .catch((error) => {
                     console.log(error);
                 });
-        } else if (data.title === 'Your Profile') {
+        } else if (data.title === 'Your Profile' || data.title === 'Tài khoản') {
             localStorage.setItem('anotherAccountName', '');
             localStorage.setItem('anotherAccountAvatar', '');
             localStorage.setItem('anotherAccountId', '');

@@ -8,8 +8,24 @@ import { SocketContext } from '~/Context/SocketContext/SocketContext';
 import Modal from 'react-bootstrap/Modal';
 import Peer from 'simple-peer';
 
-function VideoCall({ conversationId, userId, currentUser, peerData }) {
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
+
+function VideoCall({ conversationId, userId, currentUser, peerData, userName }) {
     const socket = useContext(SocketContext);
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     // Define Call video variables
     const [stream, setStream] = useState();
     const [userStream, setUserStream] = useState();
@@ -108,27 +124,51 @@ function VideoCall({ conversationId, userId, currentUser, peerData }) {
         <Modal show={true} animation={false}>
             <Modal.Body>
                 <div className={cx('wrapper')}>
+                    <p className={cx('title')}>{dict.Video_Call}</p>
                     <div className={cx('videoContainer')}>
                         {stream && (
-                            <video
-                                playsInline
-                                muted
-                                ref={myVideo}
-                                autoPlay
-                                style={{ width: '23vw', margin: 'auto' }}
-                            ></video>
+                            <div className={cx('video')}>
+                                <p className={cx('name')}>{dict.You}</p>
+                                <video
+                                    playsInline
+                                    muted
+                                    ref={myVideo}
+                                    autoPlay
+                                    style={{
+                                        height: '40vh',
+                                        width: '20vw',
+                                    }}
+                                ></video>
+                            </div>
                         )}
                         {callAccepted && (
-                            <video
-                                playsInline
-                                ref={userVideo}
-                                autoPlay
-                                style={{ width: '23vw', margin: 'auto' }}
-                            ></video>
+                            <div className={cx('video')}>
+                                <p className={cx('name')}>{userName}</p>
+                                <video
+                                    playsInline
+                                    ref={userVideo}
+                                    autoPlay
+                                    style={{ width: '20vw', height: '40vh' }}
+                                ></video>
+                            </div>
+                        )}
+                        {!callAccepted && (
+                            <div className={cx('video')}>
+                                <p className={cx('name')}>{userName}</p>
+                                <div className={cx('loading')}>
+                                    <section className={cx('dots-container')}>
+                                        <div className={cx('dot')}></div>
+                                        <div className={cx('dot')}></div>
+                                        <div className={cx('dot')}></div>
+                                        <div className={cx('dot')}></div>
+                                        <div className={cx('dot')}></div>
+                                    </section>
+                                </div>
+                            </div>
                         )}
                     </div>
                     <Button className={cx('end')} onClick={leaveCall}>
-                        End
+                        {dict.End}
                     </Button>
                 </div>
             </Modal.Body>

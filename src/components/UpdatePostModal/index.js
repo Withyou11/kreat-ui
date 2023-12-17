@@ -1,15 +1,30 @@
 import styles from './UpdatePostModal.module.scss';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from 'react-bootstrap/Modal';
 import { Carousel } from 'react-bootstrap';
 import { Image } from 'cloudinary-react';
 import axios from 'axios';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 function UpdatePostModal({ data, onClose, visible, setResults, results }) {
     const [privacy, setPrivacy] = useState(data.postPrivacy);
     const [feeling, setFeeling] = useState(data.postFeeling);
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const handleChangeFeeling = (e) => {
         setFeeling(e.target.value);
     };
@@ -139,7 +154,7 @@ function UpdatePostModal({ data, onClose, visible, setResults, results }) {
                                 checked={privacy === 'public'}
                                 onChange={() => setPrivacy('public')}
                             />
-                            <p className={cx('radio-label')}>Public</p>
+                            <p className={cx('radio-label')}>{dict.Public}</p>
                         </div>
                         <div className={cx('radio-item')}>
                             <input
@@ -150,7 +165,7 @@ function UpdatePostModal({ data, onClose, visible, setResults, results }) {
                                 checked={privacy === 'friend'}
                                 onChange={() => setPrivacy('friend')}
                             />
-                            <p className={cx('radio-label')}>Friends</p>
+                            <p className={cx('radio-label')}>{dict.Friends}</p>
                         </div>
                         <div className={cx('radio-item')}>
                             <input
@@ -161,7 +176,7 @@ function UpdatePostModal({ data, onClose, visible, setResults, results }) {
                                 checked={privacy === 'private'}
                                 onChange={() => setPrivacy('private')}
                             />
-                            <p className={cx('radio-label')}>Private</p>
+                            <p className={cx('radio-label')}>{dict.Private}</p>
                         </div>
                     </div>
                     <div className={cx('form-group')}>
@@ -171,18 +186,16 @@ function UpdatePostModal({ data, onClose, visible, setResults, results }) {
                             value={feeling}
                             onChange={(e) => handleChangeFeeling(e)}
                         >
-                            <option value="No">No emotion</option>
-                            <option value="Happy">Happy</option>
-                            <option value="Upset">Upset</option>
-                            <option value="Excited">Excited</option>
-                            <option value="Disappointed">Disappointed</option>
-                            <option value="Surprised">Surprised</option>
-                            <option value="Emotional">Emotional</option>
-                            <option value="Optimistic">Optimistic</option>
-                            <option value="Skeptical">Skeptical</option>
-                            <option value="Glad">Glad</option>
-                            <option value="Amazed">Amazed</option>
-                            <option value="Regretful">Regretful</option>
+                            <option value="No">{dict.No_emotion}</option>
+                            <option value="Happy">{dict.Happy}</option>
+                            <option value="Upset">{dict.Upset}</option>
+                            <option value="Excited">{dict.Excited}</option>
+                            <option value="Disappointed">{dict.Disappointed}</option>
+                            <option value="Surprised">{dict.Surprised}</option>
+                            <option value="Emotional">{dict.Emotional}</option>
+                            <option value="Optimistic">{dict.Optimistic}</option>
+                            <option value="Skeptical">{dict.Skeptical}</option>
+                            <option value="Regretful">{dict.Regretful}</option>
                         </select>
                     </div>
                 </div>

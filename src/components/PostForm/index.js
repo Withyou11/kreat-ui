@@ -429,7 +429,7 @@ function PostForm() {
                                 </span>
                                 <span className={cx('location-info')}>
                                     <h4 style={{ display: 'inline-block', marginLeft: '4px' }}>{dict.Feeling}</h4>
-                                    <p style={{ display: 'inline-block', marginLeft: '4px' }}>{feeling}</p>
+                                    <p style={{ display: 'inline-block', marginLeft: '4px' }}>{dict[feeling]}</p>
                                 </span>
                             </div>
 

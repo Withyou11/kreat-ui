@@ -8,19 +8,6 @@ import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
 function FeelingModal({ onClose, visible, handleFeelingChange }) {
-    const feelingsList = [
-        'Happy',
-        'Upset',
-        'Excited',
-        'Disappointed',
-        'Surprised',
-        'Emotional',
-        'Optimistic',
-        'Skeptical',
-        'Glad',
-        'Amazed',
-        'Regretful',
-    ];
     const [selectedFeeling, setSelectedFeeling] = useState('');
     const cx = classNames.bind(styles);
 
@@ -36,15 +23,28 @@ function FeelingModal({ onClose, visible, handleFeelingChange }) {
         }
     }, []);
 
+    const feelingsList = [
+        dict.Happy,
+        dict.Upset,
+        dict.Excited,
+        dict.Disappointed,
+        dict.Surprised,
+        dict.Emotional,
+        dict.Optimistic,
+        dict.Skeptical,
+        dict.Regretful,
+    ];
+
     const handleCompleteFeeling = (event) => {
         event.preventDefault();
         onClose();
     };
 
     const handleFeelingClick = (feeling) => {
-        setSelectedFeeling(feeling);
+        const lastSpaceIndex = feeling.lastIndexOf(' ');
+        const truncatedFeeling = feeling.substring(0, lastSpaceIndex);
+        setSelectedFeeling(truncatedFeeling);
     };
-
     function handleClose() {
         setSelectedFeeling('');
         onClose();

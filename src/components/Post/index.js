@@ -34,6 +34,7 @@ import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
 function Post({ data, results, setResults }) {
+    console.log(data);
     const [dict, setDict] = useState({});
     useEffect(() => {
         switch (localStorage.getItem('language')) {
@@ -84,20 +85,20 @@ function Post({ data, results, setResults }) {
 
         if (diff < 60) {
             // Dưới 1 phút
-            return `${Math.floor(diff)} seconds ago`;
+            return `${Math.floor(diff)} ${dict.secsAgo}`;
         } else if (diff < 60 * 60) {
             // Dưới 1 giờ
-            if (diff < 120) return `1 minute ago`;
+            if (diff < 120) return `1 ${dict.minAgo}`;
             else {
-                return `${Math.floor(diff / 60)} minutes ago`;
+                return `${Math.floor(diff / 60)} ${dict.minsAgo}`;
             }
         } else if (diff < 24 * 60 * 60) {
-            if (diff < 60 * 60 * 2) return `1 hour ago`;
+            if (diff < 60 * 60 * 2) return `1 ${dict.hourAgo}`;
             // Dưới 1 ngày
-            return `${Math.floor(diff / (60 * 60))} hours ago`;
+            return `${Math.floor(diff / (60 * 60))} ${dict.hoursAgo}`;
         } else if (diff < 2 * 24 * 60 * 60) {
             // Từ 1 ngày tới 2 ngày
-            return `Yesterday at ${formatTime(date)}`;
+            return `${dict.yesterday} ${formatTime(date)}`;
         } else {
             // Hơn 2 ngày
             return formatDateToString(date);
@@ -362,7 +363,7 @@ function Post({ data, results, setResults }) {
                                         >
                                             {dict.is_feeling}
                                         </span>
-                                        <span style={{ fontSize: '1.7rem' }}> {data?.postFeeling}</span>
+                                        <span style={{ fontSize: '1.7rem' }}> {dict[data.postFeeling]}</span>
                                     </span>
                                 )}
                             </p>

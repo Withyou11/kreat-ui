@@ -1,11 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Image } from 'cloudinary-react';
 import styles from './ChatItem.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
+
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
+
 function ChatItem({ data, setShowListChats, handleUserSelect }) {
     const cx = classNames.bind(styles);
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     function formatDate(timestamp) {
         const date = new Date(timestamp);
         const now = new Date();
@@ -14,20 +31,20 @@ function ChatItem({ data, setShowListChats, handleUserSelect }) {
 
         if (diff < 60) {
             // Dưới 1 phút
-            return `${Math.floor(diff)} seconds ago`;
+            return `${Math.floor(diff)} ${dict.secsAgo}`;
         } else if (diff < 60 * 60) {
             // Dưới 1 giờ
-            if (diff < 120) return `1 minute ago`;
+            if (diff < 120) return `1 ${dict.minAgo}`;
             else {
-                return `${Math.floor(diff / 60)} minutes ago`;
+                return `${Math.floor(diff / 60)} ${dict.minsAgo}`;
             }
         } else if (diff < 24 * 60 * 60) {
-            if (diff < 60 * 60 * 2) return `1 hour ago`;
+            if (diff < 60 * 60 * 2) return `1 ${dict.hourAgo}`;
             // Dưới 1 ngày
-            return `${Math.floor(diff / (60 * 60))} hours ago`;
+            return `${Math.floor(diff / (60 * 60))} ${dict.hoursAgo}`;
         } else if (diff < 2 * 24 * 60 * 60) {
             // Từ 1 ngày tới 2 ngày
-            return `Yesterday at ${formatTime(date)}`;
+            return `${dict.yesterday} ${formatTime(date)}`;
         } else {
             // Hơn 2 ngày
             return formatDateToString(date);

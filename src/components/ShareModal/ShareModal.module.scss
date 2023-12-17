@@ -125,9 +125,10 @@
 
 .radio-container {
     margin-left: 50px;
-    margin-right: 20px;
+    margin-right: 10px;
     display: flex;
     flex-direction: column;
+    width: 40%;
 }
 
 .radio-item {
@@ -141,7 +142,7 @@
 }
 
 .form-group {
-    margin: 0 200px;
+    margin: 0 100px;
 }
 
 .form-control2 {

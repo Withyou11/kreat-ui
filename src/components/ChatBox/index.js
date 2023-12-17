@@ -15,9 +15,10 @@ import UpdateGroupInfoModal from '../UpdateGroupInfoModal';
 import AddMemberModal from '../AddMemberModal';
 import { SocketContext } from '~/Context/SocketContext/SocketContext';
 import VideoCall from '~/pages/VideoCall';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 function ChatBox({ updateState, conversationId, userName, userAvatar, userId, flag, status }) {
-    const socket = useContext(SocketContext);
     const onlineFriend = useContext(OnlineFriendContext);
     const navigate = useNavigate();
     const onlineFriendList = onlineFriend.onlineFriendList;
@@ -26,10 +27,19 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
     const [leader, setLeader] = useState(null);
     const [isUpdateGroupInfoOpen, setIsUpdateGroupInfoOpen] = useState(false);
     const [isAddMemberOpen, setIsAddMemberOpen] = useState(false);
-    const [peer, setPeer] = useState(null);
-    // Define Call video variables
-    const [stream, setStream] = useState();
     const [calling, setCalling] = useState(false);
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
 
     const cx = classNames.bind(styles);
     function handleClose(e) {
@@ -213,7 +223,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
                         </button>
                     </form>
                 ) : (
-                    <p className={cx('not-friend')}>This person is not your friend now</p>
+                    <p className={cx('not-friend')}>{dict.This_person_is_not_your_friend_now}</p>
                 )}
             </PopperWrapper>
             {isUpdateGroupInfoOpen && (
@@ -235,6 +245,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
                     userId={userId}
                     currentUser={'caller'}
                     peerData={null}
+                    userName={userName}
                 ></VideoCall>
             )}
         </div>
