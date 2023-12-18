@@ -40,6 +40,9 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
             initiator: true,
             trickle: false,
             stream: stream,
+            config: {
+                iceServers: [{ urls: 'stun:stun.a-mm.tv:3478' }],
+            },
         });
         peer.on('signal', (peerData) => {
             socket.emit('callUser', {
@@ -65,7 +68,14 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
     const answerCall = (conversationId, userId) => {
         setCallerAccepted(true);
 
-        const peer = new Peer({ initiator: false, trickle: false, stream });
+        const peer = new Peer({
+            initiator: false,
+            trickle: false,
+            stream,
+            config: {
+                iceServers: [{ urls: 'stun:stun.a-mm.tv:3478' }],
+            },
+        });
 
         peer.on('signal', (peerData) => {
             socket.emit('answerCall', {
