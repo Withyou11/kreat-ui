@@ -42,8 +42,11 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
             stream: stream,
             config: {
                 iceServers: [
-                    { urls: 'stun:stun.l.google.com:19302' },
-                    { urls: 'stun:global.stun.twilio.com:3478?transport=udp' },
+                    {
+                        urls: 'turn:13.250.13.83:3478?transport=udp',
+                        username: 'YzYNCouZM1mhqhmseWk6',
+                        credential: 'YzYNCouZM1mhqhmseWk6',
+                    },
                 ],
             },
         });
@@ -77,8 +80,11 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
             stream,
             config: {
                 iceServers: [
-                    { urls: 'stun:stun.l.google.com:19302' },
-                    { urls: 'stun:global.stun.twilio.com:3478?transport=udp' },
+                    {
+                        urls: 'turn:13.250.13.83:3478?transport=udp',
+                        username: 'YzYNCouZM1mhqhmseWk6',
+                        credential: 'YzYNCouZM1mhqhmseWk6',
+                    },
                 ],
             },
         });
