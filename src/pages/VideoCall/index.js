@@ -41,7 +41,7 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
             trickle: false,
             stream: stream,
             config: {
-                iceServers: [{ urls: 'stun:stun.a-mm.tv:3478' }],
+                iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
             },
         });
         peer.on('signal', (peerData) => {
@@ -73,7 +73,7 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
             trickle: false,
             stream,
             config: {
-                iceServers: [{ urls: 'stun:stun.a-mm.tv:3478' }],
+                iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
             },
         });
 
