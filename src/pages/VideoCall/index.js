@@ -41,7 +41,10 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
             trickle: false,
             stream: stream,
             config: {
-                iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
+                iceServers: [
+                    { urls: 'stun:stun.l.google.com:19302' },
+                    { urls: 'stun:global.stun.twilio.com:3478?transport=udp' },
+                ],
             },
         });
         peer.on('signal', (peerData) => {
@@ -73,7 +76,10 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
             trickle: false,
             stream,
             config: {
-                iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
+                iceServers: [
+                    { urls: 'stun:stun.l.google.com:19302' },
+                    { urls: 'stun:global.stun.twilio.com:3478?transport=udp' },
+                ],
             },
         });
 
@@ -85,7 +91,6 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
                 id_conversation: conversationId,
             });
         });
-
         peer?.on('stream', (currentStream) => {
             setUserStream(currentStream);
         });
