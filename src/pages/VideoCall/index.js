@@ -42,12 +42,12 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
             stream: stream,
             config: {
                 iceServers: [
-                    { urls: 'STUN:stun.kaseya.com:3478' },
-                    {
-                        urls: 'turn:13.250.13.83:3478?transport=udp',
-                        username: 'YzYNCouZM1mhqhmseWk6',
-                        credential: 'YzYNCouZM1mhqhmseWk6',
-                    },
+                    { urls: 'stun:stun.comrex.com:3478' },
+                    // {
+                    //     urls: 'turn:openrelay.metered.ca:80',
+                    //     username: 'openrelayproject',
+                    //     credentials: 'openrelayproject',
+                    // },
                 ],
             },
         });
@@ -81,12 +81,12 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
             stream,
             config: {
                 iceServers: [
-                    { urls: 'STUN:stun.kaseya.com:3478' },
-                    {
-                        urls: 'turn:13.250.13.83:3478?transport=udp',
-                        username: 'YzYNCouZM1mhqhmseWk6',
-                        credential: 'YzYNCouZM1mhqhmseWk6',
-                    },
+                    { urls: 'stun:stun.comrex.com:3478' },
+                    // {
+                    //     urls: 'turn:openrelay.metered.ca:80',
+                    //     username: 'openrelayproject',
+                    //     credentials: 'openrelayproject',
+                    // },
                 ],
             },
         });
