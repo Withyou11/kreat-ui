@@ -124,7 +124,6 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
                 },
             })
             .then((response) => {
-                console.log(response.data);
                 setIsGroup(response.data.leader);
                 setMessages(response.data.messages);
                 setLeader(response.data.leader);

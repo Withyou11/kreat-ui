@@ -33,7 +33,6 @@ function MenuItem({ data }) {
                 )
                 .then((res) => {
                     if (res.status === 200) {
-                        console.log('Logout success !!!');
                         navigate('/authentication');
                         localStorage.removeItem('accessToken');
                     } else {

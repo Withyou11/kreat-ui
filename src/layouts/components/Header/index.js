@@ -46,29 +46,9 @@ function Header({ unviewAmount, setUnviewAmount, handleUserSelect }) {
             title: dict.Logout,
         },
     ];
-    // const [unviewAmount, setUnviewAmount] = useState();
     const [showListNotification, setShowListNotification] = useState(false);
     const [showListChats, setShowListChats] = useState(false);
     const navigation = useNavigate();
-    // const socket = useRef();
-    // socket = io('https://kreat-socket.onrender.com');
-    // useEffect(() => {
-    //     socket.on('getNotification', () => {
-    //         console.log('hihihhaha');
-    //         axios
-    //             .get(`https://kreat-api.onrender.com/accounts/unviewed_notification_and_message`, {
-    //                 headers: {
-    //                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-    //                 },
-    //             })
-    //             .then((res) => {
-    //                 setUnviewAmount(res.data);
-    //             })
-    //             .catch((error) => {
-    //                 console.log(error);
-    //             });
-    //     });
-    // }, []);
 
     useEffect(() => {
         axios

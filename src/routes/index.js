@@ -12,7 +12,11 @@ import Settings from '~/pages/Settings';
 import VideoCall from '~/pages/VideoCall';
 // public routes
 const publicRoutes = [
-    { path: '/', component: Newsfeed },
+    {
+        path: '/',
+        component: localStorage.getItem('accessToken') ? Newsfeed : Login,
+        layout: localStorage.getItem('accessToken') ? '' : NoLayout,
+    },
     { path: '/timelines', component: Profile_TimeLines, layout: HeaderOnly },
     { path: '/timelines/:id', component: Profile_TimeLines, layout: HeaderOnly },
     { path: '/about', component: Profile_AboutMe, layout: HeaderOnly },

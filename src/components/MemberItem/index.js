@@ -14,11 +14,10 @@ function MemberItem({ data, isLeader, setListMember, groupId, listMember }) {
     const navigate = useNavigate();
     // let newListMember;
     const handleGoTimelines = () => {
-        console.log('go timeline');
-        // localStorage.setItem('anotherAccountId', data.id_account);
-        // localStorage.setItem('anotherAccountName', data.fullName);
-        // localStorage.setItem('anotherAccountAvatar', data.avatar);
-        // navigate(`/timelines/${data.id_account}`);
+        localStorage.setItem('anotherAccountId', data.id_account);
+        localStorage.setItem('anotherAccountName', data.fullName);
+        localStorage.setItem('anotherAccountAvatar', data.avatar);
+        navigate(`/timelines/${data.id_account}`);
     };
 
     const handleClickMember = (e) => {

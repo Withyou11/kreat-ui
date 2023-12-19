@@ -61,7 +61,6 @@ function CreateGroupModal({ onClose, visible }) {
                 },
             })
             .then((response) => {
-                console.log(response.data.listFriend);
                 setData(response.data.listFriend);
             })
             .catch((e) => {

@@ -3,8 +3,7 @@ import styles from './DefaultLayout.module.scss';
 import Header from '~/layouts/components/Header';
 import LeftSidebar from './LeftSidebar';
 import RightSidebar from './RightSidebar';
-import { useEffect, useRef, useContext, useState, cloneElement } from 'react';
-import { io } from 'socket.io-client';
+import { useEffect, useContext, useState, cloneElement } from 'react';
 import { OnlineFriendContext } from '~/Context/OnlineFriendContext/OnlineFriendContext';
 import axios from 'axios';
 import ConfirmVideoCall from '~/components/ConfirmVideoCall';
@@ -12,7 +11,6 @@ import { SocketContext } from '~/Context/SocketContext/SocketContext';
 
 function DefaultLayout({ children }) {
     const socket = useContext(SocketContext);
-
     const cx = classNames.bind(styles);
     const [selectedConversationId, setSelectedConversatioId] = useState(null);
     const [selectedUserName, setSelectedUserName] = useState(null);
@@ -37,8 +35,6 @@ function DefaultLayout({ children }) {
     };
     const onlineFriend = useContext(OnlineFriendContext);
     const setOnlineFriendList = onlineFriend.setOnlineFriendList;
-    // let socket = useRef();
-    // socket = io('https://kreat-socket.onrender.com');
     useEffect(() => {
         window.scrollTo(0, 0);
         if (localStorage.getItem('accountId')) {
@@ -72,7 +68,6 @@ function DefaultLayout({ children }) {
                     });
             });
             socket.on('getCall', (data) => {
-                console.log('getCall: ', data);
                 setCallingData(data);
             });
         }
@@ -84,7 +79,7 @@ function DefaultLayout({ children }) {
         }
     }, [newMessage]);
     return (
-        <>
+        <div>
             <div className={cx('wrapper')}>
                 <Header
                     setUnviewAmount={setUnviewAmount}
@@ -110,7 +105,7 @@ function DefaultLayout({ children }) {
                     <RightSidebar />
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

@@ -34,7 +34,6 @@ function AddMemberModal({ groupId, onClose, visible }) {
     };
 
     const handleAddMember = (event) => {
-        console.log(withfriend);
         const body = {
             newMembers: withfriend,
         };

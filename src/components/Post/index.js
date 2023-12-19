@@ -34,7 +34,6 @@ import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
 function Post({ data, results, setResults }) {
-    console.log(data);
     const [dict, setDict] = useState({});
     useEffect(() => {
         switch (localStorage.getItem('language')) {
@@ -534,7 +533,29 @@ function Post({ data, results, setResults }) {
                                     publicId={data?.shareContent.shared_avatar}
                                 />
                                 <div className={cx('post-info-main')}>
-                                    <h4 className={cx('name')}>{data?.shareContent.shared_fullName}</h4>
+                                    <div className={cx('name-container')}>
+                                        <h4 className={cx('name')}>{data?.shareContent.shared_fullName}</h4>
+                                        <p>
+                                            {data?.shareContent.shared_postFeeling && (
+                                                <span style={{ display: 'inline' }}>
+                                                    <span
+                                                        style={{
+                                                            opacity: 0.6,
+                                                            fontSize: '1.7rem',
+                                                            marginLeft: '8px',
+                                                            marginRight: '4px',
+                                                        }}
+                                                    >
+                                                        {dict.is_feeling}
+                                                    </span>
+                                                    <span style={{ fontSize: '1.7rem' }}>
+                                                        {' '}
+                                                        {dict[data?.shareContent.shared_postFeeling]}
+                                                    </span>
+                                                </span>
+                                            )}
+                                        </p>
+                                    </div>
                                     <div className={cx('time-location')}>
                                         <p className={cx('time')}>{formatDate(data?.shareContent.shared_createdAt)}</p>
                                         <FontAwesomeIcon
