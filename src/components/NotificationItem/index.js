@@ -5,6 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 function NotificationItem({ data, setShowListNotification }) {
+    console.log(data);
+    function getNotificationContent() {
+        return localStorage.getItem('language') === 'english'
+            ? data?.notificationEnglishContent
+            : data?.notificationVietnameseContent;
+    }
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
     function formatDate(timestamp) {
@@ -72,7 +78,7 @@ function NotificationItem({ data, setShowListNotification }) {
                 <div className={cx('wrapper')}>
                     <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} crop="scale" />
                     <div className={cx('info')}>
-                        <p className={cx('content')}>{data?.notificationContent}</p>
+                        <p className={cx('content')}>{getNotificationContent()}</p>
                         <p className={cx('time1')}>{formatDate(data?.notificationTime)}</p>
                     </div>
                     <FontAwesomeIcon className={cx('icon')} icon={faCircle}></FontAwesomeIcon>
@@ -81,7 +87,7 @@ function NotificationItem({ data, setShowListNotification }) {
                 <div style={{ opacity: 0.7 }} className={cx('wrapper')}>
                     <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} crop="scale" />
                     <div className={cx('info')}>
-                        <p className={cx('content')}>{data?.notificationContent}</p>
+                        <p className={cx('content')}>{getNotificationContent()}</p>
                         <p className={cx('time')}>{formatDate(data?.notificationTime)}</p>
                     </div>
                     <FontAwesomeIcon
