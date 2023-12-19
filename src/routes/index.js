@@ -10,7 +10,14 @@ import DetailPost from '~/pages/DetailPost';
 import ForgotPassword from '~/pages/ForgotPassword';
 import Settings from '~/pages/Settings';
 import VideoCall from '~/pages/VideoCall';
+import { useState, useEffect } from 'react';
 // public routes
+
+// const [accessToken, setAccessToken] = useState('');
+// useEffect(() => {
+//     setAccessToken(localStorage.getItem('accessToken'));
+// }, [localStorage.getItem('accessToken')]);
+
 const publicRoutes = [
     {
         path: '/',

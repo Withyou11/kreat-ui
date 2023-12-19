@@ -30,6 +30,7 @@ function Login() {
                     localStorage.setItem('language', res.data.setting.language);
                     localStorage.setItem('anotherAccountId', '');
                     navigate('/');
+                    window.location.reload();
                 }
             })
             .catch((error) => {

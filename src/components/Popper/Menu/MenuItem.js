@@ -21,6 +21,7 @@ function MenuItem({ data }) {
             localStorage.removeItem('friendStatus');
             localStorage.removeItem('idFriendRequest');
             localStorage.removeItem('display');
+            localStorage.removeItem('language');
             await axios
                 .post(
                     `https://kreat-api.onrender.com/auth/logout`,
