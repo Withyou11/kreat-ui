@@ -42,12 +42,14 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
             stream: stream,
             config: {
                 iceServers: [
-                    { urls: 'stun:stun.comrex.com:3478' },
-                    // {
-                    //     urls: 'turn:openrelay.metered.ca:80',
-                    //     username: 'openrelayproject',
-                    //     credentials: 'openrelayproject',
-                    // },
+                    {
+                        urls: 'stun:stun.l.google.com:19302',
+                    },
+                    {
+                        urls: 'turn:numb.viagenie.ca',
+                        username: 'webrtc@live.com',
+                        credential: 'muazkh',
+                    },
                 ],
             },
         });
@@ -81,12 +83,14 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
             stream,
             config: {
                 iceServers: [
-                    { urls: 'stun:stun.comrex.com:3478' },
-                    // {
-                    //     urls: 'turn:openrelay.metered.ca:80',
-                    //     username: 'openrelayproject',
-                    //     credentials: 'openrelayproject',
-                    // },
+                    {
+                        urls: 'stun:stun.l.google.com:19302',
+                    },
+                    {
+                        urls: 'turn:numb.viagenie.ca',
+                        username: 'webrtc@live.com',
+                        credential: 'muazkh',
+                    },
                 ],
             },
         });
