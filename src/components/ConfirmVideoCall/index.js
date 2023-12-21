@@ -10,10 +10,9 @@ import VideoCall from '~/pages/VideoCall';
 import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
-function ConfirmVideoCall({ data, setCallingData }) {
+function ConfirmVideoCall({ data }) {
     const cx = classNames.bind(styles);
     const [receivingCall, setReceivingCall] = useState(true);
-    const [calling, setCalling] = useState(false);
     const [callEnded, setCallEnded] = useState(false);
     const connectionRef = useRef();
 

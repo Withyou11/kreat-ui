@@ -194,8 +194,7 @@ function VideoCall() {
                             ref={myVideo}
                             autoPlay
                             style={{
-                                height: '60vh',
-                                width: '30vw',
+                                width: '45vw',
                             }}
                         ></video>
                     </div>
@@ -203,7 +202,7 @@ function VideoCall() {
                 {callAccepted && (
                     <div className={cx('video')}>
                         <p className={cx('name')}>{userName}</p>
-                        <video playsInline ref={userVideo} autoPlay style={{ width: '30vw', height: '60vh' }}></video>
+                        <video playsInline ref={userVideo} autoPlay style={{ width: '45vw' }}></video>
                     </div>
                 )}
                 {!callAccepted && (
@@ -223,11 +222,11 @@ function VideoCall() {
             </div>
             <div className={cx('button-container')}>
                 {!isMicOpen ? (
-                    <button className={cx('red-button')} onClick={handleToggleMic}>
+                    <button className={cx('white-button')} onClick={handleToggleMic}>
                         <FontAwesomeIcon className={cx('icon')} icon={faMicrophoneSlash}></FontAwesomeIcon>
                     </button>
                 ) : (
-                    <button className={cx('white-button')} onClick={handleToggleMic}>
+                    <button className={cx('red-button')} onClick={handleToggleMic}>
                         <FontAwesomeIcon className={cx('icon')} icon={faMicrophone}></FontAwesomeIcon>
                     </button>
                 )}
@@ -235,11 +234,11 @@ function VideoCall() {
                     <FontAwesomeIcon className={cx('delete-user-icon')} icon={faPhoneSlash}></FontAwesomeIcon>
                 </button>
                 {!isVideoOpen ? (
-                    <button className={cx('red-button')} onClick={handleToggleVideo}>
+                    <button className={cx('white-button')} onClick={handleToggleVideo}>
                         <FontAwesomeIcon className={cx('icon')} icon={faVideoSlash}></FontAwesomeIcon>
                     </button>
                 ) : (
-                    <button className={cx('white-button')} onClick={handleToggleVideo}>
+                    <button className={cx('red-button')} onClick={handleToggleVideo}>
                         <FontAwesomeIcon className={cx('icon')} icon={faVideo}></FontAwesomeIcon>
                     </button>
                 )}

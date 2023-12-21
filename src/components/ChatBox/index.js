@@ -27,8 +27,6 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
     const [leader, setLeader] = useState(null);
     const [isUpdateGroupInfoOpen, setIsUpdateGroupInfoOpen] = useState(false);
     const [isAddMemberOpen, setIsAddMemberOpen] = useState(false);
-    const [calling, setCalling] = useState(false);
-
     const [dict, setDict] = useState({});
     useEffect(() => {
         switch (localStorage.getItem('language')) {
@@ -171,9 +169,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
     };
 
     const handleCallVideo = () => {
-        // const peerData = {};
         const videoCallUrl = `/video-call?conversationId=${conversationId}&userId=${userId}&currentUser=caller&userName=${userName}`;
-
         window.open(videoCallUrl, '_blank');
     };
 
