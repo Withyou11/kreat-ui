@@ -194,7 +194,7 @@ function VideoCall() {
                             ref={myVideo}
                             autoPlay
                             style={{
-                                width: '47vw',
+                                width: '45vw',
                             }}
                         ></video>
                     </div>
@@ -202,7 +202,7 @@ function VideoCall() {
                 {callAccepted && (
                     <div className={cx('video')}>
                         <p className={cx('name')}>{userName}</p>
-                        <video playsInline ref={userVideo} autoPlay style={{ width: '47vw' }}></video>
+                        <video playsInline ref={userVideo} autoPlay style={{ width: '45vw' }}></video>
                     </div>
                 )}
                 {!callAccepted && (

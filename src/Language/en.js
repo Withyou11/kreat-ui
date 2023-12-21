@@ -113,7 +113,7 @@ const enDict = {
     Vietnamese: 'Vietnamese',
     This_person_is_not_your_friend_now: 'This person is not your friend now',
     You: 'You',
-    Video_Call: 'Video call',
+    Video_Call: 'Video Call',
     is_calling_you: 'is calling you',
     Deny: 'Deny',
     Accept: 'Accept',
