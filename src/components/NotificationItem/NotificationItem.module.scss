@@ -38,14 +38,85 @@
     margin-bottom: 0;
 }
 
+.content1 {
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+}
+
 .time1 {
     color: var(--primary-darker);
     font-size: 16px;
     margin-bottom: 0;
 }
 
-.icon {
-    color: var(--primary);
+.icon-new {
+    color: var(--primary-darker);
     font-size: 14px;
     margin: auto 0;
+}
+
+// .icon {
+//     color: white;
+//     font-size: 2.4rem;
+//     padding: 4px;
+// }
+
+.red {
+    margin: auto 0;
+    color: red;
+    font-size: 2.4rem;
+}
+
+.love {
+    margin: auto 0;
+    color: red;
+    font-size: 2.4rem;
+}
+
+.blue {
+    margin: auto 0;
+    color: aqua;
+    font-size: 2.4rem;
+}
+
+.primary {
+    color: var(--primary);
+    font-size: 2.4rem;
+    margin: auto 0;
+}
+
+.yellow {
+    margin: auto 0;
+    color: #fce16b;
+    font-size: 2.4rem;
+}
+
+.green {
+    margin: auto 0;
+    color: lightgreen;
+    font-size: 2.4rem;
+}
+
+.pink {
+    margin: auto 0;
+    color: pink;
+    font-size: 2.4rem;
+}
+
+.purple {
+    margin: auto 0;
+    color: violet;
+    font-size: 2.4rem;
+}
+
+.imageIcon {
+    width: 24px;
+    height: 24px;
+    margin: auto 0;
+}
+
+.iconContainer {
+    width: 10%;
+    display: flex;
 }

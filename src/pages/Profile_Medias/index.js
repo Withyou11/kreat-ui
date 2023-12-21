@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import ProfileHeader from '~/components/ProfileHeader';
 import styles from './Profile_Medias.module.scss';
 import classNames from 'classnames/bind';
-import { Image } from 'cloudinary-react';
+import { Image, Video } from 'cloudinary-react';
 import axios from 'axios';
 
 import enDict from '~/Language/en';
@@ -49,6 +49,7 @@ function Profile_Medias() {
                     },
                 });
                 setListImage(response1.data.listURL);
+                console.log(response1.data.listURL);
                 setLoading(false);
 
                 const response2 = await axios.get(`https://kreat-api.onrender.com/accounts/${id}/avatar`, {
@@ -93,16 +94,26 @@ function Profile_Medias() {
                     </div>
                     <div className={cx('wrapper')}>
                         <div className={cx('image-container')}>
-                            {listImage.map((image, index) => {
+                            {listImage.map((media, index) => {
                                 return (
                                     <div key={index} className={cx('image-item')}>
-                                        <Image
-                                            className={cx('image')}
-                                            cloudName="dzuzcewvj"
-                                            publicId={image.url.visualUrl}
-                                            crop="scale"
-                                            onClick={() => handleClick(image.url.visualUrl)}
-                                        />
+                                        {media.url.visualType === 'video' ? (
+                                            <Video
+                                                publicId={media.url.visualUrl}
+                                                className={cx('image')}
+                                                cloudName="dzuzcewvj"
+                                                controls
+                                                sourceTypes={['webm', 'mp4']}
+                                            ></Video>
+                                        ) : (
+                                            <Image
+                                                className={cx('image')}
+                                                cloudName="dzuzcewvj"
+                                                publicId={media.url.visualUrl}
+                                                crop="scale"
+                                                onClick={() => handleClick(media.url.visualUrl)}
+                                            />
+                                        )}
                                     </div>
                                 );
                             })}

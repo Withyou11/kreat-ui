@@ -7,8 +7,8 @@ import styles from './FriendSuggest.module.scss';
 import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
-const cx = classNames.bind(styles);
 function FriendSuggest() {
+    const cx = classNames.bind(styles);
     const [dict, setDict] = useState({});
     useEffect(() => {
         switch (localStorage.getItem('language')) {

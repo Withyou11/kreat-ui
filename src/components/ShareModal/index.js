@@ -230,7 +230,7 @@ function ShareModal({ data, onClose, visible }) {
                     </div>
                 </div>
                 <button className={cx('buttonDone')} onClick={(event) => handleShare(event)}>
-                    Share
+                    {dict.Share}
                 </button>
             </Modal.Body>
         </Modal>

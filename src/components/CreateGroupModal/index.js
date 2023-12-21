@@ -6,6 +6,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import ListTagFriend from '../ListTagFriend';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 function CreateGroupModal({ onClose, visible }) {
     const cx = classNames.bind(styles);
@@ -49,7 +51,7 @@ function CreateGroupModal({ onClose, visible }) {
                     console.log(error);
                 });
         } else {
-            alert('Please fill in the group name and select at least 2 people to add to the group');
+            alert(`${dict.Please_fill_in_the_group_name_and_select_at_least_2_people_to_add_to_the_group}`);
         }
     };
 
@@ -90,6 +92,18 @@ function CreateGroupModal({ onClose, visible }) {
         onClose();
     }
 
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const handleChange1 = (event) => {
         setChosenImage(event.target.files);
         const file = event.target.files[0];
@@ -106,7 +120,7 @@ function CreateGroupModal({ onClose, visible }) {
         <Modal show={visible} onHide={handleClose} animation={false} centered>
             <Modal.Body>
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                    <h2>Create new group chat</h2>
+                    <h2>{dict.Create_new_group_chat}</h2>
                     <div className={cx('wrapper')}>
                         <div className={cx('avatar-container')}>
                             {chosenImage && (
@@ -118,7 +132,7 @@ function CreateGroupModal({ onClose, visible }) {
                                 className={cx('add-image-button')}
                                 onClick={(event) => handleInputButtonClick(event)}
                             >
-                                Choose image...
+                                {dict.Choose_image}
                             </button>
                         </div>
                         <input
@@ -133,7 +147,7 @@ function CreateGroupModal({ onClose, visible }) {
                     </div>
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="fullName">
-                            Group Name:
+                            {dict.Group_Name}
                         </label>
                         <input
                             type="text"
@@ -143,7 +157,7 @@ function CreateGroupModal({ onClose, visible }) {
                             className={cx('form-control')}
                         />
                     </div>
-                    <h3 style={{ margin: '0 12px' }}>Select friends to add to the group chat:</h3>
+                    <h3 style={{ margin: '0 12px' }}>{dict.Select_friends_to_add_to_the_group_chat}</h3>
                     <button className={cx('delete-image-button')} onClick={handleClose}>
                         <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                     </button>
@@ -151,7 +165,7 @@ function CreateGroupModal({ onClose, visible }) {
                     <input
                         value={searchText}
                         style={{ width: '90%' }}
-                        placeholder="Find your friend..."
+                        placeholder={dict.Find_your_fiends}
                         spellCheck="false"
                         onChange={(e) => handleChange(e)}
                     />
@@ -164,7 +178,7 @@ function CreateGroupModal({ onClose, visible }) {
                         />
                     </div>
                     <button className={cx('buttonDone')} onClick={(event) => handleCreateGroup(event)}>
-                        Create
+                        {dict.Create}
                     </button>
                 </div>
             </Modal.Body>

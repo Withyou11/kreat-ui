@@ -34,6 +34,7 @@ import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
 function Post({ data, results, setResults }) {
+    console.log(data);
     const [dict, setDict] = useState({});
     useEffect(() => {
         switch (localStorage.getItem('language')) {
@@ -191,7 +192,7 @@ function Post({ data, results, setResults }) {
     const handleShowShareModal = (e) => {
         e.preventDefault();
         if (data.postPrivacy !== 'public' || data.isShared) {
-            alert('You are not allowed to share this post');
+            alert(`${dict.You_are_not_allowed_to_share_this_post}`);
         } else {
             setIsShareModalOpen(true);
         }
@@ -311,6 +312,26 @@ function Post({ data, results, setResults }) {
         setCurrentUserReact(reaction);
     }
 
+    const [listTaggedFriend, setListTaggedFriend] = useState('');
+
+    useEffect(() => {
+        axios
+            .get(`https://kreat-api.onrender.com/posts/${data._id}/get_all_tagged_friend`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+            })
+            .then((res) => {
+                // Assuming res.data.listTaggedFriend is an array of objects
+                const fullNameArray = res.data.listTaggedFriend.map((friend) => friend.personalInfo.fullName);
+                const fullNameString = fullNameArray.join(', ');
+                setListTaggedFriend(fullNameString);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
     useEffect(() => {
         checkCurrentUserReact(currentUser);
         // eslint-disable-next-line
@@ -367,6 +388,14 @@ function Post({ data, results, setResults }) {
                                 )}
                             </p>
                         </div>
+                        {data?.id_friendTag?.length > 0 && (
+                            <div className={cx('with-friend-container')}>
+                                <p style={{ marginRight: '4px' }}>{dict.with}</p>
+                                <p onClick={(e) => handleTagButtonClick(e)} className={cx('listTagFriend')}>
+                                    {listTaggedFriend}
+                                </p>
+                            </div>
+                        )}
                         <div className={cx('time-location')}>
                             <p className={cx('time')}>{formatDate(data?.createdAt)}</p>
                             {data?.postPrivacy === 'friend' && (
@@ -399,7 +428,7 @@ function Post({ data, results, setResults }) {
                                 </div>
                             )}
                         </div>
-                        {data?.id_friendTag?.length > 0 && (
+                        {/* {data?.id_friendTag?.length > 0 && (
                             <div className={cx('friend')} onClick={(e) => handleTagButtonClick(e)}>
                                 {data?.id_friendTag.length > 1 ? (
                                     <p className={cx('friend-number')}>
@@ -409,7 +438,7 @@ function Post({ data, results, setResults }) {
                                     <p className={cx('friend-number')}>1 {dict.person}</p>
                                 )}
                             </div>
-                        )}
+                        )} */}
                     </div>
                 </div>
 

@@ -2,16 +2,28 @@ import classNames from 'classnames/bind';
 import styles from './MemberItem.module.scss';
 import { Image } from 'cloudinary-react';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Button from '../Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle, faKey, faUserMinus, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import reactIcons from '../General/reactIcons';
+import { faKey, faUserMinus } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import { io } from 'socket.io-client';
-
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 function MemberItem({ data, isLeader, setListMember, groupId, listMember }) {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
     // let newListMember;
     const handleGoTimelines = () => {
         localStorage.setItem('anotherAccountId', data.id_account);
@@ -62,7 +74,7 @@ function MemberItem({ data, isLeader, setListMember, groupId, listMember }) {
                     onClick={handleClickMember}
                 ></Button>
             )}
-            {!isLeader && data.id === localStorage.getItem('accountId') && <p className={cx('me')}>Me</p>}
+            {!isLeader && data.id === localStorage.getItem('accountId') && <p className={cx('me')}>{dict.Me}</p>}
         </div>
     );
 }

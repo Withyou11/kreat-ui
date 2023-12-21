@@ -87,20 +87,20 @@ function UpdatePostModal({ data, onClose, visible, setResults, results }) {
 
         if (diff < 60) {
             // Dưới 1 phút
-            return `${Math.floor(diff)} seconds ago`;
+            return `${Math.floor(diff)} ${dict.secsAgo}`;
         } else if (diff < 60 * 60) {
             // Dưới 1 giờ
-            if (diff < 120) return `1 minute ago`;
+            if (diff < 120) return `1 ${dict.minAgo}`;
             else {
-                return `${Math.floor(diff / 60)} minutes ago`;
+                return `${Math.floor(diff / 60)} ${dict.minsAgo}`;
             }
         } else if (diff < 24 * 60 * 60) {
-            if (diff < 60 * 60 * 2) return `1 hour ago`;
+            if (diff < 60 * 60 * 2) return `1 ${dict.hourAgo}`;
             // Dưới 1 ngày
-            return `${Math.floor(diff / (60 * 60))} hours ago`;
+            return `${Math.floor(diff / (60 * 60))} ${dict.hoursAgo}`;
         } else if (diff < 2 * 24 * 60 * 60) {
             // Từ 1 ngày tới 2 ngày
-            return `Yesterday at ${formatTime(date)}`;
+            return `${dict.yesterday} ${formatTime(date)}`;
         } else {
             // Hơn 2 ngày
             return formatDateToString(date);
@@ -130,7 +130,7 @@ function UpdatePostModal({ data, onClose, visible, setResults, results }) {
     return (
         <Modal style={{ marginLeft: '-6.8%' }} show={visible} onHide={handleClose} animation={false}>
             <Modal.Body style={{ height: '100px' }}>
-                <h3 style={{ margin: '0 12px' }}>Update the post</h3>
+                <h3 style={{ margin: '0 12px' }}>{dict.Update_the_post}</h3>
                 <button className={cx('delete-image-button')} onClick={handleClose}>
                     <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                 </button>
@@ -243,7 +243,7 @@ function UpdatePostModal({ data, onClose, visible, setResults, results }) {
                     </div>
                 </div>
                 <button className={cx('buttonDone')} onClick={(event) => handleUpdate(event)}>
-                    Update
+                    {dict.Update}
                 </button>
             </Modal.Body>
         </Modal>

@@ -1,5 +1,5 @@
-import { faHeart, faThumbsUp, faUserGroup, faEarthAmericas, faLock } from '@fortawesome/free-solid-svg-icons';
-import { faComment, faShareFromSquare, faThumbsUp as faThumbsUp1 } from '@fortawesome/free-regular-svg-icons';
+import { faHeart, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp as faThumbsUp1 } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../Button';
 import { useState, useEffect, memo } from 'react';

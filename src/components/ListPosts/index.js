@@ -30,7 +30,6 @@ function ListPosts() {
                 })
                 .catch((error) => {
                     if (error.response.status === 403) {
-                        // alert('Login session expired, please login again');
                         localStorage.removeItem('avatar');
                         localStorage.removeItem('fullname');
                         localStorage.removeItem('anotherAccountId');

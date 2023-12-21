@@ -7,9 +7,24 @@ import { useState, useRef, useEffect } from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MemberItem from '../MemberItem';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 function UpdateGroupInfoModal({ groupId, isLeader, groupName, groupImage, onClose, onSave }) {
     const cx = classNames.bind(styles);
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const personalInfo = {
         name: groupName,
         picture: groupImage,
@@ -106,7 +121,7 @@ function UpdateGroupInfoModal({ groupId, isLeader, groupName, groupImage, onClos
             <Modal.Body>
                 <div style={{ position: 'relative', height: '100%' }}>
                     <div style={{ display: 'flex' }}>
-                        <h3 style={{ margin: 'auto 12px' }}>Update your group information:</h3>
+                        <h3 style={{ margin: 'auto 12px' }}>{dict.Update_your_group_information}</h3>
                         <button className={cx('delete-image-button')} onClick={onClose}>
                             <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                         </button>
@@ -131,7 +146,7 @@ function UpdateGroupInfoModal({ groupId, isLeader, groupName, groupImage, onClos
                                     className={cx('add-image-button')}
                                     onClick={(event) => handleInputButtonClick(event)}
                                 >
-                                    Choose image...
+                                    {dict.Choose_image}
                                 </button>
                             </div>
                         )}
@@ -148,7 +163,7 @@ function UpdateGroupInfoModal({ groupId, isLeader, groupName, groupImage, onClos
                     </div>
                     <div className={cx('form-group')}>
                         <label className={cx('label1')} htmlFor="name">
-                            Group Name:
+                            {dict.Group_Name}
                         </label>
                         <input
                             type="text"
@@ -173,11 +188,11 @@ function UpdateGroupInfoModal({ groupId, isLeader, groupName, groupImage, onClos
                         ))}
                     </div>
                     <button className={cx('buttonLeave')} onClick={handleLeave}>
-                        Leave this group
+                        {dict.Leave_this_group}
                     </button>
                     {isLeader && (
                         <button className={cx('buttonDone')} onClick={handleSave}>
-                            Update
+                            {dict.Update}
                         </button>
                     )}
                 </div>

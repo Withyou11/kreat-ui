@@ -37,10 +37,10 @@ function ChangePassword() {
                     },
                 })
                 .then((res) => {
-                    alert('Password changed successfully');
+                    alert(`${dict.Password_changed_successfully}`);
                 })
                 .catch(() => {
-                    alert('Can not change password now');
+                    alert(`${dict.Can_not_change_password_now}`);
                 });
         }
     };

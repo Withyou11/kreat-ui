@@ -2,10 +2,91 @@ import { Image } from 'cloudinary-react';
 import styles from './NotificationItem.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faHand, faComment, faUpload, faTag, faShare, faFaceSmile } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import hahaImg from '~/assets/images/haha.png';
+import wowImg from '~/assets/images/wow.png';
+import sadImg from '~/assets/images/sad.png';
+import angryImg from '~/assets/images/angry.png';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 function NotificationItem({ data, setShowListNotification }) {
     console.log(data);
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
+    const listIcon = [
+        {
+            type: 'friend request',
+            icon: faHand,
+            backgroundColor: 'blue',
+        },
+        {
+            type: 'like',
+            icon: faThumbsUp,
+            backgroundColor: 'primary',
+        },
+        {
+            type: 'love',
+            icon: faHeart,
+            backgroundColor: 'love',
+        },
+        {
+            type: 'haha',
+            icon: hahaImg,
+            backgroundColor: 'yellow',
+        },
+        {
+            type: 'wow',
+            icon: wowImg,
+            backgroundColor: 'yellow',
+        },
+        {
+            type: 'sad',
+            icon: sadImg,
+            backgroundColor: 'yellow',
+        },
+        {
+            type: 'angry',
+            icon: angryImg,
+            backgroundColor: 'yellow',
+        },
+        {
+            type: 'comment',
+            icon: faComment,
+            backgroundColor: 'green',
+        },
+        {
+            type: 'upload',
+            icon: faUpload,
+            backgroundColor: 'pink',
+        },
+        {
+            type: 'tag',
+            icon: faTag,
+            backgroundColor: 'red',
+        },
+        {
+            type: 'share',
+            icon: faShare,
+            backgroundColor: 'purple',
+        },
+    ];
+
+    const [icon, setIcon] = useState(listIcon.find((item) => item.type === data.notificationType));
+
     function getNotificationContent() {
         return localStorage.getItem('language') === 'english'
             ? data?.notificationEnglishContent
@@ -21,20 +102,20 @@ function NotificationItem({ data, setShowListNotification }) {
 
         if (diff < 60) {
             // Dưới 1 phút
-            return `${Math.floor(diff)} seconds ago`;
+            return `${Math.floor(diff)} ${dict.secsAgo}`;
         } else if (diff < 60 * 60) {
             // Dưới 1 giờ
-            if (diff < 120) return `1 minute ago`;
+            if (diff < 120) return `1 ${dict.minAgo}`;
             else {
-                return `${Math.floor(diff / 60)} minutes ago`;
+                return `${Math.floor(diff / 60)} ${dict.minsAgo}`;
             }
         } else if (diff < 24 * 60 * 60) {
-            if (diff < 60 * 60 * 2) return `1 hour ago`;
+            if (diff < 60 * 60 * 2) return `1 ${dict.hourAgo}`;
             // Dưới 1 ngày
-            return `${Math.floor(diff / (60 * 60))} hours ago`;
+            return `${Math.floor(diff / (60 * 60))} ${dict.hoursAgo}`;
         } else if (diff < 2 * 24 * 60 * 60) {
             // Từ 1 ngày tới 2 ngày
-            return `Yesterday at ${formatTime(date)}`;
+            return `${dict.yesterday} ${formatTime(date)}`;
         } else {
             // Hơn 2 ngày
             return formatDateToString(date);
@@ -76,25 +157,49 @@ function NotificationItem({ data, setShowListNotification }) {
         <div onClick={handleClick} className={cx('container')}>
             {!data.isViewed ? (
                 <div className={cx('wrapper')}>
-                    <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} crop="scale" />
+                    <div className={cx('imageContainer')}>
+                        <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} crop="scale" />
+                    </div>
                     <div className={cx('info')}>
-                        <p className={cx('content')}>{getNotificationContent()}</p>
+                        <p className={cx('content1')}>{getNotificationContent()}</p>
                         <p className={cx('time1')}>{formatDate(data?.notificationTime)}</p>
                     </div>
-                    <FontAwesomeIcon className={cx('icon')} icon={faCircle}></FontAwesomeIcon>
+                    <div className={cx('iconContainer')}>
+                        {icon?.type === 'haha' ||
+                        icon?.type === 'sad' ||
+                        icon?.type === 'angry' ||
+                        icon?.type === 'wow' ? (
+                            <img src={icon.icon} className={cx('imageIcon')} alt="Icon" />
+                        ) : (
+                            <FontAwesomeIcon
+                                className={cx(`${icon?.backgroundColor}`)}
+                                icon={icon?.icon}
+                            ></FontAwesomeIcon>
+                        )}
+                    </div>
                 </div>
             ) : (
-                <div style={{ opacity: 0.7 }} className={cx('wrapper')}>
-                    <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} crop="scale" />
+                <div style={{ opacity: 0.6 }} className={cx('wrapper')}>
+                    <div className={cx('imageContainer')}>
+                        <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} crop="scale" />
+                    </div>
                     <div className={cx('info')}>
                         <p className={cx('content')}>{getNotificationContent()}</p>
                         <p className={cx('time')}>{formatDate(data?.notificationTime)}</p>
                     </div>
-                    <FontAwesomeIcon
-                        style={{ display: 'none' }}
-                        className={cx('icon')}
-                        icon={faCircle}
-                    ></FontAwesomeIcon>
+                    <div className={cx('iconContainer')}>
+                        {icon?.type === 'haha' ||
+                        icon?.type === 'sad' ||
+                        icon?.type === 'angry' ||
+                        icon?.type === 'wow' ? (
+                            <img src={icon.icon} className={cx('imageIcon')} alt="Icon" />
+                        ) : (
+                            <FontAwesomeIcon
+                                className={cx(`${icon?.backgroundColor}`)}
+                                icon={icon?.icon}
+                            ></FontAwesomeIcon>
+                        )}
+                    </div>
                 </div>
             )}
         </div>

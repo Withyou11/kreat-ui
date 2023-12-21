@@ -2,13 +2,28 @@ import styles from './UpdateCommentModal.module.scss';
 import classNames from 'classnames/bind';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { faCamera, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Image } from 'cloudinary-react';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 
 function UpdateCommentModal({ data, onClose, visible, setComments, comments }) {
     const cx = classNames.bind(styles);
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const [content, setContent] = useState(data.commentContent);
     const [chosenImage, setChosenImage] = useState();
 
@@ -122,7 +137,7 @@ function UpdateCommentModal({ data, onClose, visible, setComments, comments }) {
         <Modal style={{ marginLeft: '-6.8%' }} show={true} onHide={handleClose} animation={false}>
             <Modal.Body>
                 <div style={{ display: 'flex' }}>
-                    <h3 style={{ margin: 'auto 12px', flex: 1 }}>Update your comment:</h3>
+                    <h3 style={{ margin: 'auto 12px', flex: 1 }}>{dict.Update_your_comment}</h3>
                     <button className={cx('delete-image-button')} onClick={onClose}>
                         <FontAwesomeIcon className={cx('delete-user-icon')} icon={faTimes}></FontAwesomeIcon>
                     </button>
@@ -140,7 +155,7 @@ function UpdateCommentModal({ data, onClose, visible, setComments, comments }) {
                         <Image className={cx('image')} cloudName="dzuzcewvj" publicId={data.commentImage} />
                     )}
                     {!data.commentImage && !chosenImage && (
-                        <p style={{ margin: '10px auto' }}>You haven't selected any photos yet</p>
+                        <p style={{ margin: '10px auto' }}>{dict.You_havent_selected_any_photos_yet}</p>
                     )}
                     {chosenImage && (
                         <img className={cx('image')} src={URL.createObjectURL(chosenImage)} alt="comment" />
@@ -153,7 +168,7 @@ function UpdateCommentModal({ data, onClose, visible, setComments, comments }) {
                     </button>
                 </div>
                 <button className={cx('buttonDone')} onClick={(event) => handleUpdate(event)}>
-                    Update
+                    {dict.Update}
                 </button>
             </Modal.Body>
         </Modal>

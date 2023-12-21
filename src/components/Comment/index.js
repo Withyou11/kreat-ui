@@ -11,10 +11,23 @@ import Button from '../Button';
 import { Image } from 'cloudinary-react';
 import axios from 'axios';
 import UpdateCommentModal from '../UpdateCommentModal';
-
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 function Comment({ data, comments, setComments }) {
     const [isUpdateCommentModalOpen, setIsUpdateCommentModalOpen] = useState(false);
     const menuRef = useRef(null);
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
 
     const [isReactModalOpen, setIsReactModalOpen] = useState(false);
     const handleReactButtonClick = (event) => {
@@ -160,31 +173,28 @@ function Comment({ data, comments, setComments }) {
         const now = new Date();
 
         const diff = (now.getTime() - date.getTime()) / 1000; // Đổi thành giây
-        if (diff < 2) {
-            return `Just now`;
-        }
+
         if (diff < 60) {
             // Dưới 1 phút
-            return `${Math.floor(diff)} seconds ago`;
+            return `${Math.floor(diff)} ${dict.secsAgo}`;
         } else if (diff < 60 * 60) {
             // Dưới 1 giờ
-            if (diff < 120) return `1 minute ago`;
+            if (diff < 120) return `1 ${dict.minAgo}`;
             else {
-                return `${Math.floor(diff / 60)} minutes ago`;
+                return `${Math.floor(diff / 60)} ${dict.minsAgo}`;
             }
         } else if (diff < 24 * 60 * 60) {
-            if (diff < 60 * 60 * 2) return `1 hour ago`;
+            if (diff < 60 * 60 * 2) return `1 ${dict.hourAgo}`;
             // Dưới 1 ngày
-            return `${Math.floor(diff / (60 * 60))} hours ago`;
+            return `${Math.floor(diff / (60 * 60))} ${dict.hoursAgo}`;
         } else if (diff < 2 * 24 * 60 * 60) {
             // Từ 1 ngày tới 2 ngày
-            return `Yesterday at ${formatTime(date)}`;
+            return `${dict.yesterday} ${formatTime(date)}`;
         } else {
             // Hơn 2 ngày
             return formatDateToString(date);
         }
     }
-
     function formatTime(date) {
         const hours = date.getHours();
         const minutes = date.getMinutes();
@@ -223,7 +233,7 @@ function Comment({ data, comments, setComments }) {
     }
 
     const handleDeleteComment = (id) => {
-        if (window.confirm(`Are you sure to delete this comment?`)) {
+        if (window.confirm(`${dict.Are_you_sure_to_delete_this_comment}`)) {
             axios
                 .delete(`https://kreat-api.onrender.com/accounts/${id}/delete_comment_post`, {
                     headers: {
@@ -264,10 +274,10 @@ function Comment({ data, comments, setComments }) {
                         {showMenu && (
                             <div ref={menuRef} className={cx('menu')}>
                                 <button className={cx('menu-item')} onClick={handleShowUpdateCommentModal}>
-                                    Update comment
+                                    {dict.Update_comment}
                                 </button>
                                 <button className={cx('menu-item')} onClick={() => handleDeleteComment(data._id)}>
-                                    Delete comment
+                                    {dict.Delete_comment}
                                 </button>
                             </div>
                         )}
