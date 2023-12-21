@@ -34,8 +34,11 @@ function ConfirmVideoCall({ data, setCallingData }) {
         connectionRef.current.destroy();
     };
     function handleConfirm() {
-        setCalling(true);
         setReceivingCall(false);
+        const encodedPeerData = encodeURIComponent(JSON.stringify(data?.peerData));
+        const videoCallUrl = `/video-call?conversationId=${data.id_conversation}&userId=${data?.id_sender}&currentUser=answerer&peerData=${encodedPeerData}&userName=${data.fullName}`;
+
+        window.open(videoCallUrl, '_blank');
     }
 
     const handleCancel = () => {
@@ -76,14 +79,6 @@ function ConfirmVideoCall({ data, setCallingData }) {
                 </div>
             </Modal.Body>
         </Modal>
-    ) : calling ? (
-        <VideoCall
-            conversationId={data?.id_conversation}
-            userId={data?.id_sender}
-            currentUser={'answerer'}
-            peerData={data?.peerData}
-            userName={data.fullName}
-        ></VideoCall>
     ) : null;
 }
 

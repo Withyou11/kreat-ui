@@ -171,8 +171,10 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
     };
 
     const handleCallVideo = () => {
-        // callUser();
-        setCalling(true);
+        // const peerData = {};
+        const videoCallUrl = `/video-call?conversationId=${conversationId}&userId=${userId}&currentUser=caller&userName=${userName}`;
+
+        window.open(videoCallUrl, '_blank');
     };
 
     return (
@@ -237,15 +239,6 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
             )}
             {isAddMemberOpen && (
                 <AddMemberModal groupId={conversationId} onClose={handleCloseAddMemberModal}></AddMemberModal>
-            )}
-            {calling && (
-                <VideoCall
-                    conversationId={conversationId}
-                    userId={userId}
-                    currentUser={'caller'}
-                    peerData={null}
-                    userName={userName}
-                ></VideoCall>
             )}
         </div>
     );

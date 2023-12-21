@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './VideoCall.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState, useRef } from 'react';
 import SimplePeer from 'simple-peer';
 import { useContext } from 'react';
@@ -7,12 +8,35 @@ import Button from '~/components/Button';
 import { SocketContext } from '~/Context/SocketContext/SocketContext';
 import Modal from 'react-bootstrap/Modal';
 import Peer from 'simple-peer';
-
 import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
+import {
+    faVideoSlash,
+    faMicrophoneSlash,
+    faPhoneSlash,
+    faVideo,
+    faMicrophone,
+} from '@fortawesome/free-solid-svg-icons';
 
-function VideoCall({ conversationId, userId, currentUser, peerData, userName }) {
+import { useLocation } from 'react-router-dom';
+
+function VideoCall() {
     const socket = useContext(SocketContext);
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+
+    const conversationId = queryParams.get('conversationId');
+    const userId = queryParams.get('userId');
+    const currentUser = queryParams.get('currentUser');
+
+    const encodedPeerData = queryParams.get('peerData');
+    const peerData = encodedPeerData ? JSON.parse(decodeURIComponent(encodedPeerData)) : null;
+
+    const userName = queryParams.get('userName');
+
+    const [isMicOpen, setIsMicOpen] = useState(true);
+    const [isVideoOpen, setIsVideoOpen] = useState(true);
 
     const [dict, setDict] = useState({});
     useEffect(() => {
@@ -147,59 +171,80 @@ function VideoCall({ conversationId, userId, currentUser, peerData, userName }) 
 
     const cx = classNames.bind(styles);
 
+    const handleToggleMic = () => {
+        setIsMicOpen(!isMicOpen);
+        // Xử lý tắt/mở mic ở đây
+    };
+
+    const handleToggleVideo = () => {
+        setIsVideoOpen(!isVideoOpen);
+        // Xử lý tắt/mở video ở đây
+    };
+
     return (
-        <Modal show={true} animation={false}>
-            <Modal.Body>
-                <div className={cx('wrapper')}>
-                    <p className={cx('title')}>{dict.Video_Call}</p>
-                    <div className={cx('videoContainer')}>
-                        {stream && (
-                            <div className={cx('video')}>
-                                <p className={cx('name')}>{dict.You}</p>
-                                <video
-                                    playsInline
-                                    muted
-                                    ref={myVideo}
-                                    autoPlay
-                                    style={{
-                                        height: '40vh',
-                                        width: '20vw',
-                                    }}
-                                ></video>
-                            </div>
-                        )}
-                        {callAccepted && (
-                            <div className={cx('video')}>
-                                <p className={cx('name')}>{userName}</p>
-                                <video
-                                    playsInline
-                                    ref={userVideo}
-                                    autoPlay
-                                    style={{ width: '20vw', height: '40vh' }}
-                                ></video>
-                            </div>
-                        )}
-                        {!callAccepted && (
-                            <div className={cx('video')}>
-                                <p className={cx('name')}>{userName}</p>
-                                <div className={cx('loading')}>
-                                    <section className={cx('dots-container')}>
-                                        <div className={cx('dot')}></div>
-                                        <div className={cx('dot')}></div>
-                                        <div className={cx('dot')}></div>
-                                        <div className={cx('dot')}></div>
-                                        <div className={cx('dot')}></div>
-                                    </section>
-                                </div>
-                            </div>
-                        )}
+        <div className={cx('wrapper')}>
+            <p className={cx('title')}>{dict.Video_Call}</p>
+            <div className={cx('videoContainer')}>
+                {stream && (
+                    <div className={cx('video')}>
+                        <p className={cx('name')}>{dict.You}</p>
+                        <video
+                            playsInline
+                            muted
+                            ref={myVideo}
+                            autoPlay
+                            style={{
+                                height: '60vh',
+                                width: '30vw',
+                            }}
+                        ></video>
                     </div>
-                    <Button className={cx('end')} onClick={leaveCall}>
-                        {dict.End}
-                    </Button>
-                </div>
-            </Modal.Body>
-        </Modal>
+                )}
+                {callAccepted && (
+                    <div className={cx('video')}>
+                        <p className={cx('name')}>{userName}</p>
+                        <video playsInline ref={userVideo} autoPlay style={{ width: '30vw', height: '60vh' }}></video>
+                    </div>
+                )}
+                {!callAccepted && (
+                    <div className={cx('video')}>
+                        <p className={cx('name')}>{userName}</p>
+                        <div className={cx('loading')}>
+                            <section className={cx('dots-container')}>
+                                <div className={cx('dot')}></div>
+                                <div className={cx('dot')}></div>
+                                <div className={cx('dot')}></div>
+                                <div className={cx('dot')}></div>
+                                <div className={cx('dot')}></div>
+                            </section>
+                        </div>
+                    </div>
+                )}
+            </div>
+            <div className={cx('button-container')}>
+                {!isMicOpen ? (
+                    <button className={cx('red-button')} onClick={handleToggleMic}>
+                        <FontAwesomeIcon className={cx('icon')} icon={faMicrophoneSlash}></FontAwesomeIcon>
+                    </button>
+                ) : (
+                    <button className={cx('white-button')} onClick={handleToggleMic}>
+                        <FontAwesomeIcon className={cx('icon')} icon={faMicrophone}></FontAwesomeIcon>
+                    </button>
+                )}
+                <button className={cx('end')} onClick={leaveCall}>
+                    <FontAwesomeIcon className={cx('delete-user-icon')} icon={faPhoneSlash}></FontAwesomeIcon>
+                </button>
+                {!isVideoOpen ? (
+                    <button className={cx('red-button')} onClick={handleToggleVideo}>
+                        <FontAwesomeIcon className={cx('icon')} icon={faVideoSlash}></FontAwesomeIcon>
+                    </button>
+                ) : (
+                    <button className={cx('white-button')} onClick={handleToggleVideo}>
+                        <FontAwesomeIcon className={cx('icon')} icon={faVideo}></FontAwesomeIcon>
+                    </button>
+                )}
+            </div>
+        </div>
     );
 }
 
