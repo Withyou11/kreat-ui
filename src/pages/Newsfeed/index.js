@@ -17,7 +17,7 @@ function Newsfeed({
     status,
 }) {
     return (
-        <div>
+        <div style={{ width: '100%' }}>
             <PostForm />
             <ListPosts />
             {selectedUserId && (
