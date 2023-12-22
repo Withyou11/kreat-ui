@@ -14,7 +14,6 @@ import { useState, useEffect } from 'react';
 import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 function NotificationItem({ data, setShowListNotification }) {
-    console.log(data);
     const [dict, setDict] = useState({});
     useEffect(() => {
         switch (localStorage.getItem('language')) {

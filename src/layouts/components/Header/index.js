@@ -58,7 +58,6 @@ function Header({ unviewAmount, setUnviewAmount, handleUserSelect }) {
                 },
             })
             .then((res) => {
-                console.log(res.data);
                 setUnviewAmount(res.data);
             })
             .catch((error) => {
