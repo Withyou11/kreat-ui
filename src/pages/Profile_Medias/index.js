@@ -49,7 +49,6 @@ function Profile_Medias() {
                     },
                 });
                 setListImage(response1.data.listURL);
-                console.log(response1.data.listURL);
                 setLoading(false);
 
                 const response2 = await axios.get(`https://kreat-api.onrender.com/accounts/${id}/avatar`, {

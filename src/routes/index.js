@@ -34,7 +34,7 @@ const publicRoutes = [
     { path: '/forgot_password', component: ForgotPassword, layout: NoLayout },
     { path: '/settings', component: Settings, layout: HeaderOnly },
     { path: '/post/:id', component: DetailPost, layout: HeaderOnly },
-    { path: '/video-call', component: VideoCall, layout: NoLayout },
+    { path: '/video-call/:id', component: VideoCall, layout: NoLayout },
 ];
 
 const privateRoutes = [];

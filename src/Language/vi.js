@@ -124,7 +124,7 @@ const vnDict = {
     hoursAgo: 'giờ trước',
     yesterday: 'Hôm qua vào lúc',
     No_emotion: 'Không cảm xúc',
-    Happy: 'Vui mừng 😊',
+    Happy: 'Hạnh phúc 😊',
     Upset: 'Buồn bã 😢',
     Excited: 'Hào hứng 😍',
     Disappointed: 'Thất vọng 😞',

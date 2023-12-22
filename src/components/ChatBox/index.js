@@ -14,7 +14,6 @@ import { useNavigate } from 'react-router-dom';
 import UpdateGroupInfoModal from '../UpdateGroupInfoModal';
 import AddMemberModal from '../AddMemberModal';
 import { SocketContext } from '~/Context/SocketContext/SocketContext';
-import VideoCall from '~/pages/VideoCall';
 import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
@@ -169,7 +168,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
     };
 
     const handleCallVideo = () => {
-        const videoCallUrl = `/video-call?conversationId=${conversationId}&userId=${userId}&currentUser=caller&userName=${userName}`;
+        const videoCallUrl = `/video-call/${conversationId}?conversationId=${conversationId}&userId=${userId}&currentUser=caller&userName=${userName}`;
         window.open(videoCallUrl, '_blank');
     };
 
