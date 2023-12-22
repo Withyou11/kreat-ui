@@ -155,6 +155,7 @@ const enDict = {
     Are_you_sure_to_leave_this_group_chat: 'Are you sure to leave this group chat?',
     Update_comment: 'Update comment',
     Delete_comment: 'Delete comment',
+    Call_ended: 'Call ended',
 };
 
 export default enDict;

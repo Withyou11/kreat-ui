@@ -16,6 +16,7 @@ import {
     faPhoneSlash,
     faVideo,
     faMicrophone,
+    faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { useLocation } from 'react-router-dom';
@@ -37,6 +38,8 @@ function VideoCall() {
 
     const [isMicOpen, setIsMicOpen] = useState(true);
     const [isVideoOpen, setIsVideoOpen] = useState(true);
+
+    const [callEnded, setCallEnded] = useState(false);
 
     const [dict, setDict] = useState({});
     useEffect(() => {
@@ -174,7 +177,10 @@ function VideoCall() {
     }, [userStream]);
 
     const leaveCall = () => {
-        // setCallEnded(true);
+        setCallEnded(true);
+        if (stream) {
+            stream.getTracks().forEach((track) => track.stop());
+        }
         if (localStorage.getItem('accountId')) {
             socket.emit('removeUserCalling', {
                 id_conversation: conversationId,
@@ -196,68 +202,88 @@ function VideoCall() {
         // Xử lý tắt/mở video ở đây
     };
 
+    const handleCloseTab = () => {
+        window.close();
+    };
+
     return (
         <div className={cx('wrapper')}>
-            <p className={cx('title')}>{dict.Video_Call}</p>
-            <div className={cx('videoContainer')}>
-                {stream && (
-                    <div className={cx('video')}>
-                        <p className={cx('name')}>{dict.You}</p>
-                        <video
-                            playsInline
-                            muted
-                            ref={myVideo}
-                            autoPlay
-                            style={{
-                                width: '45vw',
-                            }}
-                        ></video>
+            {!callEnded ? (
+                <>
+                    <p className={cx('title')}>{dict.Video_Call}</p>
+                    <div className={cx('videoContainer')}>
+                        {stream && (
+                            <div className={cx('video')}>
+                                <p className={cx('name')}>{dict.You}</p>
+                                <video
+                                    playsInline
+                                    muted
+                                    ref={myVideo}
+                                    autoPlay
+                                    style={{
+                                        width: '45vw',
+                                    }}
+                                ></video>
+                            </div>
+                        )}
+                        {callAccepted && (
+                            <div className={cx('video')}>
+                                <p className={cx('name')}>{userName}</p>
+                                <video playsInline ref={userVideo} autoPlay style={{ width: '45vw' }}></video>
+                            </div>
+                        )}
+                        {!callAccepted && (
+                            <div className={cx('video')}>
+                                <p className={cx('name')}>{userName}</p>
+                                <div className={cx('loading')}>
+                                    <section className={cx('dots-container')}>
+                                        <div className={cx('dot')}></div>
+                                        <div className={cx('dot')}></div>
+                                        <div className={cx('dot')}></div>
+                                        <div className={cx('dot')}></div>
+                                        <div className={cx('dot')}></div>
+                                    </section>
+                                </div>
+                            </div>
+                        )}
                     </div>
-                )}
-                {callAccepted && (
-                    <div className={cx('video')}>
-                        <p className={cx('name')}>{userName}</p>
-                        <video playsInline ref={userVideo} autoPlay style={{ width: '45vw' }}></video>
+                    <div className={cx('button-container')}>
+                        {!isMicOpen ? (
+                            <button className={cx('white-button')} onClick={handleToggleMic}>
+                                <FontAwesomeIcon className={cx('icon')} icon={faMicrophoneSlash}></FontAwesomeIcon>
+                            </button>
+                        ) : (
+                            <button className={cx('red-button')} onClick={handleToggleMic}>
+                                <FontAwesomeIcon className={cx('icon')} icon={faMicrophone}></FontAwesomeIcon>
+                            </button>
+                        )}
+                        <button className={cx('end')} onClick={leaveCall}>
+                            <FontAwesomeIcon className={cx('delete-user-icon')} icon={faPhoneSlash}></FontAwesomeIcon>
+                        </button>
+                        {!isVideoOpen ? (
+                            <button className={cx('white-button')} onClick={handleToggleVideo}>
+                                <FontAwesomeIcon className={cx('icon')} icon={faVideoSlash}></FontAwesomeIcon>
+                            </button>
+                        ) : (
+                            <button className={cx('red-button')} onClick={handleToggleVideo}>
+                                <FontAwesomeIcon className={cx('icon')} icon={faVideo}></FontAwesomeIcon>
+                            </button>
+                        )}
                     </div>
-                )}
-                {!callAccepted && (
-                    <div className={cx('video')}>
-                        <p className={cx('name')}>{userName}</p>
-                        <div className={cx('loading')}>
-                            <section className={cx('dots-container')}>
-                                <div className={cx('dot')}></div>
-                                <div className={cx('dot')}></div>
-                                <div className={cx('dot')}></div>
-                                <div className={cx('dot')}></div>
-                                <div className={cx('dot')}></div>
-                            </section>
-                        </div>
+                </>
+            ) : (
+                <>
+                    <p className={cx('title')}>{dict.Video_Call}</p>
+                    <div style={{ display: 'flex', height: '80vh' }}>
+                        <p style={{ margin: 'auto' }}>{dict.Call_ended}</p>
                     </div>
-                )}
-            </div>
-            <div className={cx('button-container')}>
-                {!isMicOpen ? (
-                    <button className={cx('white-button')} onClick={handleToggleMic}>
-                        <FontAwesomeIcon className={cx('icon')} icon={faMicrophoneSlash}></FontAwesomeIcon>
-                    </button>
-                ) : (
-                    <button className={cx('red-button')} onClick={handleToggleMic}>
-                        <FontAwesomeIcon className={cx('icon')} icon={faMicrophone}></FontAwesomeIcon>
-                    </button>
-                )}
-                <button className={cx('end')} onClick={leaveCall}>
-                    <FontAwesomeIcon className={cx('delete-user-icon')} icon={faPhoneSlash}></FontAwesomeIcon>
-                </button>
-                {!isVideoOpen ? (
-                    <button className={cx('white-button')} onClick={handleToggleVideo}>
-                        <FontAwesomeIcon className={cx('icon')} icon={faVideoSlash}></FontAwesomeIcon>
-                    </button>
-                ) : (
-                    <button className={cx('red-button')} onClick={handleToggleVideo}>
-                        <FontAwesomeIcon className={cx('icon')} icon={faVideo}></FontAwesomeIcon>
-                    </button>
-                )}
-            </div>
+                    <div className={cx('button-container')}>
+                        <button className={cx('red-button')} onClick={handleCloseTab}>
+                            <FontAwesomeIcon className={cx('icon')} icon={faTimes}></FontAwesomeIcon>
+                        </button>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

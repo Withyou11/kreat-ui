@@ -155,6 +155,7 @@ const vnDict = {
     Are_you_sure_to_leave_this_group_chat: 'Bạn có chắc chắn rời khỏi cuộc trò chuyện nhóm này không?',
     Update_comment: 'Cập nhật',
     Delete_comment: 'Xóa',
+    Call_ended: 'Cuộc gọi kết thúc',
 };
 
 export default vnDict;
