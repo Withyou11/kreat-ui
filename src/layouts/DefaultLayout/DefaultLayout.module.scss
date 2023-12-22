@@ -9,6 +9,7 @@
     display: flex;
     margin-top: var(--default-layout-header-height, 70px);
     position: relative;
+    min-height: 1000px;
 }
 
 .content {
