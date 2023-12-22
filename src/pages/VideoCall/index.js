@@ -50,6 +50,15 @@ function VideoCall() {
         }
     }, []);
 
+    useEffect(() => {
+        if (localStorage.getItem('accountId')) {
+            socket.emit('addUserCalling', {
+                id_conversation: conversationId,
+                id_account: localStorage.getItem('accountId'),
+            });
+        }
+    }, []);
+
     // Define Call video variables
     const [stream, setStream] = useState();
     const [userStream, setUserStream] = useState();
@@ -166,6 +175,12 @@ function VideoCall() {
 
     const leaveCall = () => {
         // setCallEnded(true);
+        if (localStorage.getItem('accountId')) {
+            socket.emit('removeUserCalling', {
+                id_conversation: conversationId,
+                id_account: localStorage.getItem('accountId'),
+            });
+        }
         connectionRef.current.destroy();
     };
 

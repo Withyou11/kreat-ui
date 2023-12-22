@@ -34,7 +34,6 @@ import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
 function Post({ data, results, setResults }) {
-    console.log(data);
     const [dict, setDict] = useState({});
     useEffect(() => {
         switch (localStorage.getItem('language')) {

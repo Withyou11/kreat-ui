@@ -35,7 +35,7 @@ function ConfirmVideoCall({ data }) {
     function handleConfirm() {
         setReceivingCall(false);
         const encodedPeerData = encodeURIComponent(JSON.stringify(data?.peerData));
-        const videoCallUrl = `/video-call?conversationId=${data.id_conversation}&userId=${data?.id_sender}&currentUser=answerer&peerData=${encodedPeerData}&userName=${data.fullName}`;
+        const videoCallUrl = `/video-call/${data.id_conversation}?conversationId=${data.id_conversation}&userId=${data?.id_sender}&currentUser=answerer&peerData=${encodedPeerData}&userName=${data.fullName}`;
 
         window.open(videoCallUrl, '_blank');
     }
