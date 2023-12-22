@@ -6,9 +6,11 @@ import Post from '~/components/Post';
 import axios from 'axios';
 import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
+import SelectBar from '~/layouts/components/SelectBar';
 
 function Profile_TimeLines(props) {
     const [dict, setDict] = useState({});
+
     useEffect(() => {
         switch (localStorage.getItem('language')) {
             case 'english':
@@ -20,11 +22,20 @@ function Profile_TimeLines(props) {
         }
     }, []);
 
+    const options = [
+        { value: 'All', id: 1, title: dict.My_posts },
+        { value: 'Tagged', id: 2, title: dict.My_taggedin_posts },
+        { value: 'Scheduled', id: 3, title: dict.My_scheduled_posts },
+    ];
+
     const [loading, setLoading] = useState(true);
     const [listMyPost, setListMyPost] = useState([]);
     const [listTaggedInPost, setListTaggedInPost] = useState([]);
     const [listSchedulePost, setListSchedulePost] = useState([]);
-    const [selectedMode, setSelectedMode] = useState('mypost');
+    const [selectedMode, setSelectedMode] = useState('All');
+    const [title, setTitle] = useState(localStorage.getItem('language') === 'english' ? 'My posts' : 'Bài viết');
+
+    // const [title, setTitle] = useState(dict.My_posts);
     let id = '';
     if (localStorage.getItem('anotherAccountId')) {
         id = localStorage.getItem('anotherAccountId');
@@ -38,6 +49,7 @@ function Profile_TimeLines(props) {
         window.scrollTo(0, 0);
 
         const fetchData = async () => {
+            setTitle(dict.My_posts);
             try {
                 const response1 = await axios.get(`https://kreat-api.onrender.com/accounts/${id}/timeline`, {
                     headers: {
@@ -77,23 +89,18 @@ function Profile_TimeLines(props) {
     return (
         <>
             {!loading && <ProfileHeader />}
-            {!loading && selectedMode === 'mypost' && (
+            {!loading && selectedMode === 'All' && (
                 <>
                     {
                         <>
                             {!localStorage.getItem('anotherAccountId') && (
-                                <div>
-                                    <select
-                                        className={cx('changeMode')}
-                                        id="view-mode"
-                                        value={selectedMode}
-                                        onChange={(e) => handleChangeMode(e)}
-                                    >
-                                        <option value="mypost">{dict.My_posts}</option>
-                                        <option value="myTagged">{dict.My_taggedin_posts}</option>
-                                        <option value="myScheduled">{dict.My_scheduled_posts}</option>
-                                    </select>
-                                </div>
+                                <SelectBar
+                                    options={options}
+                                    selectedMode={selectedMode}
+                                    setSelectedMode={setSelectedMode}
+                                    title={title ? title : dict.My_posts}
+                                    setTitle={setTitle}
+                                />
                             )}
                             <div className={cx('list-post')}>
                                 {listMyPost?.length > 0 ? (
@@ -110,23 +117,18 @@ function Profile_TimeLines(props) {
                     }
                 </>
             )}
-            {!loading && selectedMode === 'myTagged' && (
+            {!loading && selectedMode === 'Tagged' && (
                 <>
                     {
                         <>
                             {!localStorage.getItem('anotherAccountId') && (
-                                <div>
-                                    <select
-                                        className={cx('changeMode')}
-                                        id="view-mode"
-                                        value={selectedMode}
-                                        onChange={(e) => handleChangeMode(e)}
-                                    >
-                                        <option value="mypost">{dict.My_posts}</option>
-                                        <option value="myTagged">{dict.My_taggedin_posts}</option>
-                                        <option value="myScheduled">{dict.My_scheduled_posts}</option>
-                                    </select>
-                                </div>
+                                <SelectBar
+                                    options={options}
+                                    selectedMode={selectedMode}
+                                    setSelectedMode={setSelectedMode}
+                                    title={title ? title : dict.My_posts}
+                                    setTitle={setTitle}
+                                />
                             )}
                             <div className={cx('list-post')}>
                                 {listTaggedInPost?.length > 0 ? (
@@ -144,23 +146,18 @@ function Profile_TimeLines(props) {
                 </>
             )}
 
-            {!loading && selectedMode === 'myScheduled' && (
+            {!loading && selectedMode === 'Scheduled' && (
                 <>
                     {
                         <>
                             {!localStorage.getItem('anotherAccountId') && (
-                                <div>
-                                    <select
-                                        className={cx('changeMode')}
-                                        id="view-mode"
-                                        value={selectedMode}
-                                        onChange={(e) => handleChangeMode(e)}
-                                    >
-                                        <option value="mypost">{dict.My_posts}</option>
-                                        <option value="myTagged">{dict.My_taggedin_posts}</option>
-                                        <option value="myScheduled">{dict.My_scheduled_posts}</option>
-                                    </select>
-                                </div>
+                                <SelectBar
+                                    options={options}
+                                    selectedMode={selectedMode}
+                                    setSelectedMode={setSelectedMode}
+                                    title={title ? title : dict.My_posts}
+                                    setTitle={setTitle}
+                                />
                             )}
                             <div className={cx('list-post')}>
                                 {listSchedulePost?.length > 0 ? (

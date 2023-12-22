@@ -8,7 +8,7 @@ import axios from 'axios';
 import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
-import { arrow } from '~/assets/images/arrow-down.svg';
+import SelectBar from '~/layouts/components/SelectBar';
 
 function Profile_Medias() {
     const [dict, setDict] = useState({});
@@ -33,19 +33,10 @@ function Profile_Medias() {
     const [listAvatar, setListAvatar] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedMode, setSelectedMode] = useState('Uploads');
+    const [title, setTitle] = useState(dict?.Uploads);
     const cx = classNames.bind(styles);
     const handleClick = (image) => {
         setSelectedImage(image);
-    };
-
-    // const handleChangeMode = (e) => {
-    //     setSelectedMode(e.target.value);
-    // };
-
-    const [isOptionsContainerActive, setOptionsContainerActive] = useState(false);
-    const handleChangeMode = (value) => {
-        setSelectedMode(value);
-        setOptionsContainerActive(false);
     };
 
     let id = '';
@@ -95,43 +86,13 @@ function Profile_Medias() {
             )}
             {!loading && selectedMode === 'Uploads' ? (
                 <>
-                    <div className={cx('container')}>
-                        <div className={cx('select-box')}>
-                            <div className={cx('options-container', { active: isOptionsContainerActive })}>
-                                {options.map((option, index) => (
-                                    <div
-                                        key={index}
-                                        className={cx('option')}
-                                        onClick={() => handleChangeMode(option.value)}
-                                    >
-                                        <input type="radio" className={cx('radio')} id={option.id} name="category" />
-                                        <label htmlFor={option.id}>{option.title}</label>
-                                    </div>
-                                ))}
-                            </div>
-                            <div
-                                className={cx('selected')}
-                                onClick={() => setOptionsContainerActive(!isOptionsContainerActive)}
-                            >
-                                {selectedMode}
-                            </div>
-                        </div>
-                    </div>
-                    {/* <div>
-                        <select
-                            className={cx('changeMode')}
-                            id="view-mode"
-                            value={selectedMode}
-                            onChange={(e) => handleChangeMode(e)}
-                        >
-                            <option value="image" className={cx('option')}>
-                                {dict.Uploads}
-                            </option>
-                            <option value="avatar" className={cx('option')}>
-                                {dict.Avatars}
-                            </option>
-                        </select>
-                    </div> */}
+                    <SelectBar
+                        options={options}
+                        setSelectedMode={setSelectedMode}
+                        selectedMode={selectedMode}
+                        title={title ? title : dict.Uploads}
+                        setTitle={setTitle}
+                    />
                     <div className={cx('wrapper')}>
                         <div className={cx('image-container')}>
                             {listImage.map((media, index) => {
@@ -162,28 +123,13 @@ function Profile_Medias() {
                 </>
             ) : (
                 <>
-                    <div className={cx('container')}>
-                        <div className={cx('select-box')}>
-                            <div className={cx('options-container', { active: isOptionsContainerActive })}>
-                                {options.map((option, index) => (
-                                    <div
-                                        key={index}
-                                        className={cx('option')}
-                                        onClick={() => handleChangeMode(option.value)}
-                                    >
-                                        <input type="radio" className={cx('radio')} id={option.id} name="category" />
-                                        <label htmlFor={option.id}>{option.title}</label>
-                                    </div>
-                                ))}
-                            </div>
-                            <div
-                                className={cx('selected')}
-                                onClick={() => setOptionsContainerActive(!isOptionsContainerActive)}
-                            >
-                                {selectedMode}
-                            </div>
-                        </div>
-                    </div>
+                    <SelectBar
+                        options={options}
+                        setSelectedMode={setSelectedMode}
+                        selectedMode={selectedMode}
+                        title={title ? title : dict.Uploads}
+                        setTitle={setTitle}
+                    />
                     <div className={cx('wrapper')}>
                         <div className={cx('image-container')}>
                             {listAvatar.map((image, index) => {

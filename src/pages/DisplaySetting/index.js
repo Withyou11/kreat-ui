@@ -6,6 +6,8 @@ import axios from 'axios';
 import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
+import SelectBar from '~/layouts/components/SelectBar';
+
 function DisplaySetting() {
     const cx = classNames.bind(styles);
 
@@ -22,9 +24,13 @@ function DisplaySetting() {
     }, []);
 
     const [selectedMode, setSelectedMode] = useState(localStorage.getItem('display'));
-    const handleChangeMode = (e) => {
-        setSelectedMode(e.target.value);
-    };
+
+    const options = [
+        { value: 'Grid', id: 1, title: dict.Grid },
+        { value: 'Slider', id: 2, title: dict.Slider },
+    ];
+
+    const [title, setTitle] = useState(dict?.Uploads);
 
     const handleSave = () => {
         const body = {
@@ -47,15 +53,13 @@ function DisplaySetting() {
     return (
         <div className={cx('wrapper')}>
             <h2>{dict.Change_display_style}</h2>
-            <select
-                className={cx('changeMode')}
-                id="view-mode"
-                value={selectedMode}
-                onChange={(e) => handleChangeMode(e)}
-            >
-                <option value="slider">{dict.Slider}</option>
-                <option value="grid">{dict.Grid}</option>
-            </select>
+            <SelectBar
+                options={options}
+                selectedMode={selectedMode}
+                setSelectedMode={setSelectedMode}
+                title={title ? title : localStorage.getItem('display') === 'grid' ? dict.Grid : dict.Slider}
+                setTitle={setTitle}
+            />
             <button className={cx('buttonDone')} onClick={handleSave}>
                 {dict.Save}
             </button>

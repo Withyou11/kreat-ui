@@ -6,6 +6,8 @@ import axios from 'axios';
 import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
+import SelectBar from '~/layouts/components/SelectBar';
+
 function LanguageSetting() {
     const cx = classNames.bind(styles);
 
@@ -20,6 +22,13 @@ function LanguageSetting() {
                 break;
         }
     }, []);
+
+    const options = [
+        { value: 'english', id: 1, title: dict.English },
+        { value: 'vietnamese', id: 2, title: dict.Vietnamese },
+    ];
+
+    const [title, setTitle] = useState(dict?.Uploads);
 
     const [selectedMode, setSelectedMode] = useState(localStorage.getItem('language'));
     const handleChangeMode = (e) => {
@@ -47,15 +56,13 @@ function LanguageSetting() {
     return (
         <div className={cx('wrapper')}>
             <h2>{dict.Change_language}</h2>
-            <select
-                className={cx('changeMode')}
-                id="view-mode"
-                value={selectedMode}
-                onChange={(e) => handleChangeMode(e)}
-            >
-                <option value="english">{dict.English}</option>
-                <option value="vietnamese">{dict.Vietnamese}</option>
-            </select>
+            <SelectBar
+                options={options}
+                selectedMode={selectedMode}
+                setSelectedMode={setSelectedMode}
+                title={title ? title : localStorage.getItem('language') === 'english' ? dict.English : dict.Vietnamese}
+                setTitle={setTitle}
+            />
             <button className={cx('buttonDone')} onClick={handleSave}>
                 {dict.Save}
             </button>
