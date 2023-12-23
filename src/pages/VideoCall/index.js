@@ -70,12 +70,27 @@ function VideoCall() {
             config: {
                 iceServers: [
                     {
-                        urls: 'stun:stun.l.google.com:19302',
+                        urls: 'stun:stun.relay.metered.ca:80',
                     },
                     {
-                        urls: 'turn:numb.viagenie.ca',
-                        username: 'webrtc@live.com',
-                        credential: 'muazkh',
+                        urls: 'turn:a.relay.metered.ca:80',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
+                    },
+                    {
+                        urls: 'turn:a.relay.metered.ca:80?transport=tcp',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
+                    },
+                    {
+                        urls: 'turn:a.relay.metered.ca:443',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
+                    },
+                    {
+                        urls: 'turn:a.relay.metered.ca:443?transport=tcp',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
                     },
                 ],
             },
@@ -111,12 +126,27 @@ function VideoCall() {
             config: {
                 iceServers: [
                     {
-                        urls: 'stun:stun.l.google.com:19302',
+                        urls: 'stun:stun.relay.metered.ca:80',
                     },
                     {
-                        urls: 'turn:numb.viagenie.ca',
-                        username: 'webrtc@live.com',
-                        credential: 'muazkh',
+                        urls: 'turn:a.relay.metered.ca:80',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
+                    },
+                    {
+                        urls: 'turn:a.relay.metered.ca:80?transport=tcp',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
+                    },
+                    {
+                        urls: 'turn:a.relay.metered.ca:443',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
+                    },
+                    {
+                        urls: 'turn:a.relay.metered.ca:443?transport=tcp',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
                     },
                 ],
             },
