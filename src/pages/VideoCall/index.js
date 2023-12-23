@@ -60,6 +60,9 @@ function VideoCall() {
                 id_account: localStorage.getItem('accountId'),
             });
         }
+        socket.on('callEnded', () => {
+            setCallEnded(true);
+        });
     }, []);
 
     // Define Call video variables
@@ -177,29 +180,35 @@ function VideoCall() {
     }, [userStream]);
 
     const leaveCall = () => {
-        setCallEnded(true);
         if (stream) {
             stream.getTracks().forEach((track) => track.stop());
         }
-        if (localStorage.getItem('accountId')) {
-            socket.emit('removeUserCalling', {
-                id_conversation: conversationId,
-                id_account: localStorage.getItem('accountId'),
-            });
-        }
         connectionRef.current.destroy();
+        window.close();
     };
 
     const cx = classNames.bind(styles);
 
     const handleToggleMic = () => {
-        setIsMicOpen(!isMicOpen);
-        // Xử lý tắt/mở mic ở đây
+        const audioTrack = stream.getTracks().find((track) => track.kind === 'audio');
+        if (isMicOpen) {
+            audioTrack.enabled = false;
+            setIsMicOpen(!isMicOpen);
+        } else {
+            audioTrack.enabled = true;
+            setIsMicOpen(!isMicOpen);
+        }
     };
 
     const handleToggleVideo = () => {
-        setIsVideoOpen(!isVideoOpen);
-        // Xử lý tắt/mở video ở đây
+        const videoTrack = stream.getTracks().find((track) => track.kind === 'video');
+        if (isVideoOpen) {
+            videoTrack.enabled = false;
+            setIsVideoOpen(!isVideoOpen);
+        } else {
+            videoTrack.enabled = true;
+            setIsVideoOpen(!isVideoOpen);
+        }
     };
 
     const handleCloseTab = () => {
