@@ -64,6 +64,7 @@ function VideoCall() {
             if (stream) {
                 stream.getTracks().forEach((track) => track.stop());
             }
+            connectionRef?.current?.destroy();
             setCallEnded(true);
         });
     }, []);
@@ -186,7 +187,7 @@ function VideoCall() {
         if (stream) {
             stream.getTracks().forEach((track) => track.stop());
         }
-        connectionRef.current.destroy();
+        connectionRef?.current?.destroy();
         window.close();
     };
 
@@ -218,6 +219,8 @@ function VideoCall() {
         if (stream) {
             stream.getTracks().forEach((track) => track.stop());
         }
+        connectionRef?.current?.destroy();
+
         window.close();
     };
 
