@@ -53,22 +53,6 @@ function VideoCall() {
         }
     }, []);
 
-    useEffect(() => {
-        if (localStorage.getItem('accountId')) {
-            socket.emit('addUserCalling', {
-                id_conversation: conversationId,
-                id_account: localStorage.getItem('accountId'),
-            });
-        }
-        socket.on('callEnded', () => {
-            if (stream) {
-                stream.getTracks().forEach((track) => track.stop());
-            }
-            connectionRef?.current?.destroy();
-            setCallEnded(true);
-        });
-    }, []);
-
     // Define Call video variables
     const [stream, setStream] = useState();
     const [userStream, setUserStream] = useState();
@@ -166,6 +150,25 @@ function VideoCall() {
         };
         initializeMedia();
     }, []);
+
+    useEffect(() => {
+        if (localStorage.getItem('accountId')) {
+            socket.emit('addUserCalling', {
+                id_conversation: conversationId,
+                id_account: localStorage.getItem('accountId'),
+            });
+        }
+        socket.on('callEnded', () => {
+            setCallEnded(true);
+        });
+    }, []);
+
+    useEffect(() => {
+        if (callEnded && stream) {
+            stream.getTracks().forEach((track) => track.stop());
+            connectionRef?.current?.destroy();
+        }
+    }, [callEnded]);
 
     useEffect(() => {
         if (myVideo.current && stream) {
