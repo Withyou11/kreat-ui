@@ -275,7 +275,7 @@ function VideoCall() {
                 <>
                     <p className={cx('title')}>{dict.Video_Call}</p>
                     <div style={{ display: 'flex', height: '80vh' }}>
-                        <p style={{ margin: 'auto' }}>{dict.Call_ended}</p>
+                        <p style={{ margin: 'auto', fontSize: '2.4rem', fontWeight: '500' }}>{dict.Call_ended}</p>
                     </div>
                     <div className={cx('button-container')}>
                         <button className={cx('red-button')} onClick={handleCloseTab}>
