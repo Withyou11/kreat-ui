@@ -61,6 +61,9 @@ function VideoCall() {
             });
         }
         socket.on('callEnded', () => {
+            if (stream) {
+                stream.getTracks().forEach((track) => track.stop());
+            }
             setCallEnded(true);
         });
     }, []);
@@ -212,6 +215,9 @@ function VideoCall() {
     };
 
     const handleCloseTab = () => {
+        if (stream) {
+            stream.getTracks().forEach((track) => track.stop());
+        }
         window.close();
     };
 
