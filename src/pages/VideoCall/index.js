@@ -266,7 +266,7 @@ function VideoCall() {
                         {stream && (
                             <div className={cx('video')}>
                                 <p className={cx('name')}>{dict.You}</p>
-                                <div style={{ width: '45vw', height: '60vh', overflow: 'hidden', display: 'flex' }}>
+                                <div style={{ width: '45vw', height: '50vh', overflow: 'hidden', display: 'flex' }}>
                                     <video
                                         playsInline
                                         muted
@@ -283,7 +283,7 @@ function VideoCall() {
                         {callAccepted && (
                             <div className={cx('video')}>
                                 <p className={cx('name')}>{userName}</p>
-                                <div style={{ width: '45vw', height: '60vh', overflow: 'hidden', display: 'flex' }}>
+                                <div style={{ width: '45vw', height: '50vh', overflow: 'hidden', display: 'flex' }}>
                                     <video
                                         playsInline
                                         ref={userVideo}

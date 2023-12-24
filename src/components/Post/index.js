@@ -427,17 +427,6 @@ function Post({ data, results, setResults }) {
                                 </div>
                             )}
                         </div>
-                        {/* {data?.id_friendTag?.length > 0 && (
-                            <div className={cx('friend')} onClick={(e) => handleTagButtonClick(e)}>
-                                {data?.id_friendTag.length > 1 ? (
-                                    <p className={cx('friend-number')}>
-                                        {data?.id_friendTag.length} {dict.people}
-                                    </p>
-                                ) : (
-                                    <p className={cx('friend-number')}>1 {dict.person}</p>
-                                )}
-                            </div>
-                        )} */}
                     </div>
                 </div>
 
