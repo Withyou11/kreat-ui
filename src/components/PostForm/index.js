@@ -162,7 +162,13 @@ function PostForm() {
                     });
             })
             .catch((error) => {
-                console.error(error);
+                if (error.response.status === 400) {
+                    alert(dict.Warning_toxic);
+                } else if (error.response.status === 406) {
+                    alert(dict.Ban_toxic);
+                } else {
+                    alert(dict.Error_notification);
+                }
             });
         // Biến tag bạn bè: withfriend, biến location: atLocation, biến nội dung: inputValue, biến ảnh: selectedImages, biến video: selectedVideos, biến quyền riêng tư: privacy
     };

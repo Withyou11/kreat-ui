@@ -215,21 +215,31 @@ function VideoCall() {
                         {stream && (
                             <div className={cx('video')}>
                                 <p className={cx('name')}>{dict.You}</p>
-                                <video
-                                    playsInline
-                                    muted
-                                    ref={myVideo}
-                                    autoPlay
-                                    style={{
-                                        width: '45vw',
-                                    }}
-                                ></video>
+                                <div style={{ width: '45vw', height: '60vh', overflow: 'hidden', display: 'flex' }}>
+                                    <video
+                                        playsInline
+                                        muted
+                                        ref={myVideo}
+                                        autoPlay
+                                        style={{
+                                            width: '45vw',
+                                            margin: 'auto',
+                                        }}
+                                    ></video>
+                                </div>
                             </div>
                         )}
                         {callAccepted && (
                             <div className={cx('video')}>
                                 <p className={cx('name')}>{userName}</p>
-                                <video playsInline ref={userVideo} autoPlay style={{ width: '45vw' }}></video>
+                                <div style={{ width: '45vw', height: '60vh', overflow: 'hidden', display: 'flex' }}>
+                                    <video
+                                        playsInline
+                                        ref={userVideo}
+                                        autoPlay
+                                        style={{ width: '45vw', margin: 'auto' }}
+                                    ></video>
+                                </div>
                             </div>
                         )}
                         {!callAccepted && (

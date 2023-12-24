@@ -122,7 +122,13 @@ function ListComments({ id_post }) {
                         setSelectedImage('');
                     })
                     .catch((error) => {
-                        console.log(error);
+                        if (error.response.status === 400) {
+                            alert(dict.Warning_toxic);
+                        } else if (error.response.status === 406) {
+                            alert(dict.Ban_toxic);
+                        } else {
+                            alert(dict.Error_notification);
+                        }
                     });
             })
             .catch((error) => {

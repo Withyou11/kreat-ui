@@ -156,6 +156,9 @@ const enDict = {
     Update_comment: 'Update comment',
     Delete_comment: 'Delete comment',
     Call_ended: 'The call has ended',
+    Warning_toxic: 'We notice that you used inappropriate language. Be more careful with what you post.',
+    Ban_toxic: 'Your account is currently blocked. Please try again later.',
+    Error_notification: 'Can not do this now.',
 };
 
 export default enDict;

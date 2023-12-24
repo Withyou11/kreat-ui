@@ -31,9 +31,6 @@ function LanguageSetting() {
     const [title, setTitle] = useState(dict?.Uploads);
 
     const [selectedMode, setSelectedMode] = useState(localStorage.getItem('language'));
-    const handleChangeMode = (e) => {
-        setSelectedMode(e.target.value);
-    };
 
     const handleSave = () => {
         const body = {
@@ -48,6 +45,7 @@ function LanguageSetting() {
             })
             .then((res) => {
                 localStorage.setItem('language', selectedMode);
+                window.location.reload();
             })
             .catch((error) => {
                 console.log(error);

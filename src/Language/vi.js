@@ -156,6 +156,10 @@ const vnDict = {
     Update_comment: 'Cập nhật',
     Delete_comment: 'Xóa',
     Call_ended: 'Cuộc gọi đã kết thúc',
+    Warning_toxic:
+        'Chúng tôi nhận thấy rằng bạn đã sử dụng ngôn ngữ không phù hợp. Hãy cẩn thận hơn với những gì bạn đăng.',
+    Ban_toxic: 'Tài khoản của bạn hiện tại đang bị khóa. Hãy thử lại sau.',
+    Error_notification: 'Không thể thực hiện hành động.',
 };
 
 export default vnDict;
