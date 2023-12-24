@@ -53,15 +53,6 @@ function VideoCall() {
         }
     }, []);
 
-    useEffect(() => {
-        if (localStorage.getItem('accountId')) {
-            socket.emit('addUserCalling', {
-                id_conversation: conversationId,
-                id_account: localStorage.getItem('accountId'),
-            });
-        }
-    }, []);
-
     // Define Call video variables
     const [stream, setStream] = useState();
     const [userStream, setUserStream] = useState();
@@ -79,12 +70,27 @@ function VideoCall() {
             config: {
                 iceServers: [
                     {
-                        urls: 'stun:stun.l.google.com:19302',
+                        urls: 'stun:stun.relay.metered.ca:80',
                     },
                     {
-                        urls: 'turn:numb.viagenie.ca',
-                        username: 'webrtc@live.com',
-                        credential: 'muazkh',
+                        urls: 'turn:a.relay.metered.ca:80',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
+                    },
+                    {
+                        urls: 'turn:a.relay.metered.ca:80?transport=tcp',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
+                    },
+                    {
+                        urls: 'turn:a.relay.metered.ca:443',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
+                    },
+                    {
+                        urls: 'turn:a.relay.metered.ca:443?transport=tcp',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
                     },
                 ],
             },
@@ -120,12 +126,27 @@ function VideoCall() {
             config: {
                 iceServers: [
                     {
-                        urls: 'stun:stun.l.google.com:19302',
+                        urls: 'stun:stun.relay.metered.ca:80',
                     },
                     {
-                        urls: 'turn:numb.viagenie.ca',
-                        username: 'webrtc@live.com',
-                        credential: 'muazkh',
+                        urls: 'turn:a.relay.metered.ca:80',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
+                    },
+                    {
+                        urls: 'turn:a.relay.metered.ca:80?transport=tcp',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
+                    },
+                    {
+                        urls: 'turn:a.relay.metered.ca:443',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
+                    },
+                    {
+                        urls: 'turn:a.relay.metered.ca:443?transport=tcp',
+                        username: '7b444593c8c63afdd778f3d7',
+                        credential: 'GpkNVLi0gxKgxu4u',
                     },
                 ],
             },
@@ -161,6 +182,25 @@ function VideoCall() {
     }, []);
 
     useEffect(() => {
+        if (localStorage.getItem('accountId')) {
+            socket.emit('addUserCalling', {
+                id_conversation: conversationId,
+                id_account: localStorage.getItem('accountId'),
+            });
+        }
+        socket.on('callEnded', () => {
+            setCallEnded(true);
+        });
+    }, []);
+
+    useEffect(() => {
+        if (callEnded && stream) {
+            stream.getTracks().forEach((track) => track.stop());
+            connectionRef?.current?.destroy();
+        }
+    }, [callEnded]);
+
+    useEffect(() => {
         if (myVideo.current && stream) {
             myVideo.current.srcObject = stream;
             if (currentUser === 'caller') {
@@ -177,32 +217,43 @@ function VideoCall() {
     }, [userStream]);
 
     const leaveCall = () => {
-        setCallEnded(true);
         if (stream) {
             stream.getTracks().forEach((track) => track.stop());
         }
-        if (localStorage.getItem('accountId')) {
-            socket.emit('removeUserCalling', {
-                id_conversation: conversationId,
-                id_account: localStorage.getItem('accountId'),
-            });
-        }
-        connectionRef.current.destroy();
+        connectionRef?.current?.destroy();
+        window.close();
     };
 
     const cx = classNames.bind(styles);
 
     const handleToggleMic = () => {
-        setIsMicOpen(!isMicOpen);
-        // Xử lý tắt/mở mic ở đây
+        const audioTrack = stream.getTracks().find((track) => track.kind === 'audio');
+        if (isMicOpen) {
+            audioTrack.enabled = false;
+            setIsMicOpen(!isMicOpen);
+        } else {
+            audioTrack.enabled = true;
+            setIsMicOpen(!isMicOpen);
+        }
     };
 
     const handleToggleVideo = () => {
-        setIsVideoOpen(!isVideoOpen);
-        // Xử lý tắt/mở video ở đây
+        const videoTrack = stream.getTracks().find((track) => track.kind === 'video');
+        if (isVideoOpen) {
+            videoTrack.enabled = false;
+            setIsVideoOpen(!isVideoOpen);
+        } else {
+            videoTrack.enabled = true;
+            setIsVideoOpen(!isVideoOpen);
+        }
     };
 
     const handleCloseTab = () => {
+        if (stream) {
+            stream.getTracks().forEach((track) => track.stop());
+        }
+        connectionRef?.current?.destroy();
+
         window.close();
     };
 

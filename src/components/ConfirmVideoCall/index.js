@@ -10,7 +10,7 @@ import VideoCall from '~/pages/VideoCall';
 import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
-function ConfirmVideoCall({ data }) {
+function ConfirmVideoCall({ data, setCallingData }) {
     const cx = classNames.bind(styles);
     const [receivingCall, setReceivingCall] = useState(true);
     const [callEnded, setCallEnded] = useState(false);
@@ -38,10 +38,12 @@ function ConfirmVideoCall({ data }) {
         const videoCallUrl = `/video-call/${data.id_conversation}?conversationId=${data.id_conversation}&userId=${data?.id_sender}&currentUser=answerer&peerData=${encodedPeerData}&userName=${data.fullName}`;
 
         window.open(videoCallUrl, '_blank');
+        setCallingData(null);
     }
 
     const handleCancel = () => {
         setReceivingCall(false);
+        setCallingData(null);
         leaveCall();
     };
 
