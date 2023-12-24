@@ -2,7 +2,16 @@ import { Image } from 'cloudinary-react';
 import styles from './NotificationItem.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle, faHand, faComment, faUpload, faTag, faShare, faBan } from '@fortawesome/free-solid-svg-icons';
+import {
+    faCircle,
+    faHand,
+    faComment,
+    faUpload,
+    faTag,
+    faShare,
+    faBan,
+    faUnlock,
+} from '@fortawesome/free-solid-svg-icons';
 import { faHeart, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import hahaImg from '~/assets/images/haha.png';
 import wowImg from '~/assets/images/wow.png';
@@ -89,8 +98,8 @@ function NotificationItem({ data, setShowListNotification }) {
         },
         {
             type: 'unblock',
-            icon: faShare,
-            backgroundColor: 'red',
+            icon: faUnlock,
+            backgroundColor: 'orange',
         },
     ];
 

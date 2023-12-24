@@ -72,10 +72,14 @@ function AccountItem({ data, button, active, inactive, user, onUserSelect, mutua
                 <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} crop="scale" />
                 <div className={cx('info')}>
                     <h4 className={cx('name')}>{data.fullName}</h4>
-                    <p className={cx('amount-common-friend')}>
-                        {mutualFriends}
-                        <span> {dict.Mutual_friends}</span>
-                    </p>
+                    {data.fullName !== localStorage.getItem('fullname') ? (
+                        <p className={cx('amount-common-friend')}>
+                            {mutualFriends}
+                            <span> {dict.Mutual_friends}</span>
+                        </p>
+                    ) : (
+                        <p className={cx('amount-common-friend')}>{dict.Me}</p>
+                    )}
                 </div>
                 {button && (
                     <Button

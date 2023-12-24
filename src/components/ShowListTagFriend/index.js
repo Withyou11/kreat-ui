@@ -10,7 +10,6 @@ import Modal from 'react-bootstrap/Modal';
 function ShowListTagFriend({ data, visible, onClose }) {
     const cx = classNames.bind(styles);
     const [listFriend, setListFriend] = useState([]);
-
     useEffect(() => {
         axios
             .get(`https://kreat-api.onrender.com/posts/${data}/get_all_tagged_friend`, {

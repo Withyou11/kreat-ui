@@ -311,26 +311,6 @@ function Post({ data, results, setResults }) {
         setCurrentUserReact(reaction);
     }
 
-    const [listTaggedFriend, setListTaggedFriend] = useState('');
-
-    useEffect(() => {
-        axios
-            .get(`https://kreat-api.onrender.com/posts/${data._id}/get_all_tagged_friend`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-            })
-            .then((res) => {
-                // Assuming res.data.listTaggedFriend is an array of objects
-                const fullNameArray = res.data.listTaggedFriend.map((friend) => friend.personalInfo.fullName);
-                const fullNameString = fullNameArray.join(', ');
-                setListTaggedFriend(fullNameString);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
-
     useEffect(() => {
         checkCurrentUserReact(currentUser);
         // eslint-disable-next-line
@@ -389,9 +369,9 @@ function Post({ data, results, setResults }) {
                         </div>
                         {data?.id_friendTag?.length > 0 && (
                             <div className={cx('with-friend-container')}>
-                                <p style={{ marginRight: '4px' }}>{dict.with}</p>
+                                <p style={{ marginRight: '4px', flexWrap: 'nowrap' }}>{dict.with}</p>
                                 <p onClick={(e) => handleTagButtonClick(e)} className={cx('listTagFriend')}>
-                                    {listTaggedFriend}
+                                    {data.id_friendTag.map((friend) => friend.fullName).join(', ')}
                                 </p>
                             </div>
                         )}
