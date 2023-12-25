@@ -160,8 +160,8 @@ const vnDict = {
         'Chúng tôi nhận thấy rằng bạn đã sử dụng ngôn ngữ không phù hợp. Hãy cẩn thận hơn với những gì bạn đăng.',
     Ban_toxic: 'Tài khoản của bạn hiện tại đang bị khóa. Hãy thử lại sau.',
     Error_notification: 'Không thể thực hiện hành động.',
-    Notifications: 'Các thông báo',
-    Chats: 'Trò chuyện',
+    Notifications: 'Thông báo',
+    Chats: 'Tin nhắn',
     No_Notifications: 'Không có thông báo',
     No_Messages: 'Không có cuộc trò chuyện nào',
 };

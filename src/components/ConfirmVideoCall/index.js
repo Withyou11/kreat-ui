@@ -5,8 +5,6 @@ import { Image } from 'cloudinary-react';
 import { useState, useRef, useEffect } from 'react';
 import { faPhoneVolume, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { io } from 'socket.io-client';
-import VideoCall from '~/pages/VideoCall';
 import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
