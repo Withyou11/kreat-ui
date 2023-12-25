@@ -3,9 +3,24 @@ import classNames from 'classnames/bind';
 import NotificationItem from '../NotificationItem';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 function ListNotification({ setShowListNotification }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     useEffect(() => {
         axios
             .get(`https://kreat-api.onrender.com/accounts/notification`, {
@@ -23,10 +38,10 @@ function ListNotification({ setShowListNotification }) {
     const cx = classNames.bind(styles);
     return (
         <div className={cx('wrapper')}>
-            <p className={cx('title')}>Notifications</p>
+            <p className={cx('title')}>{dict.Notifications}</p>
             {!loading ? (
                 <div className={cx('container')}>
-                    {data.length === 0 && <p className={cx('title1')}>No notifications to show</p>}
+                    {data.length === 0 && <p className={cx('title1')}>{dict.No_Notifications}</p>}
                     {data?.map((notification, index) => (
                         <div key={index}>
                             <NotificationItem

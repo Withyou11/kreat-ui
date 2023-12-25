@@ -96,7 +96,7 @@ function Header({ unviewAmount, setUnviewAmount, handleUserSelect }) {
                 <Search />
 
                 <div className={cx('actions')}>
-                    <NewTippy content="Chats">
+                    <NewTippy content={dict.Chats}>
                         <div style={{ position: 'relative' }}>
                             {unviewAmount?.unviewedMessageAmount > 0 && (
                                 <div className={cx('amount-container')}>
@@ -111,7 +111,7 @@ function Header({ unviewAmount, setUnviewAmount, handleUserSelect }) {
                             )}
                         </div>
                     </NewTippy>
-                    <NewTippy content="Notifications">
+                    <NewTippy content={dict.Notifications}>
                         <div style={{ position: 'relative' }}>
                             {unviewAmount?.unviewedNotificationAmount > 0 && (
                                 <div className={cx('amount-container')}>

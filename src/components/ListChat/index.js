@@ -7,7 +7,21 @@ import { faCirclePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../Button';
 import CreateGroupModal from '../CreateGroupModal';
+import enDict from '~/Language/en';
+import viDict from '~/Language/vi';
 function ListChat({ setShowListChats, handleUserSelect }) {
+    const [dict, setDict] = useState({});
+    useEffect(() => {
+        switch (localStorage.getItem('language')) {
+            case 'english':
+                setDict(enDict);
+                break;
+            case 'vietnamese':
+                setDict(viDict);
+                break;
+        }
+    }, []);
+
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -33,7 +47,7 @@ function ListChat({ setShowListChats, handleUserSelect }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('titleContainer')}>
-                <p className={cx('title')}>Chats</p>
+                <p className={cx('title')}>{dict.Chats}</p>
                 <Button
                     leftIcon={<FontAwesomeIcon icon={faCirclePlus} />}
                     smallest
@@ -43,7 +57,7 @@ function ListChat({ setShowListChats, handleUserSelect }) {
             </div>
             {!loading ? (
                 <div className={cx('container')}>
-                    {data.length === 0 && <p className={cx('title1')}>No conversations to show</p>}
+                    {data.length === 0 && <p className={cx('title1')}>{dict.No_Messages}</p>}
                     {data?.map((notification, index) => (
                         <div key={index}>
                             <ChatItem

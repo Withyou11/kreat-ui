@@ -159,6 +159,10 @@ const enDict = {
     Warning_toxic: 'We notice that you used inappropriate language. Be more careful with what you post.',
     Ban_toxic: 'Your account is currently blocked. Please try again later.',
     Error_notification: 'Can not do this now.',
+    Notifications: 'Notifications',
+    Chats: 'Chats',
+    No_Notifications: 'No notifications to show',
+    No_Messages: 'No conversations to show',
 };
 
 export default enDict;
