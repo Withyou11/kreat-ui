@@ -162,8 +162,8 @@ const vnDict = {
     Error_notification: 'Không thể thực hiện hành động.',
     Notifications: 'Thông báo',
     Chats: 'Tin nhắn',
-    No_Notifications: 'Không có thông báo',
-    No_Messages: 'Không có cuộc trò chuyện nào',
+    No_Notifications: 'Không có thông báo nào',
+    No_Messages: 'Không có tin nhắn nào',
 };
 
 export default vnDict;
