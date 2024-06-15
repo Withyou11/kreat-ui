@@ -2,18 +2,19 @@ import styles from './ConfirmVideoCall.module.scss';
 import classNames from 'classnames/bind';
 import Modal from 'react-bootstrap/Modal';
 import { Image } from 'cloudinary-react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { faPhoneVolume, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { io } from 'socket.io-client';
-import VideoCall from '~/pages/VideoCall';
+import { SocketContext } from '~/Context/SocketContext/SocketContext';
 import enDict from '~/Language/en';
 import viDict from '~/Language/vi';
 
 function ConfirmVideoCall({ data, setCallingData }) {
+    const socket = useContext(SocketContext);
     const cx = classNames.bind(styles);
     const [receivingCall, setReceivingCall] = useState(true);
     const [callEnded, setCallEnded] = useState(false);
+    const [isAnswer, setIsAnswer] = useState(false);
     const connectionRef = useRef();
 
     const [dict, setDict] = useState({});
@@ -28,11 +29,20 @@ function ConfirmVideoCall({ data, setCallingData }) {
         }
     }, []);
 
+    useEffect(() => {
+        setTimeout(() => {
+            if (isAnswer === false) {
+                handleCancel();
+            }
+        }, 45000);
+    }, []);
+
     const leaveCall = () => {
         setCallEnded(true);
         connectionRef.current.destroy();
     };
     function handleConfirm() {
+        setIsAnswer(true);
         setReceivingCall(false);
         const encodedPeerData = encodeURIComponent(JSON.stringify(data?.peerData));
         const videoCallUrl = `/video-call/${data.id_conversation}?conversationId=${data.id_conversation}&userId=${data?.id_sender}&currentUser=answerer&peerData=${encodedPeerData}&userName=${data.fullName}`;
@@ -42,6 +52,11 @@ function ConfirmVideoCall({ data, setCallingData }) {
     }
 
     const handleCancel = () => {
+        setIsAnswer(true);
+        socket.emit('denyCall', {
+            id_conversation: data?.id_conversation,
+            id_account: localStorage.getItem('accountId'),
+        });
         setReceivingCall(false);
         setCallingData(null);
         leaveCall();
@@ -50,6 +65,7 @@ function ConfirmVideoCall({ data, setCallingData }) {
     return receivingCall ? (
         <Modal show={true} animation={false} centered>
             <Modal.Body>
+                <audio src="https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3" loop autoPlay />
                 <div className={cx('infoContainer')}>
                     <Image className={cx('avatar')} cloudName="dzuzcewvj" publicId={data.avatar} crop="scale" />
                     <p className={cx('name')}>{data.fullName}</p>

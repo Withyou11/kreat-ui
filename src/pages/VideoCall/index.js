@@ -188,6 +188,7 @@ function VideoCall() {
                 id_account: localStorage.getItem('accountId'),
             });
         }
+
         socket.on('callEnded', () => {
             setCallEnded(true);
         });
