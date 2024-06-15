@@ -35,13 +35,13 @@ function AccountItem({ data, button, active, inactive, user, onUserSelect, mutua
             id_receiver: data.id_account,
         };
         axios
-            .post(`https://kreat-api.onrender.com/accounts/send_friend_request`, receiver, {
+            .post(`http://localhost:3000/accounts/send_friend_request`, receiver, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
             })
             .then((res) => {
-                io('https://kreat-socket.onrender.com').emit('sendNotification', res.data.id_notification_receivers);
+                io('http://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
 
                 setFriendSuggestionList((results) =>
                     results.filter((account) => account.id_account !== data.id_account),

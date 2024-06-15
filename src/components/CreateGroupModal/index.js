@@ -39,7 +39,7 @@ function CreateGroupModal({ onClose, visible }) {
         };
         if (groupName && withfriend.length > 1) {
             axios
-                .post(`https://kreat-api.onrender.com/chat/create_group_chat`, body, {
+                .post(`http://localhost:3000/chat/create_group_chat`, body, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
@@ -57,7 +57,7 @@ function CreateGroupModal({ onClose, visible }) {
 
     useEffect(() => {
         axios
-            .get(`https://kreat-api.onrender.com/posts/get_all_friend_to_tag`, {
+            .get(`http://localhost:3000/posts/get_all_friend_to_tag`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

@@ -13,13 +13,13 @@ function FriendRequestItem({ data }) {
         e.stopPropagation();
         e.preventDefault();
         axios
-            .delete(`https://kreat-api.onrender.com/accounts/${data.id_friendRequest}/accept_friend_request`, {
+            .delete(`http://localhost:3000/accounts/${data.id_friendRequest}/accept_friend_request`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
             })
             .then((res) => {
-                io('https://kreat-socket.onrender.com').emit('sendNotification', res.data.id_notification_receivers);
+                io('http://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
                 window.location.reload();
             })
             .catch(() => {});
@@ -28,7 +28,7 @@ function FriendRequestItem({ data }) {
         e.stopPropagation();
         e.preventDefault();
         axios
-            .delete(`https://kreat-api.onrender.com/accounts/${data.id_friendRequest}/decline_friend_request`, {
+            .delete(`http://localhost:3000/accounts/${data.id_friendRequest}/decline_friend_request`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

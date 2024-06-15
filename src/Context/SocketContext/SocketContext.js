@@ -4,7 +4,7 @@ import { io } from 'socket.io-client';
 const SocketContext = createContext();
 
 function SocketProvider({ children }) {
-    const socket = io('https://kreat-socket.onrender.com');
+    const socket = io('http://localhost:3002');
     return <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>;
 }
 

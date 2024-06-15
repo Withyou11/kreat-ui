@@ -58,13 +58,13 @@ function ProfileHeader() {
             id_receiver: localStorage.getItem('anotherAccountId'),
         };
         axios
-            .post(`https://kreat-api.onrender.com/accounts/send_friend_request`, receiver, {
+            .post(`http://localhost:3000/accounts/send_friend_request`, receiver, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
             })
             .then((res) => {
-                io('https://kreat-socket.onrender.com').emit('sendNotification', res.data.id_notification_receivers);
+                io('http://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
                 setFriendStatus('friend request sent');
                 localStorage.setItem('friendStatus', 'friend request sent');
             })
@@ -74,9 +74,7 @@ function ProfileHeader() {
     function handleCancelRequest(e) {
         axios
             .delete(
-                `https://kreat-api.onrender.com/accounts/${localStorage.getItem(
-                    'anotherAccountId',
-                )}/cancel_friend_request`,
+                `http://localhost:3000/accounts/${localStorage.getItem('anotherAccountId')}/cancel_friend_request`,
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -93,9 +91,7 @@ function ProfileHeader() {
     function handleDeclineRequest(e) {
         axios
             .delete(
-                `https://kreat-api.onrender.com/accounts/${localStorage.getItem(
-                    'idFriendRequest',
-                )}/decline_friend_request`,
+                `http://localhost:3000/accounts/${localStorage.getItem('idFriendRequest')}/decline_friend_request`,
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -111,18 +107,13 @@ function ProfileHeader() {
 
     function handleAcceptRequest(e) {
         axios
-            .delete(
-                `https://kreat-api.onrender.com/accounts/${localStorage.getItem(
-                    'idFriendRequest',
-                )}/accept_friend_request`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                    },
+            .delete(`http://localhost:3000/accounts/${localStorage.getItem('idFriendRequest')}/accept_friend_request`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
-            )
+            })
             .then((res) => {
-                io('https://kreat-socket.onrender.com').emit('sendNotification', res.data.id_notification_receivers);
+                io('http://localhost:3002').emit('sendNotification', res.data.id_notification_receivers);
                 localStorage.setItem('friendStatus', 'friend');
                 window.location.reload();
             })
@@ -134,14 +125,11 @@ function ProfileHeader() {
         e.preventDefault();
         if (window.confirm(`Are you sure you want to unfriend ${localStorage.getItem('anotherAccountName')}?`)) {
             axios
-                .delete(
-                    `https://kreat-api.onrender.com/accounts/${localStorage.getItem('anotherAccountId')}/unfriend`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                        },
+                .delete(`http://localhost:3000/accounts/${localStorage.getItem('anotherAccountId')}/unfriend`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
-                )
+                })
                 .then((res) => {
                     localStorage.setItem('friendStatus', 'not friend');
                     window.location.reload();
@@ -166,7 +154,7 @@ function ProfileHeader() {
         if (updateInfo.avatar.includes('base64')) {
             axios
                 .patch(
-                    `https://kreat-api.onrender.com/accounts/update_personal_info`,
+                    `http://localhost:3000/accounts/update_personal_info`,
                     {
                         fullName: updateInfo.fullName,
                         avatarData: updateInfo.avatar,
@@ -189,7 +177,7 @@ function ProfileHeader() {
         } else {
             axios
                 .patch(
-                    `https://kreat-api.onrender.com/accounts/update_personal_info`,
+                    `http://localhost:3000/accounts/update_personal_info`,
                     {
                         fullName: updateInfo.fullName,
                     },

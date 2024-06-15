@@ -38,7 +38,7 @@ function MemberItem({ data, isLeader, setListMember, groupId, listMember }) {
             setListMember((prevList) => prevList.filter((member) => member.id !== data.id));
             axios
                 .patch(
-                    `https://kreat-api.onrender.com/chat/update_group_chat/${groupId}`,
+                    `http://localhost:3000/chat/update_group_chat/${groupId}`,
                     {
                         member: data.id,
                     },

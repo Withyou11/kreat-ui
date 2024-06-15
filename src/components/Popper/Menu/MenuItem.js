@@ -11,7 +11,7 @@ function MenuItem({ data }) {
     const navigate = useNavigate();
     const handleClick = async () => {
         if (data.title === 'Logout' || data.title === 'Đăng xuất') {
-            io('https://kreat-socket.onrender.com').emit('logout', localStorage.getItem('accountId'));
+            io('http://localhost:3002').emit('logout', localStorage.getItem('accountId'));
             localStorage.removeItem('avatar');
             localStorage.removeItem('fullname');
             localStorage.removeItem('anotherAccountId');
@@ -24,7 +24,7 @@ function MenuItem({ data }) {
             localStorage.removeItem('language');
             await axios
                 .post(
-                    `https://kreat-api.onrender.com/auth/logout`,
+                    `http://localhost:3000/auth/logout`,
                     {},
                     {
                         headers: {

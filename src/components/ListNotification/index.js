@@ -23,7 +23,7 @@ function ListNotification({ setShowListNotification }) {
 
     useEffect(() => {
         axios
-            .get(`https://kreat-api.onrender.com/accounts/notification`, {
+            .get(`http://localhost:3000/accounts/notification`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

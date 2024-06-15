@@ -53,7 +53,7 @@ function Search() {
         setLoading(true);
 
         axios
-            .get(`https://kreat-api.onrender.com/accounts/search`, {
+            .get(`http://localhost:3000/accounts/search`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

@@ -37,7 +37,7 @@ function Profile_AboutMe(props) {
     const cx = classNames.bind(styles);
     useEffect(() => {
         axios
-            .get(`https://kreat-api.onrender.com/accounts/${id}/about`, {
+            .get(`http://localhost:3000/accounts/${id}/about`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
@@ -62,7 +62,7 @@ function Profile_AboutMe(props) {
     const handleSavePersonalInfo = (updatedPersonalInfo) => {
         axios
             .patch(
-                `https://kreat-api.onrender.com/accounts/update_personal_info`,
+                `http://localhost:3000/accounts/update_personal_info`,
                 {
                     aboutMe: updatedPersonalInfo.aboutMe,
                     birthday: updatedPersonalInfo.birthday,
@@ -99,7 +99,7 @@ function Profile_AboutMe(props) {
     const handleSaveFavoriteInfo = (updatedFavoriteInfo) => {
         axios
             .patch(
-                `https://kreat-api.onrender.com/accounts/update_favorite_info`,
+                `http://localhost:3000/accounts/update_favorite_info`,
                 {
                     hobbies: updatedFavoriteInfo.hobbies,
                     favoriteTVShows: updatedFavoriteInfo.favoriteTVShows,
@@ -136,7 +136,7 @@ function Profile_AboutMe(props) {
     const handleSaveEducationInfo = (updatedEducationInfo) => {
         axios
             .patch(
-                `https://kreat-api.onrender.com/accounts/update_education_info`,
+                `http://localhost:3000/accounts/update_education_info`,
                 {
                     primarySchool: updatedEducationInfo.primarySchool,
                     yearStartPrimarySchool: updatedEducationInfo.yearStartPrimarySchool,

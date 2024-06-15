@@ -41,7 +41,7 @@ function Profile_Friends(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response1 = await axios.get(`https://kreat-api.onrender.com/accounts/${id}/friends`, {
+                const response1 = await axios.get(`http://localhost:3000/accounts/${id}/friends`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
@@ -50,7 +50,7 @@ function Profile_Friends(props) {
                 setLoading1(false);
 
                 if (localStorage.getItem('anotherAccountId') === '') {
-                    const response2 = await axios.get(`https://kreat-api.onrender.com/accounts/friend_requests`, {
+                    const response2 = await axios.get(`http://localhost:3000/accounts/friend_requests`, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                         },
@@ -81,7 +81,7 @@ function Profile_Friends(props) {
         setSearchResults(resultFind);
 
         axios
-            .get(`https://kreat-api.onrender.com/accounts/${id}/friends/search`, {
+            .get(`http://localhost:3000/accounts/${id}/friends/search`, {
                 params: {
                     q: debouncedValue,
                 },

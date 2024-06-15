@@ -59,7 +59,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
         if (updateInfo.picture.includes('base64')) {
             axios
                 .patch(
-                    `https://kreat-api.onrender.com/chat/update_group_chat/${conversationId}`,
+                    `http://localhost:3000/chat/update_group_chat/${conversationId}`,
                     {
                         name: updateInfo.name,
                         picture: updateInfo.picture,
@@ -81,7 +81,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
         } else {
             axios
                 .patch(
-                    `https://kreat-api.onrender.com/chat/update_group_chat/${conversationId}`,
+                    `http://localhost:3000/chat/update_group_chat/${conversationId}`,
                     {
                         name: updateInfo.name,
                     },
@@ -115,7 +115,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
 
     useEffect(() => {
         axios
-            .get(`https://kreat-api.onrender.com/chat/${conversationId}/messages`, {
+            .get(`http://localhost:3000/chat/${conversationId}/messages`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
@@ -140,7 +140,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
                 messageContent: inputValue,
             };
             axios
-                .post(`https://kreat-api.onrender.com/chat/send_message`, newMessage, {
+                .post(`http://localhost:3000/chat/send_message`, newMessage, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
@@ -155,7 +155,7 @@ function ChatBox({ updateState, conversationId, userName, userAvatar, userId, fl
                             id_receiver: userId,
                             messageContent: inputValue,
                         };
-                        io('https://kreat-socket.onrender.com').emit('sendMessage', data);
+                        io('http://localhost:3002').emit('sendMessage', data);
                     }
 
                     setMessages([...messages, response.data.newMessage]);

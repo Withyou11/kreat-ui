@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from 'react';
 import SimplePeer from 'simple-peer';
 import { io } from 'socket.io-client';
 
-const socket = io.connect('https://kreat-socket.onrender.com');
+const socket = io.connect('http://localhost:3002');
 
 function Newsfeed({
     selectedConversationId,

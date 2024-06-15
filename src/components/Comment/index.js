@@ -121,7 +121,7 @@ function Comment({ data, comments, setComments }) {
         handleRemoveItem();
         setCurrentUserReact('');
         axios
-            .delete(`https://kreat-api.onrender.com/accounts/${data._id}/unreact_comment`, {
+            .delete(`http://localhost:3000/accounts/${data._id}/unreact_comment`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -140,7 +140,7 @@ function Comment({ data, comments, setComments }) {
                 reactType: reaction,
             };
             axios
-                .patch(`https://kreat-api.onrender.com/accounts/update_react`, body, {
+                .patch(`http://localhost:3000/accounts/update_react`, body, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
@@ -155,7 +155,7 @@ function Comment({ data, comments, setComments }) {
                 reactType: reaction,
             };
             axios
-                .post(`https://kreat-api.onrender.com/accounts/react`, body, {
+                .post(`http://localhost:3000/accounts/react`, body, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
@@ -235,7 +235,7 @@ function Comment({ data, comments, setComments }) {
     const handleDeleteComment = (id) => {
         if (window.confirm(`${dict.Are_you_sure_to_delete_this_comment}`)) {
             axios
-                .delete(`https://kreat-api.onrender.com/accounts/${id}/delete_comment_post`, {
+                .delete(`http://localhost:3000/accounts/${id}/delete_comment_post`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },

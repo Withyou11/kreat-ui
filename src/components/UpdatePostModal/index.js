@@ -49,7 +49,7 @@ function UpdatePostModal({ data, onClose, visible, setResults, results }) {
             postFeeling: feeling === 'No emotion' ? '' : feeling,
         };
         axios
-            .patch('https://kreat-api.onrender.com/posts/update_post', postData, {
+            .patch('http://localhost:3000/posts/update_post', postData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

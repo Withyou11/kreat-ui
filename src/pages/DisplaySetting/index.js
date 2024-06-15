@@ -38,7 +38,7 @@ function DisplaySetting() {
         };
 
         axios
-            .patch(`https://kreat-api.onrender.com/accounts/update_setting`, body, {
+            .patch(`http://localhost:3000/accounts/update_setting`, body, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

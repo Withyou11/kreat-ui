@@ -38,7 +38,7 @@ function AddMemberModal({ groupId, onClose, visible }) {
             newMembers: withfriend,
         };
         axios
-            .patch(`https://kreat-api.onrender.com/chat/add_members_group_chat/${groupId}`, body, {
+            .patch(`http://localhost:3000/chat/add_members_group_chat/${groupId}`, body, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
@@ -53,7 +53,7 @@ function AddMemberModal({ groupId, onClose, visible }) {
 
     useEffect(() => {
         axios
-            .get(`https://kreat-api.onrender.com/chat/get_all_friends_for_group_chat/${groupId}`, {
+            .get(`http://localhost:3000/chat/get_all_friends_for_group_chat/${groupId}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

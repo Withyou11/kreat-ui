@@ -51,7 +51,7 @@ function Profile_TimeLines(props) {
         const fetchData = async () => {
             setTitle(dict.My_posts);
             try {
-                const response1 = await axios.get(`https://kreat-api.onrender.com/accounts/${id}/timeline`, {
+                const response1 = await axios.get(`http://localhost:3000/accounts/${id}/timeline`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
@@ -64,14 +64,14 @@ function Profile_TimeLines(props) {
                 }
                 setLoading(false);
 
-                const response2 = await axios.get(`https://kreat-api.onrender.com/accounts/tagged-in_post`, {
+                const response2 = await axios.get(`http://localhost:3000/accounts/tagged-in_post`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
                 });
                 setListTaggedInPost(response2.data.listPost);
 
-                const response3 = await axios.get(`https://kreat-api.onrender.com/accounts/scheduled_posts`, {
+                const response3 = await axios.get(`http://localhost:3000/accounts/scheduled_posts`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },

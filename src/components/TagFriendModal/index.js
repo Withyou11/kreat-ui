@@ -31,7 +31,7 @@ function TagFriendModal({ onClose, visible, withfriend, withfriendName, handleWi
 
     useEffect(() => {
         axios
-            .get(`https://kreat-api.onrender.com/posts/get_all_friend_to_tag`, {
+            .get(`http://localhost:3000/posts/get_all_friend_to_tag`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
